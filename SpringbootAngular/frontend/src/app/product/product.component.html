@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<div class="site-section">
+  <h2 class="mb-5 text-center">Danh sách sản phẩm</h2>
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-5"
+           *ngFor="let eachProduct of productList | paginate: {id: 'page', itemsPerPage: 15, currentPage: currentP, totalItems: productList.length}">
+        <div class="card">
+          <div class="img-container">
+            <div><a class="d-block mb-0 thumbnail"><img src="assets/images/product/{{eachProduct.urlImage}}" alt="Image"
+                                                        class="card-img-top" (click)="productDetail(eachProduct.id)"></a></div>
+            <div class="thumbnail-child" *ngIf="eachProduct.discount != 'null'">-{{eachProduct.discount}}% <i class="cart fas fa-shopping-cart" (click)="addItemCart(2)"></i></div>
+          </div>
+          <div class="card-body">
+              <h5 class="card-title"><a routerLink="/product"
+                                          (click)="productDetail(eachProduct.id)">{{eachProduct.productName}}</a></h5>
+              <div class="w-100 price">
+                <p>Giá {{eachProduct.realPrice * 1000000 | number}} VNĐ  <del *ngIf="eachProduct.discount != 'null'" class="col-6">{{eachProduct.price * 1000000 | number}}VNĐ
+                </del></p>
+
+              </div>
+            <div class="button w-70 d-flex justify-content-between mt-2">
+              <button type="button" class="btn myBtn" (click)="productDetail(eachProduct.id)">Xem chi tiết</button>
+              <button type="button" class="btn myBtn" (click)="showData(eachProduct)">Mua ngay</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="productList" class="fa-pull-right">
+      <pagination-controls id="page" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
+                           autoHide="false" responsive="false" previousLabel="Trước"
+                           nextLabel="Tiếp" screenReaderPaginationLabel="Pagination"
+                           screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+

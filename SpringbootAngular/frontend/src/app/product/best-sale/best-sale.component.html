@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<div class="site-section bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+        <h2 class="mb-5">Danh sách sản phẩm bán chạy</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-5" *ngFor="let eachProduct of listProduct | paginate: {id: 'page', itemsPerPage: 12, currentPage: currentP, totalItems: productList.length}">
+        <div class="hotel-room text-center">
+          <div class="img-container">
+            <a class="d-block mb-0 thumbnail"><img src="assets/images/product/{{eachProduct.urlImage}}" alt="Image" class="img-fluid"></a>
+          </div>
+          <div class="hotel-room-body">
+            <h3 class="heading mb-0"><a routerLink="/product" (click)="productDetail(eachProduct.id)">{{eachProduct.productName}}</a></h3>
+            <strong class="price">{{eachProduct.price}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="listProduct">
+      <pagination-controls id="page" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
+                           autoHide="false" responsive="false" previousLabel="Trước"
+                           nextLabel="Tiếp" screenReaderPaginationLabel="Pagination"
+                           screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+
+

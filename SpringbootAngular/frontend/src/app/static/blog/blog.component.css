@@ -1,0 +1,39 @@
+.blog_list{
+  margin-top: 2%;
+}
+
+.blog_para{
+  margin: 2% 0;
+}
+
+p.para1 {
+  margin: 2% 0;
+  font-size: 1em;
+  color: #777777;
+  line-height: 1.8em;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.btn:hover{
+  background: #EC5792;
+}
+
+.btn{
+  color: #ffffff;
+  background: #FF61A0;
+  display: inline-block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.5em;
+  padding: 12px 24px;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+
