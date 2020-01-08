@@ -27,7 +27,7 @@ export class BestSaleComponent implements OnInit, AfterViewInit{
   }
 
   productDetail(id: number) {
-    this.productService.proDetailAPI(id);
+    // this.productService.proDetailAPI(id);
     location.replace('/best-sale');
     console.log('productId = ', id);
   }

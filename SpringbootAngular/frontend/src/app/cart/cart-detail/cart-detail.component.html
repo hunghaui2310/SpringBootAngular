@@ -1,66 +1,72 @@
-<main>
-  <div class="basket">
-    <div class="basket-module">
-      <label for="promo-code">Nhập mã khuyến mại</label>
-      <input id="promo-code" type="text" name="promo-code" maxlength="5" class="promo-code-field">
-      <button type="button" class="btn btn-primary btn-apply">Áp dụng</button>
+
+<div class="page-head">
+</div>
+<!-- //banner -->
+<!-- check out -->
+<div class="checkout">
+  <div class="container">
+    <h3>GIỎ HÀNG</h3>
+    <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
+      <table class="timetable_sub">
+        <thead>
+        <tr>
+          <th>Sản phẩm</th>
+          <th>Tên sản phẩm</th>
+          <th>Giá</th>
+          <th>Số lượng</th>
+          <th>Thành tiền</th>
+          <th>Xóa</th>
+        </tr>
+        </thead>
+        <tr class="product">
+          <td class="invert-image"><a href="single.html"><img src="assets/images/cart/w4.png" alt=" "
+                                                              class="img-responsive"/></a></td>
+          <td class="invert">Hand Bag</td>
+          <td class="invert-price">22.0</td>
+          <td class="invert-number">
+<!--            <div class="quantity">-->
+<!--              <div class="quantity-select">-->
+<!--                <div class="entry value-minus">&nbsp;</div>-->
+<!--                <div class="entry value"><span>1</span></div>-->
+<!--                <div class="entry value-plus active">&nbsp;</div>-->
+<!--              </div>-->
+<!--            </div>-->
+            <input type="number" value="2" min="1">
+          </td>
+          <td class="invert-money">44.0</td>
+          <td class="invert-closeb">
+<!--            <div class="rem">-->
+<!--              <div class="close1"></div>-->
+<!--            </div>-->
+<!--            <script>$(document).ready(function (c) {-->
+<!--                $('.close1').on('click', function (c) {-->
+<!--                    $('.rem1').fadeOut('slow', function (c) {-->
+<!--                        $('.rem1').remove();-->
+<!--                    });-->
+<!--                });-->
+<!--            });-->
+<!--            </script>-->
+            <i class="fas fa-minus-circle"></i>
+          </td>
+          <!--quantity-->
+      </table>
     </div>
-    <div class="basket-labels">
-      <ul>
-        <li class="item item-heading">Sản phẩm</li>
-        <li class="price">Giá</li>
-        <li class="quantity">Số lượng</li>
-        <li class="subtotal">Tổng</li>
-      </ul>
-    </div>
-    <div class="basket-product">
-      <div class="item">
-        <div class="product-image">
-          <img src="http://placehold.it/120x166" alt="Placholder Image 2" class="product-frame">
-        </div>
-        <div class="product-details">
-          <h1><strong><span class="item-quantity">Tên sản phẩm</span></strong></h1>
-          <p><strong>Thể loại</strong></p>
-          <p></p>
-        </div>
+    <div class="checkout-left">
+
+      <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
+        <a href="/home"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Quay lại trang chủ</a>
       </div>
-      <div class="price">26.00</div>
-      <div class="quantity">
-        <input type="number" value="4" min="1" class="quantity-field">
+      <div class="checkout-left-basket animated wow slideInLeft" data-wow-delay=".5s">
+        <h4>Thanh toán</h4>
+        <ul>
+          <li>Hand Bag <i>-</i> <span>$45.99</span></li>
+          <li>Watches <i>-</i> <span>$45.99</span></li>
+          <li>Sandals <i>-</i> <span>$45.99</span></li>
+          <li>Wedges <i>-</i> <span>$45.99</span></li>
+          <li>Total <i>-</i> <span>$183.96</span></li>
+        </ul>
       </div>
-      <div class="subtotal">104.00</div>
-      <div>
-        <button type="button" class="btn btn-primary remove">Xoá</button>
-      </div>
+      <div class="clearfix"></div>
     </div>
   </div>
-  <aside>
-    <div class="summary">
-      <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
-      <div class="summary-subtotal">
-        <div class="subtotal-title">Subtotal</div>
-        <div class="subtotal-value final-value" id="basket-subtotal">130.00</div>
-        <div class="summary-promo hide">
-          <div class="promo-title">Promotion</div>
-          <div class="promo-value final-value" id="basket-promo"></div>
-        </div>
-      </div>
-      <div class="summary-delivery">
-        <select name="delivery-collection" class="summary-delivery-selection">
-          <option value="0" selected="selected">Select Collection or Delivery</option>
-          <option value="collection">Collection</option>
-          <option value="first-class">Royal Mail 1st Class</option>
-          <option value="second-class">Royal Mail 2nd Class</option>
-          <option value="signed-for">Royal Mail Special Delivery</option>
-        </select>
-      </div>
-      <div class="summary-total">
-        <div class="total-title">Total</div>
-        <div class="total-value final-value" id="basket-total">130.00</div>
-      </div>
-      <div class="summary-checkout">
-        <button class="checkout-cta">Go to Secure Checkout</button>
-      </div>
-    </div>
-  </aside>
-</main>
+</div>

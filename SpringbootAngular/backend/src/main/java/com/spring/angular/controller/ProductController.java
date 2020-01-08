@@ -41,13 +41,13 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/detail/{id}")
-    public ApiResponse getProductDetail(@PathVariable(value = "id") Long productId){
+    @PostMapping("/detail")
+    public ApiResponse getProductDetail(@RequestBody ProductDTO productDTO){
         ApiResponse apiResponse = null;
         try{
-            ProductDTO productDTO = productService.getProductById(productId);
-            if(productDTO != null)
-                return apiResponse.build(HttpServletResponse.SC_OK, true, "", productDTO);
+            ProductDTO productDTO1 = productService.getProductById(productDTO.getId());
+            if(productDTO1 != null)
+                return apiResponse.build(HttpServletResponse.SC_OK, true, "", productDTO1);
         }catch (Exception e){
             e.printStackTrace();
             return apiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, Contains.ERROR, null);

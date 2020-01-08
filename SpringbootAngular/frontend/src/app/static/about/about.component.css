@@ -96,3 +96,15 @@
 .section-breadcrum {
   border-bottom: 1px solid #ccc;
 }
+
+.about-made{
+  padding-left: 50px;
+}
+
+.about-made li{
+  text-align: justify;
+}
+
+.content-article p{
+  text-align: justify;
+}

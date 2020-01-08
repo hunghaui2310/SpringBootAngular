@@ -52,7 +52,8 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   productDetail(id: number) {
-    this.productService.proDetailAPI(id);
+    const productI: Product = new Product()
+    // this.productService.proDetailAPI(id);
     location.replace('/product');
     console.log('productId = ', id);
   }

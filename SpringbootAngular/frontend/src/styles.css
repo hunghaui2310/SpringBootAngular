@@ -13,6 +13,8 @@ html, body{
 }
 .container{
   background: white;
+  width: auto;
+  max-width: 100%;
 }
 body a {
   text-decoration:none;

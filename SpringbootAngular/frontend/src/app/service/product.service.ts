@@ -15,8 +15,8 @@ export class ProductService {
     return this.http.get<Product[]>(config.product_API);
   }
 
-  proDetailAPI(id: number) {
+  proDetailAPI(productId: Product) {
     // @ts-ignore
-    return this.http.get<Product[]>(config.product_detail + '/' + id);
+    return this.http.post<Product[]>(config.product_detail, productId);
   }
 }

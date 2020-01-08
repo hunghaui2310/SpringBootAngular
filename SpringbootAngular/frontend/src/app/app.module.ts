@@ -26,6 +26,9 @@ import { BlogComponent } from './static/blog/blog.component';
 import { Blog1Component } from './static/blog/blog1/blog1.component';
 import { BuyNowComponent } from './product/buy-now/buy-now.component';
 import {MatDialogModule} from '@angular/material';
+import { Blog2Component } from './static/blog/blog2/blog2.component';
+import { Blog3Component } from './static/blog/blog3/blog3.component';
+import {BestSaleComponent} from './product/best-sale/best-sale.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import {MatDialogModule} from '@angular/material';
     ProIndustryComponent,
     BlogComponent,
     Blog1Component,
-    BuyNowComponent
+    BuyNowComponent,
+    Blog2Component,
+    BestSaleComponent,
+    Blog3Component
   ],
   imports: [
     BrowserModule,

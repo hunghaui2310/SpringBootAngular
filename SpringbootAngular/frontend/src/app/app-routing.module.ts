@@ -15,6 +15,8 @@ import {ProIndustryComponent} from './product/pro-industry/pro-industry.componen
 import {AboutComponent} from './static/about/about.component';
 import {BlogComponent} from './static/blog/blog.component';
 import {Blog1Component} from './static/blog/blog1/blog1.component';
+import {Blog2Component} from './static/blog/blog2/blog2.component';
+import {Blog3Component} from './static/blog/blog3/blog3.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -36,6 +38,10 @@ const routes: Routes = [
       path: 'blog', component: BlogComponent
     }, {
       path: 'blog-detail-1', component: Blog1Component
+    }, {
+      path: 'blog-detail-2', component: Blog2Component
+    }, {
+      path: 'blog-detail-3', component: Blog3Component
     }
     ]
   },
