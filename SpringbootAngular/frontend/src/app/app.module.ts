@@ -1,14 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
-
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ProductComponent } from './product/product.component';
-import { StarterComponent } from './starter/starter.component';
-import { FooterComponent } from './footer/footer.component';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -17,42 +10,27 @@ import { LogoutComponent } from './account/logout/logout.component';
 import { NotFoundComponent } from './account/not-found/not-found.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { RegisterComponent } from './account/register/register.component';
-import { ProductDetailComponent } from './product/product-detail/product-detail.component';
-import { OrderComponent } from './cart/order/order.component';
-import {CartDetailComponent} from './cart/cart-detail/cart-detail.component';
-import { AboutComponent } from './static/about/about.component';
-import { ProIndustryComponent } from './product/pro-industry/pro-industry.component';
-import { BlogComponent } from './static/blog/blog.component';
-import { Blog1Component } from './static/blog/blog1/blog1.component';
-import { BuyNowComponent } from './product/buy-now/buy-now.component';
+import {HomeComponent} from './home/home/home.component';
+import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material';
-import { Blog2Component } from './static/blog/blog2/blog2.component';
-import { Blog3Component } from './static/blog/blog3/blog3.component';
-import {BestSaleComponent} from './product/best-sale/best-sale.component';
+import { HeaderComponent } from './home/header/header.component';
+import { FooterComponent } from './home/footer/footer.component';
+import { ItemsComponent } from './product/items/items.component';
+import { QuickViewComponent } from './product/quick-view/quick-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ProductComponent,
-    StarterComponent,
-    FooterComponent,
     LoginComponent,
     LogoutComponent,
     NotFoundComponent,
     ProfileComponent,
     RegisterComponent,
-    ProductDetailComponent,
-    CartDetailComponent,
-    OrderComponent,
-    AboutComponent,
-    ProIndustryComponent,
-    BlogComponent,
-    Blog1Component,
-    BuyNowComponent,
-    Blog2Component,
-    BestSaleComponent,
-    Blog3Component
+    HeaderComponent,
+    FooterComponent,
+    ItemsComponent,
+    QuickViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +41,6 @@ import {BestSaleComponent} from './product/best-sale/best-sale.component';
     MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [BuyNowComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
