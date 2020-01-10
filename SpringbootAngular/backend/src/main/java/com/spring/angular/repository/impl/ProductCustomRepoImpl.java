@@ -1,10 +1,8 @@
 package com.spring.angular.repository.impl;
 
-import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.SearchRequest;
-import com.spring.angular.model.Product;
-import com.spring.angular.repository.ProductRepo;
+import com.spring.angular.repository.ProductCustomRepo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,8 +12,7 @@ import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 
-@Repository
-public class ProductRepoImpl implements ProductRepo {
+public class ProductCustomRepoImpl implements ProductCustomRepo {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -23,9 +20,10 @@ public class ProductRepoImpl implements ProductRepo {
     @Override
     public List<Object[]> getProduct(String condition) {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("select p.product_id,p.product_name,p.price,p.num_like,p.discount,f.url,p.price-(p.price*p.discount/100) as real_price" +
-                " from product p, file_info f" +
-                " where f.file_type_id = 1 and p.product_id = f.product_id and p.discount is not null");
+        sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des" +
+                " FROM product p, file_info f, category c" +
+                " WHERE f.file_type_id = 1 AND p.product_id = f.product_id" +
+                " AND c.category_id = p.category_id");
         if(condition != null) {
             if (condition.equals(Contains.CREATE_DATE)) {
                 sqlBuilder.append(" order by p.create_date desc");
@@ -62,9 +60,9 @@ public class ProductRepoImpl implements ProductRepo {
     public Object[] getProductById(Long productId) {
         try {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("select p.des,p.price,p.num_like,p.product_name,p.discount,f.url from product p, file_info f" +
-                    " where p.product_id = f.product_id" +
-                    " and f.file_type_id = 2 and p.product_id = :productId");
+            stringBuilder.append("select p.product_id,p.product_name,p.des,p.price,p.num_like,p.price-(p.price*p.discount/100) AS real_price,p.discount" +
+                    " from product p" +
+                    " where p.product_id = :productId");
             Query query = entityManager.createNativeQuery(stringBuilder.toString());
             query.setParameter("productId", productId);
             return (Object[]) query.getSingleResult();

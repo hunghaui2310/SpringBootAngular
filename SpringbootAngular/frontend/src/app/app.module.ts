@@ -17,6 +17,7 @@ import { HeaderComponent } from './home/header/header.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { ItemsComponent } from './product/items/items.component';
 import { QuickViewComponent } from './product/quick-view/quick-view.component';
+import { SingleItemComponent } from './product/single-item/single-item.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { QuickViewComponent } from './product/quick-view/quick-view.component';
     FooterComponent,
     ItemsComponent,
     QuickViewComponent,
+    SingleItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,7 @@ import { QuickViewComponent } from './product/quick-view/quick-view.component';
     MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [QuickViewComponent]
 })
 export class AppModule { }

@@ -2,14 +2,14 @@ package com.spring.angular.dto;
 
 import java.util.List;
 
-public class ProductDTO {
+public class ProductDetailDTO {
 
     private Long id;
     private String productName;
     private int price;
     private Long numLike;
     private int discount;
-    private String urlImage;
+    private List<String> urlImage;
     private String description;
     private boolean noData;
     private String categoryName;
@@ -31,6 +31,14 @@ public class ProductDTO {
         this.productName = productName;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public Long getNumLike() {
         return numLike;
     }
@@ -39,11 +47,19 @@ public class ProductDTO {
         this.numLike = numLike;
     }
 
-    public String getUrlImage() {
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public List<String> getUrlImage() {
         return urlImage;
     }
 
-    public void setUrlImage(String urlImage) {
+    public void setUrlImage(List<String> urlImage) {
         this.urlImage = urlImage;
     }
 
@@ -55,7 +71,7 @@ public class ProductDTO {
         this.description = description;
     }
 
-    public boolean getNoData() {
+    public boolean isNoData() {
         return noData;
     }
 
@@ -71,27 +87,11 @@ public class ProductDTO {
         this.categoryName = categoryName;
     }
 
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
-
     public double getRealPrice() {
         return realPrice;
     }
 
     public void setRealPrice(double realPrice) {
         this.realPrice = realPrice;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

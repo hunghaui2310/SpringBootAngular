@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SearchRequest} from '../../model/search.request';
-import {config} from '../../app-routing/application.config';
+import {config} from '../../app-config/application.config';
 
 @Injectable({
   providedIn: 'root'

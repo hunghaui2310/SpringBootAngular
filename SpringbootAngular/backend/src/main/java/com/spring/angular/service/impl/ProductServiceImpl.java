@@ -1,15 +1,16 @@
 package com.spring.angular.service.impl;
 
 import com.spring.angular.dto.ProductDTO;
+import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.DataUtil;
 import com.spring.angular.helper.SearchRequest;
+import com.spring.angular.model.FileInfo;
 import com.spring.angular.repository.ProductRepo;
+import com.spring.angular.service.FileInfoService;
 import com.spring.angular.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +20,18 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
 
-    private DecimalFormat df = new DecimalFormat("###");
-    private NumberFormat format = NumberFormat.getInstance();
+    @Autowired
+    private FileInfoService fileInfoService;
+
+//    private DecimalFormat df = new DecimalFormat("###");
+//    private NumberFormat format = NumberFormat.getInstance();
 
     @Override
     public List<ProductDTO> getAllProduct(String condition) {
         List<Object[]> lstObject = productRepo.getProduct(condition);
         List<ProductDTO> productDTOList = new ArrayList<>();
 
-        String proName;
+        String proName; String cateName; String des;
         int price;
         Long numLike;
         int discount;
@@ -40,17 +44,21 @@ public class ProductServiceImpl implements ProductService {
             proName = String.valueOf(objects[1]);
             price = DataUtil.safeToInt(objects[2]);
             numLike = DataUtil.safeToLong(objects[3]);
-            discount = DataUtil.safeToInt(objects[4]);
-            img = String.valueOf(objects[5]);
-            realPrice = DataUtil.safeToDouble(objects[6]);
+            cateName = DataUtil.safeToString(objects[4]);
+            discount = DataUtil.safeToInt(objects[5]);
+            img = String.valueOf(objects[6]);
+            realPrice = DataUtil.safeToDouble(objects[7]);
+            des = DataUtil.safeToString(objects[8]);
 
             productDTO.setId(lngId);
             productDTO.setProductName(proName);
             productDTO.setPrice(price);
             productDTO.setNumLike(numLike);
             productDTO.setDiscount(discount);
+            productDTO.setCategoryName(cateName);
             productDTO.setUrlImage(img);
             productDTO.setRealPrice(realPrice);
+            productDTO.setDescription(des);
             productDTOList.add(productDTO);
         }
         return productDTOList;
@@ -90,24 +98,32 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductById(Long id) {
+    public ProductDetailDTO getProductById(Long productId) throws Exception {
+        List<FileInfo> fileInfoList = fileInfoService.getListByProId(productId);
+        List<String> list = new ArrayList<>();
+        for(FileInfo fileInFo : fileInfoList){
+            String url = fileInFo.getUrl();
+            list.add(url);
+        }
         Object[] objects = null;
-        ProductDTO productDTO = new ProductDTO();
-        if (productRepo.getProductById(id) != null) {
-            objects = productRepo.getProductById(id);
+        ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+        if (productRepo.getProductById(productId) != null) {
+            objects = productRepo.getProductById(productId);
         }
         if (objects != null) {
-            productDTO.setDescription(DataUtil.safeToString(objects[0]));
-            productDTO.setPrice(DataUtil.safeToInt(objects[1]));
-            productDTO.setNumLike(DataUtil.safeToLong(objects[2]));
-            productDTO.setProductName(DataUtil.safeToString(objects[3]));
-            productDTO.setDiscount(DataUtil.safeToInt(objects[4]));
-            productDTO.setUrlImage(DataUtil.safeToString(objects[5]));
-            productDTO.setNoData(false);
-            return productDTO;
+            productDetailDTO.setId(DataUtil.safeToLong(objects[0]));
+            productDetailDTO.setProductName(DataUtil.safeToString(objects[1]));
+            productDetailDTO.setDescription(DataUtil.safeToString(objects[2]));
+            productDetailDTO.setPrice(DataUtil.safeToInt(objects[3]));
+            productDetailDTO.setNumLike(DataUtil.safeToLong(objects[4]));
+            productDetailDTO.setRealPrice(DataUtil.safeToDouble(objects[5]));
+            productDetailDTO.setDiscount(DataUtil.safeToInt(objects[6]));
+            productDetailDTO.setUrlImage(list);
+            productDetailDTO.setNoData(false);
+            return productDetailDTO;
         } else
-            productDTO.setNoData(true);
-        return productDTO;
+            productDetailDTO.setNoData(true);
+        return productDetailDTO;
     }
 
     @Override

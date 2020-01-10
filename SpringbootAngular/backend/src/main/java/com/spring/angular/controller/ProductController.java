@@ -1,6 +1,7 @@
 package com.spring.angular.controller;
 
 import com.spring.angular.dto.ProductDTO;
+import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.ApiResponse;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.SearchRequest;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -41,13 +43,13 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/detail")
-    public ApiResponse getProductDetail(@RequestBody ProductDTO productDTO){
+    @GetMapping("/detail/{id}")
+    public ApiResponse getProductDetail(@PathVariable(value = "id") Long productId){
         ApiResponse apiResponse = null;
         try{
-            ProductDTO productDTO1 = productService.getProductById(productDTO.getId());
-            if(productDTO1 != null)
-                return apiResponse.build(HttpServletResponse.SC_OK, true, "", productDTO1);
+            ProductDetailDTO productDetailDTO = productService.getProductById(productId);
+            if(productDetailDTO != null)
+                return apiResponse.build(HttpServletResponse.SC_OK, true, "", productDetailDTO);
         }catch (Exception e){
             e.printStackTrace();
             return apiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, Contains.ERROR, null);

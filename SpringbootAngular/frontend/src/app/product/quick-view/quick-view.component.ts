@@ -17,6 +17,7 @@ export class QuickViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('view');
   }
 
 }

@@ -1,3 +1,37 @@
+<!-- shop-top-bar start -->
+<div class="shop-top-bar mt-30">
+  <div class="shop-bar-inner">
+    <div class="product-view-mode">
+      <!-- shop-item-filter-list start -->
+      <ul class="nav shop-item-filter-list" role="tablist">
+        <li class="active" role="presentation"><a aria-selected="true" class="active show" data-toggle="tab" role="tab" aria-controls="grid-view" href="#grid-view"><i class="fa fa-th"></i></a></li>
+        <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i class="fa fa-th-list"></i></a></li>
+      </ul>
+      <!-- shop-item-filter-list end -->
+    </div>
+    <div class="toolbar-amount">
+      <span>Có tất cả {{productList.length}} sản phẩm</span>
+    </div>
+  </div>
+  <!-- product-select-box start -->
+  <div class="product-select-box">
+    <div class="product-short">
+      <p>Sort By:</p>
+      <select class="nice-select">
+        <option value="trending">Relevance</option>
+        <option value="sales">Name (A - Z)</option>
+        <option value="sales">Name (Z - A)</option>
+        <option value="rating">Price (Low &gt; High)</option>
+        <option value="date">Rating (Lowest)</option>
+        <option value="price-asc">Model (A - Z)</option>
+        <option value="price-asc">Model (Z - A)</option>
+      </select>
+    </div>
+  </div>
+  <!-- product-select-box end -->
+</div>
+<!-- shop-top-bar end -->
+
 <div class="shop-products-wrapper">
   <div class="tab-content">
     <div id="grid-view" class="tab-pane fade active show" role="tabpanel">
@@ -7,16 +41,16 @@
             <!-- single-product-wrap start -->
             <div class="single-product-wrap">
               <div class="product-image">
-                <a href="single-product.html">
+                <a (click)="productDetail(eachProduct.id)">
                   <img src="assets/images/product/large-size/{{eachProduct.urlImage}}" alt="Li's Product Image">
                 </a>
-                <span class="sticker">New</span>
+                <span class="sticker" *ngIf="eachProduct.discount != 'null'">-{{eachProduct.discount}}%</span>
               </div>
               <div class="product_desc">
                 <div class="product_desc_info">
                   <div class="product-review">
                     <h5 class="manufacturer">
-                      <a href="product-details.html">Graphic Corner</a>
+                      <a href="product-details.html">{{eachProduct.categoryName}}</a>
                     </h5>
                     <div class="rating-box">
                       <ul class="rating">
@@ -29,14 +63,15 @@
                     </div>
                   </div>
                   <h4><a class="product_name" href="single-product.html">{{eachProduct.productName}}</a></h4>
-                  <div class="price-box">
-                    <span class="new-price">{{eachProduct.price}}</span>
+                  <div class="price-box row">
+                    <span class="new-price col-6">{{eachProduct.realPrice * 1000000 | number}} VNĐ</span>
+                    <del *ngIf="eachProduct.discount != 'null'" class="new-price col-6">{{eachProduct.price * 1000000 | number}} VNĐ</del>
                   </div>
                 </div>
                 <div class="add-actions">
                   <ul class="add-actions-link">
                     <li class="add-cart active"><a href="shopping-cart.html">Add to cart</a></li>
-                    <li><a href="#" title="quick view" class="quick-view-btn" (click)="showData(eachProduct)"><i class="fa fa-eye"></i></a></li>
+                    <li><span title="quick view" class="quick-view-btn" (click)="showData(eachProduct)"><i class="fa fa-eye"></i></span></li>
                     <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
                   </ul>
                 </div>
@@ -53,10 +88,10 @@
           <div class="row product-layout-list" *ngFor="let eachProduct of productList | paginate: {id: 'page', itemsPerPage: 15, currentPage: currentP, totalItems: productList.length}">
             <div class="col-lg-3 col-md-5 ">
               <div class="product-image">
-                <a href="single-product.html">
-                  <img src="images/product/large-size/{{eachProduct.urlImage}}" alt="Li's Product Image">
+                <a (click)="productDetail(eachProduct.id)">
+                  <img src="assets/images/product/large-size/{{eachProduct.urlImage}}" alt="Li's Product Image">
                 </a>
-                <span class="sticker">New</span>
+                <span class="sticker" *ngIf="eachProduct.discount != 'null'">-{{eachProduct.discount}}%</span>
               </div>
             </div>
             <div class="col-lg-5 col-md-7">
@@ -64,7 +99,7 @@
                 <div class="product_desc_info">
                   <div class="product-review">
                     <h5 class="manufacturer">
-                      <a href="product-details.html">Graphic Corner</a>
+                      <a href="product-details.html">{{eachProduct.categoryName}}</a>
                     </h5>
                     <div class="rating-box">
                       <ul class="rating">
@@ -78,9 +113,9 @@
                   </div>
                   <h4><a class="product_name" href="single-product.html">{{eachProduct.productName}}</a></h4>
                   <div class="price-box">
-                    <span class="new-price">{{eachProduct.price}}</span>
+                    <span class="new-price">$46.80</span>
                   </div>
-                  <p>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream And Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Desig</p>
+                  <p>{{eachProduct.description}}</p>
                 </div>
               </div>
             </div>
@@ -98,11 +133,15 @@
       </div>
     </div>
     <div class="paginatoin-area">
-        <div class="row">
+        <div class="row" *ngIf="productList">
         <div class="col-lg-6 col-md-6">
-          <p>Showing 1-12 of 13 item(s)</p>
+          <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
+            <span *ngIf="currentP*pageSize <  productList.length">{{currentP * pageSize}}</span>
+            <span *ngIf="currentP*pageSize >= productList.length">{{productList.length}}</span> trên tổng số
+            <span *ngIf="currentP*pageSize < productList.length">{{productList.length}}</span>
+              <span *ngIf="currentP*pageSize >= productList.length">{{currentP*pageSize}}</span> sản phẩm</p>
         </div>
-        <div class="col-lg-6 col-md-6" *ngIf="productList">
+        <div class="col-lg-6 col-md-6">
           <ul class="pagination-box">
           <pagination-controls id="page" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
                                autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
