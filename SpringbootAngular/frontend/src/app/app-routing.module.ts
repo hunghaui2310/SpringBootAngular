@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: 'logout', component: LogoutComponent, data: { title: 'Đăng xuất'}},
   {path: 'not-found', component: NotFoundComponent, data: { title: 'Không tìm thấy'}},
   // otherwise redirect to profile
-  {path: 'fff', redirectTo: '/not-found'}
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({

@@ -2,6 +2,7 @@ package com.spring.angular.helper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 
 public class DataUtil {
 
@@ -67,5 +68,30 @@ public class DataUtil {
 
     public static Double safeToDouble(Object obj1) {
         return safeToDouble(obj1, 0.0);
+    }
+
+    public static boolean isNullOrEmpty(final Object[] collection) {
+        return collection == null || collection.length == 0;
+    }
+
+    public static boolean isNullOrEmpty(final Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
+
+    public static boolean isNullOrEmpty(CharSequence cs) {
+        int strLen;
+        if (cs == null || (strLen = cs.length()) == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isNullOrZero(Integer value) {
+        return (value == null || value.equals(0));
     }
 }

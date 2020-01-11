@@ -14,17 +14,33 @@ export class SingleItemComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   productId;
-  ngOnInit() {
+  productName;
+  price;
+  realPrice;
+  dataProduct;
+  numLike;
+  description;
+  cateName;
+
+
+  getProDetail() {
     this.productId = this.route.snapshot.params['id'];
     console.log(this.productId);
-    // const productId: Product = new Product(this.productId);
     this.productService.productDetailAPI(this.productId).subscribe(
       data => {
-        // this.productList = [];
-        console.log('data detail', data);
-        // this.productService.setService(data);
-      }
-    );
+    console.log('data detail', data['data']);
+    this.dataProduct = data['data'];
+    this.productName = this.dataProduct['productName'];
+    this.price = this.dataProduct['price'];
+    this.numLike = this.dataProduct['numLike'];
+    this.description = this.dataProduct['description'];
+    this.cateName = this.dataProduct['categoryName'];
+    this.realPrice = this.dataProduct['realPrice'];
+    });
+  }
+
+  ngOnInit() {
+    this.getProDetail();
   }
 
 

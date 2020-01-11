@@ -33,8 +33,8 @@ public class ProductServiceImpl implements ProductService {
 
         String proName; String cateName; String des;
         int price;
-        Long numLike;
-        int discount;
+        Long numLike; int dataIsNew;
+        int discount = 0;
         double realPrice;
         String img;
         Long lngId;
@@ -45,20 +45,34 @@ public class ProductServiceImpl implements ProductService {
             price = DataUtil.safeToInt(objects[2]);
             numLike = DataUtil.safeToLong(objects[3]);
             cateName = DataUtil.safeToString(objects[4]);
-            discount = DataUtil.safeToInt(objects[5]);
+            if(objects[5] != null) {
+                discount = (int) objects[5];
+            }
             img = String.valueOf(objects[6]);
             realPrice = DataUtil.safeToDouble(objects[7]);
             des = DataUtil.safeToString(objects[8]);
+            dataIsNew = DataUtil.safeToInt(objects[9]);
 
             productDTO.setId(lngId);
             productDTO.setProductName(proName);
             productDTO.setPrice(price);
             productDTO.setNumLike(numLike);
-            productDTO.setDiscount(discount);
+            if(!DataUtil.isNullOrZero(discount)) {
+                productDTO.setDiscount(discount);
+            }
             productDTO.setCategoryName(cateName);
             productDTO.setUrlImage(img);
-            productDTO.setRealPrice(realPrice);
+            if(!DataUtil.isNullOrZero(price)){
+                productDTO.setRealPrice(price);
+            }else {
+                productDTO.setRealPrice(realPrice);
+            }
             productDTO.setDescription(des);
+            if(dataIsNew == 1){
+                productDTO.setNew(true);
+            }else {
+                productDTO.setNew(false);
+            }
             productDTOList.add(productDTO);
         }
         return productDTOList;
@@ -120,6 +134,7 @@ public class ProductServiceImpl implements ProductService {
             productDetailDTO.setDiscount(DataUtil.safeToInt(objects[6]));
             productDetailDTO.setUrlImage(list);
             productDetailDTO.setNoData(false);
+            productDetailDTO.setCategoryName(DataUtil.safeToString(objects[7]));
             return productDetailDTO;
         } else
             productDetailDTO.setNoData(true);

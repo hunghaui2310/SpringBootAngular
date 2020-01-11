@@ -15,6 +15,7 @@ public class Product {
     private Long numLike;
     private Long categoryId;
     private int discount;
+    private int isNew;
 
     @Id
     @GeneratedValue
@@ -88,5 +89,14 @@ public class Product {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    @Column(name = "is_new")
+    public int getIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(int isNew) {
+        this.isNew = isNew;
     }
 }
