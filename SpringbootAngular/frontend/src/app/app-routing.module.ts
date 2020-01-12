@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [{
       path: 'home', component: HomeComponent, data: { title: 'Trang chủ'}
      }, {
-       path: 'detail/:id', component: SingleItemComponent, data: { title: 'Chi tiết sản phẩm'}
+       path: 'detail/:id', component: SingleItemComponent, data: { title: 'Chi tiết sản phẩm' }
      }
     ]
   },

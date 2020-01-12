@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDTO> getAllProduct(String condition);
+    List<ProductDTO> getAllProduct() throws Exception;
 
-    List<ProductDTO> searchProductByName(SearchRequest searchRequest);
+    List<ProductDTO> searchProduct(SearchRequest searchRequest) throws Exception;
 
     ProductDetailDTO getProductById(Long productId) throws Exception;
 

@@ -27,8 +27,8 @@ public class ProductServiceImpl implements ProductService {
 //    private NumberFormat format = NumberFormat.getInstance();
 
     @Override
-    public List<ProductDTO> getAllProduct(String condition) {
-        List<Object[]> lstObject = productRepo.getProduct(condition);
+    public List<ProductDTO> getAllProduct() throws Exception {
+        List<Object[]> lstObject = productRepo.getProduct();
         List<ProductDTO> productDTOList = new ArrayList<>();
 
         String proName; String cateName; String des;
@@ -79,33 +79,52 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> searchProductByName(SearchRequest searchRequest) {
-        List<Object[]> list = productRepo.searchProduct(searchRequest);
+    public List<ProductDTO> searchProduct(SearchRequest searchRequest) throws Exception {
+        List<Object[]> lstObject = productRepo.searchProduct(searchRequest);
         List<ProductDTO> productDTOList = new ArrayList<>();
-        String proName = "";
+
+        String proName; String cateName; String des;
         int price;
-        Long numLike;
-        int discount;
+        Long numLike; int dataIsNew;
+        int discount = 0;
         double realPrice;
         String img;
         Long lngId;
-        for (Object[] objects : list) {
+        for (Object[] objects : lstObject) {
             ProductDTO productDTO = new ProductDTO();
             lngId = DataUtil.safeToLong(objects[0]);
             proName = String.valueOf(objects[1]);
             price = DataUtil.safeToInt(objects[2]);
             numLike = DataUtil.safeToLong(objects[3]);
-            discount = DataUtil.safeToInt(objects[4]);
-            img = String.valueOf(objects[5]);
-            realPrice = DataUtil.safeToDouble(objects[6]);
+            cateName = DataUtil.safeToString(objects[4]);
+            if(objects[5] != null) {
+                discount = (int) objects[5];
+            }
+            img = String.valueOf(objects[6]);
+            realPrice = DataUtil.safeToDouble(objects[7]);
+            des = DataUtil.safeToString(objects[8]);
+            dataIsNew = DataUtil.safeToInt(objects[9]);
 
             productDTO.setId(lngId);
             productDTO.setProductName(proName);
             productDTO.setPrice(price);
             productDTO.setNumLike(numLike);
-            productDTO.setDiscount(discount);
+            if(!DataUtil.isNullOrZero(discount)) {
+                productDTO.setDiscount(discount);
+            }
+            productDTO.setCategoryName(cateName);
             productDTO.setUrlImage(img);
-            productDTO.setRealPrice(realPrice);
+            if(!DataUtil.isNullOrZero(price)){
+                productDTO.setRealPrice(price);
+            }else {
+                productDTO.setRealPrice(realPrice);
+            }
+            productDTO.setDescription(des);
+            if(dataIsNew == 1){
+                productDTO.setNew(true);
+            }else {
+                productDTO.setNew(false);
+            }
             productDTOList.add(productDTO);
         }
         return productDTOList;

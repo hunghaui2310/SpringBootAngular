@@ -1,6 +1,8 @@
 package com.spring.angular.repository.impl;
 
+import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.helper.Contains;
+import com.spring.angular.helper.DataUtil;
 import com.spring.angular.helper.SearchRequest;
 import com.spring.angular.repository.ProductCustomRepo;
 import org.springframework.stereotype.Repository;
@@ -18,33 +20,27 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     EntityManager entityManager;
 
     @Override
-    public List<Object[]> getProduct(String condition) {
+    public List<Object[]> getProduct() {
+        HashMap hashMap = new HashMap();
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new" +
                 " FROM product p, file_info f, category c" +
                 " WHERE f.file_type_id = 1 AND p.product_id = f.product_id" +
                 " AND c.category_id = p.category_id");
-        if(condition != null) {
-            if (condition.equals(Contains.CREATE_DATE)) {
-                sqlBuilder.append(" order by p.create_date desc");
-            }else if (condition.equals(Contains.NUM_LIKE)){
-                sqlBuilder.append(" order by p.num_like desc");
-            }
-        }
         Query query = entityManager.createNativeQuery(sqlBuilder.toString());
         return query.getResultList();
     }
 
     @Override
     public List<Object[]> searchProduct(SearchRequest searchRequest) {
-        StringBuilder sqlBuilder = new StringBuilder();
         HashMap hashMap = new HashMap();
-        sqlBuilder.append("select p.product_id,p.product_name,p.price,p.num_like,p.discount,f.url,p.price-(p.price*p.discount/100) as real_price" +
-                " from product p, file_info f, category c");
-        sqlBuilder.append(sqlSearch(searchRequest,hashMap));
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new" +
+                " FROM product p, file_info f, category c");
+        sqlBuilder.append(sqlSearch(searchRequest, hashMap));
         Query query = entityManager.createNativeQuery(sqlBuilder.toString());
-        hashMap.forEach((k,v)->{
-            query.setParameter(k.toString(),v);
+        hashMap.forEach((k, v) -> {
+            query.setParameter(k.toString(), v);
         });
         return query.getResultList();
     }
@@ -103,28 +99,43 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
 
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" where 1 = 1");
-        stringBuilder.append(" and p.product_id = f.product_id");
-        stringBuilder.append(" and c.category_id = p.category_id");
-        stringBuilder.append(" and f.file_type_id = 1");
-        if(searchRequest.getProductName() != null){
-            stringBuilder.append(" and p.product_name like '"+ searchRequest.getProductName() +"_%'");
+        stringBuilder.append(" WHERE 1 = 1");
+        stringBuilder.append(" AND p.product_id = f.product_id");
+        stringBuilder.append(" AND f.file_type_id = 1");
+        stringBuilder.append(" AND c.category_id = p.category_id");
+        if(!DataUtil.isNullOrEmpty(searchRequest.getProductName())){
+            stringBuilder.append(" and p.product_name like :productName");
+            hashMap.put("productName", "%" + searchRequest.getProductName() + "%");
         }
-        if(searchRequest.getCategoryId() != null){
+        if(!DataUtil.isNullOrEmpty(searchRequest.getCategoryId())){
             stringBuilder.append(" and c.category_id = :categoryId");
             hashMap.put("categoryId", searchRequest.getCategoryId());
         }
-        if (searchRequest.getPrice() != 0){
-            if(searchRequest.getPrice() == 1){
-                stringBuilder.append(" and p.price BETWEEN 0 and 10");
-            }else if(searchRequest.getPrice() == 2){
-                stringBuilder.append( " and p.price BETWEEN 10 and 15");
-            }else if(searchRequest.getPrice() == 3){
-                stringBuilder.append(" and p.price BETWEEN 15 and 20");
-            }else if(searchRequest.getPrice() == 4){
-                stringBuilder.append(" and p.price BETWEEN 20 and 1000");
-            }else
-                stringBuilder.append(" and p.price BETWEEN 0 and 1000");
+        if(!DataUtil.isNullOrEmpty(searchRequest.getCondition())) {
+            String condition = searchRequest.getCondition();
+            switch (condition) {
+                case Contains.CREATE_DATE: // ngay ra mat
+                    stringBuilder.append(" order by p.create_date desc");
+                    break;
+                case Contains.NUM_LIKE: // luot thich giam dan
+                    stringBuilder.append(" order by p.num_like desc");
+                    break;
+                case Contains.NUM_BUY: //luot mua giam dan
+                    stringBuilder.append(" order by p.num_buy desc");
+                    break;
+                case Contains.PRICE_DESC: // gia giam dan
+                    stringBuilder.append(" order by p.price desc");
+                    break;
+                case Contains.PRICE_ASC: // gia tang dan
+                    stringBuilder.append(" order by p.price asc");
+                    break;
+                case Contains.NAME: // ten tu A-Z
+                    stringBuilder.append(" order by p.product_name");
+                    break;
+                default:
+                    stringBuilder.append(" order by p.num_buy desc");
+                    break;
+            }
         }
         return stringBuilder;
     }

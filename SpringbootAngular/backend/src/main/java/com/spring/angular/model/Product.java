@@ -8,14 +8,16 @@ import java.util.Date;
 public class Product {
 
     private Long id;
-    private String productName;
-    private int price;
-    private String description;
-    private Date createDate;
-    private Long numLike;
+    private Long cartId;
     private Long categoryId;
+    private Date createDate;
+    private String description;
     private int discount;
+    private Long numLike;
+    private int price;
+    private String productName;
     private int isNew;
+    private int numBuy;
 
     @Id
     @GeneratedValue
@@ -98,5 +100,14 @@ public class Product {
 
     public void setIsNew(int isNew) {
         this.isNew = isNew;
+    }
+
+    @Column(name = "num_buy")
+    public int getNumBuy() {
+        return numBuy;
+    }
+
+    public void setNumBuy(int numBuy) {
+        this.numBuy = numBuy;
     }
 }

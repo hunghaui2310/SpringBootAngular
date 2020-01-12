@@ -2,9 +2,10 @@ package com.spring.angular.helper;
 
 public class SearchRequest {
 
-    String productName;
-    String categoryId;
-    int price;
+    private String productName;
+    private String categoryId;
+    private int price;
+    private String condition;
 
     public String getProductName() {
         return productName;
@@ -28,5 +29,13 @@ public class SearchRequest {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 }

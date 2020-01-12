@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface ProductCustomRepo {
 
-    List<Object[]> getProduct(String condition);
+    List<Object[]> getProduct() throws Exception;
 
-    List<Object[]> searchProduct(SearchRequest searchRequest);
+    List<Object[]> searchProduct(SearchRequest searchRequest) throws Exception;
 
     Object[] getProductById(Long productId);
 
