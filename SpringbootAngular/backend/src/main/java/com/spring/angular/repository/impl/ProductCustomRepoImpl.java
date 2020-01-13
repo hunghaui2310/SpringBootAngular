@@ -23,7 +23,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     public List<Object[]> getProduct() {
         HashMap hashMap = new HashMap();
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new" +
+        sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new, c.category_id" +
                 " FROM product p, file_info f, category c" +
                 " WHERE f.file_type_id = 1 AND p.product_id = f.product_id" +
                 " AND c.category_id = p.category_id");
@@ -35,7 +35,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     public List<Object[]> searchProduct(SearchRequest searchRequest) {
         HashMap hashMap = new HashMap();
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new" +
+        sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new, c.category_id" +
                 " FROM product p, file_info f, category c");
         sqlBuilder.append(sqlSearch(searchRequest, hashMap));
         Query query = entityManager.createNativeQuery(sqlBuilder.toString());
@@ -56,10 +56,10 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     public Object[] getProductById(Long productId) {
         try {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("SELECT p.product_id,p.product_name,p.des,p.price,p.num_like,p.price-(p.price*p.discount/100) AS real_price,p.discount, c.category_name" +
-                    " FROM product p, category c" +
-                    " WHERE p.category_id = c.category_id" +
-                    " AND p.product_id = :productId");
+            stringBuilder.append("SELECT p.product_id,p.product_name,p.des,p.price,p.num_like,p.price-(p.price*p.discount/100) AS real_price,p.discount, c.category_name, c.category_id" +
+                    " from product p, category c" +
+                    " where c.category_id = p.category_id" +
+                    " and p.product_id = :productId");
             Query query = entityManager.createNativeQuery(stringBuilder.toString());
             query.setParameter("productId", productId);
             return (Object[]) query.getSingleResult();

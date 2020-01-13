@@ -1,3 +1,12 @@
 .product_desc .product_desc_info .new-price{
   color: red;
 }
+
+.sss{
+  width: 100%;
+  position: absolute;
+  top: -13rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}

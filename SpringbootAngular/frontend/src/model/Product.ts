@@ -9,9 +9,10 @@ export class Product {
   categoryName: string;
   description: string;
   isNew: boolean;
+  categoryId: number;
 
   // tslint:disable-next-line:max-line-length
-  constructor(id?: number, productName?: string, price?: number, numLike?: number, discount?: number, urlImage?: string, realPrice?: number, categoryName?: string, description?: string, isNew?: boolean) {
+  constructor(id?: number, productName?: string, price?: number, numLike?: number, discount?: number, urlImage?: string, realPrice?: number, categoryName?: string, description?: string, isNew?: boolean, categoryId?: number) {
     this.id = id;
     this.productName = productName;
     this.price = price;
@@ -22,5 +23,6 @@ export class Product {
     this.categoryName = categoryName;
     this.description = description;
     this.isNew = isNew;
+    this.categoryId = categoryId;
   }
 }

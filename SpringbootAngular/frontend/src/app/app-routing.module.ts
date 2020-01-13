@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './home/home/home.component';
 import {LoginComponent} from './account/login/login.component';
 import {RegisterComponent} from './account/register/register.component';
 import {LogoutComponent} from './account/logout/logout.component';
@@ -10,17 +9,20 @@ import {ProfileComponent} from './account/profile/profile.component';
 import {ApiService} from '../api.service';
 import {SingleItemComponent} from './product/single-item/single-item.component';
 import {ItemsComponent} from './product/items/items.component';
+import {ProCateComponent} from './product/pro-cate/pro-cate.component';
+import {AppComponent} from './app.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {
     path: '',
+    // component: AppComponent,
     children: [{
-      path: 'home', component: HomeComponent, data: { title: 'Trang chủ'}
+      path: 'home', component: ItemsComponent, data: { title: 'Trang chủ'}
      }, {
        path: 'detail/:id', component: SingleItemComponent, data: { title: 'Chi tiết sản phẩm' }
      }, {
-      path: 'product-category/:id', component: ItemsComponent, data: { title: 'Sản phẩm'}
+      path: 'product-category/:id', component: ProCateComponent, data: { title: 'Sản phẩm'}
     }
     ]
   },

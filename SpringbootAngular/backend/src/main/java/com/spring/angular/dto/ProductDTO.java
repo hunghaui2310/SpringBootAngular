@@ -15,6 +15,7 @@ public class ProductDTO {
     private String categoryName;
     private double realPrice;
     private boolean isNew;
+    private Long categoryId;
 
     public Long getId() {
         return id;
@@ -102,5 +103,13 @@ public class ProductDTO {
 
     public void setNew(boolean aNew) {
         isNew = aNew;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

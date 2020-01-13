@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Category} from '../../../model/Category';
 import {HttpClient} from '@angular/common/http';
 import {config} from '../../../app-config/application.config';
 import { Router } from '@angular/router';
 import {SearchRequest} from '../../../model/search.request';
-import {HomeService} from '../../service/home.service';
+import {ProductService} from '../../service/product.service';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,8 @@ import {HomeService} from '../../service/home.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  // @Output searchProduct
 
   categories;
   categoryId;
@@ -22,10 +24,11 @@ export class HeaderComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private homeService: HomeService) { }
+              private productService: ProductService) { }
 
   ngOnInit() {
     this.getComboboxCate();
+    this.categoryId = null;
   }
 
   getCategoryAPI(): Observable<Category[]> {
@@ -48,10 +51,11 @@ export class HeaderComponent implements OnInit {
   search() {
     this.searchRequest = new SearchRequest(null, this.productName, this.categoryId, null);
     console.log('search', this.searchRequest);
-    this.homeService.search(this.searchRequest).subscribe(
+    this.productService.search(this.searchRequest).subscribe(
       dataSearch => {
         console.log(dataSearch['data']);
         this.products = dataSearch['data'];
+        this.productService.setService(this.products);
       },
         error => {
         (console.log('LOI SEARCH!', error));

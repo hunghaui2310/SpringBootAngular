@@ -10,7 +10,6 @@ import { LogoutComponent } from './account/logout/logout.component';
 import { NotFoundComponent } from './account/not-found/not-found.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { RegisterComponent } from './account/register/register.component';
-import {HomeComponent} from './home/home/home.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material';
 import { HeaderComponent } from './home/header/header.component';
@@ -18,11 +17,11 @@ import { FooterComponent } from './home/footer/footer.component';
 import { ItemsComponent } from './product/items/items.component';
 import { QuickViewComponent } from './product/quick-view/quick-view.component';
 import { SingleItemComponent } from './product/single-item/single-item.component';
+import { ProCateComponent } from './product/pro-cate/pro-cate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     LogoutComponent,
     NotFoundComponent,
@@ -33,6 +32,7 @@ import { SingleItemComponent } from './product/single-item/single-item.component
     ItemsComponent,
     QuickViewComponent,
     SingleItemComponent,
+    ProCateComponent,
   ],
   imports: [
     BrowserModule,

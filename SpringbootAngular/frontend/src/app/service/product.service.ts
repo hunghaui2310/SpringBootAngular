@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Product} from '../../model/Product';
 import {config} from '../../app-config/application.config';
-import {HomeService} from './home.service';
 import {SearchRequest} from '../../model/search.request';
-import {MatDialog} from '@angular/material';
-import {QuickViewComponent} from '../product/quick-view/quick-view.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   service: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   service$: Observable<any> = this.service.asObservable();
@@ -27,11 +25,19 @@ export class ProductService {
     return this.http.get(config.product_API);
   }
 
+  search(searchModel: SearchRequest) {
+    return this.http.post(config.search_product, searchModel);
+  }
+
   productDetailAPI(productId: Product) {
     return this.http.get<Product[]>(config.product_detail + '/' + productId);
   }
 
   productCateAPI(categoryId: number) {
     return this.http.get<Product[]>(config.product_cate_API + '/' + categoryId);
+  }
+
+  sameProAPI(categoryId: SearchRequest) {
+    return this.http.post<Product[]>(config.same_product_API, categoryId);
   }
 }

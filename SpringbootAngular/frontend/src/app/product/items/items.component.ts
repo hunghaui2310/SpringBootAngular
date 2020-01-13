@@ -2,11 +2,14 @@ import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Product} from '../../../model/Product';
 import {QuickViewComponent} from '../quick-view/quick-view.component';
 import {SearchRequest} from '../../../model/search.request';
-import {HomeService} from '../../service/home.service';
 import {MatDialog} from '@angular/material';
 import {config} from '../../../app-config/application.config';
 import {ProductService} from '../../service/product.service';
 import {Router} from '@angular/router';
+import {sort, Sort} from '../../../model/sort';
+import {Observable} from 'rxjs';
+import {Category} from '../../../model/category';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-items',
@@ -14,7 +17,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit, AfterViewInit {
-  // @Input() productList: Product[];
+   @Input() productList: Product[];
 
   currentP = 1;
   urlImage;
@@ -25,21 +28,58 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   productDiscount;
   productDescription;
   categoryName;
-  categoryId;
   numLike;
   pageSize = config.pageSize;
+  sortList: Sort[] = sort;
+  sortCondition;
+  searchRequest: SearchRequest;
 
-  constructor(private homeService: HomeService,
-              private productService: ProductService,
+  categories;
+  categoryId;
+  products;
+
+  constructor(private productService: ProductService,
               private router: Router,
+              private http: HttpClient,
               public dialog: MatDialog) {
   }
 
-  productList: any = [];
+ // productList: any = [];
 
   ngOnInit() {
     this.getProducts();
-    this.cateProData(this.categoryId);
+    this.sortCondition = null;
+
+    this.getComboboxCate();
+    this.categoryId = null;
+
+    this.productService.service$.subscribe(
+      data => {
+        console.log(data);
+        this.productList = data;
+      }
+    );
+  }
+
+  proCate(categoryId: number) {
+    this.router.navigate(['/product-category/' + categoryId]);
+  }
+
+  search() {
+    this.searchRequest = new SearchRequest(null, null, null, this.sortCondition);
+    console.log('search', this.searchRequest);
+    this.productService.search(this.searchRequest).subscribe(
+      dataSerach => {
+        console.log(dataSerach['data']);
+        this.productList = dataSerach['data'];
+      },
+      error => {
+        (console.log('LOI SEARCH', error));
+      },
+      () => {
+        console.log('ok');
+      }
+    );
   }
 
   getProducts() {
@@ -65,7 +105,6 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   productDetail(id: number) {
     const productId: Product = new Product(id);
     this.router.navigate(['/detail/' + id]);
-    // console.log('productId', id);
 
   }
 
@@ -96,24 +135,17 @@ export class ItemsComponent implements OnInit, AfterViewInit {
     vdialog.afterClosed().subscribe(
       result => {
         this.loadData();
+        console.log('load Data', this.loadData());
       });
   }
 
   loadData() {
     const searchModel: SearchRequest = new SearchRequest(this.productId);
     console.log('search', searchModel);
-    this.homeService.search(searchModel).subscribe(
+    this.productService.search(searchModel).subscribe(
       data => {
         console.log('data search', data['data']);
         this.dataTables = data['data'];
-      }
-    );
-  }
-
-  cateProData(categoryId: any) {
-    this.productService.productCateAPI(this.categoryId).subscribe(
-      dataProCate => {
-        this.productList = dataProCate['data'];
       }
     );
   }
@@ -124,6 +156,40 @@ export class ItemsComponent implements OnInit, AfterViewInit {
       this.productList = this.productList;
       console.log(this.productList);
     }
+  }
+
+  getCategoryAPI(): Observable<Category[]> {
+    return this.http.get<Category[]>(config.category_API);
+  }
+
+  getComboboxCate() {
+    this.getCategoryAPI().subscribe(
+      data => {
+        this.categories = data['data'];
+      },
+      error => (console.log('NO DATA!'))
+    );
+  }
+
+  proCatess(categoryId: number) {
+    this.router.navigate(['/product-category/' + categoryId]);
+  }
+
+  searchss() {
+    this.searchRequest = new SearchRequest(null, this.productName, this.categoryId, null);
+    console.log('search', this.searchRequest);
+    this.productService.search(this.searchRequest).subscribe(
+      dataSearch => {
+        console.log(dataSearch['data']);
+        this.productList = dataSearch['data'];
+      },
+      error => {
+        (console.log('LOI SEARCH!', error));
+      },
+      () => {
+        console.log('ok');
+      }
+    );
   }
 
 }

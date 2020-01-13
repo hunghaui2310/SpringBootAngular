@@ -14,6 +14,7 @@ public class ProductDetailDTO {
     private boolean noData;
     private String categoryName;
     private double realPrice;
+    private Long categoryId;
 
     public Long getId() {
         return id;
@@ -93,5 +94,13 @@ public class ProductDetailDTO {
 
     public void setRealPrice(double realPrice) {
         this.realPrice = realPrice;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

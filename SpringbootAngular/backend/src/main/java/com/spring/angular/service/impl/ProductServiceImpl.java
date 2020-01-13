@@ -73,6 +73,7 @@ public class ProductServiceImpl implements ProductService {
             }else {
                 productDTO.setNew(false);
             }
+            productDTO.setCategoryId(DataUtil.safeToLong(objects[10]));
             productDTOList.add(productDTO);
         }
         return productDTOList;
@@ -125,6 +126,7 @@ public class ProductServiceImpl implements ProductService {
             }else {
                 productDTO.setNew(false);
             }
+            productDTO.setCategoryId(DataUtil.safeToLong(objects[10]));
             productDTOList.add(productDTO);
         }
         return productDTOList;
@@ -140,20 +142,29 @@ public class ProductServiceImpl implements ProductService {
         }
         Object[] objects = null;
         ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+        int discount;
         if (productRepo.getProductById(productId) != null) {
             objects = productRepo.getProductById(productId);
         }
         if (objects != null) {
+            discount = DataUtil.safeToInt(objects[6]);
             productDetailDTO.setId(DataUtil.safeToLong(objects[0]));
             productDetailDTO.setProductName(DataUtil.safeToString(objects[1]));
             productDetailDTO.setDescription(DataUtil.safeToString(objects[2]));
             productDetailDTO.setPrice(DataUtil.safeToInt(objects[3]));
             productDetailDTO.setNumLike(DataUtil.safeToLong(objects[4]));
-            productDetailDTO.setRealPrice(DataUtil.safeToDouble(objects[5]));
-            productDetailDTO.setDiscount(DataUtil.safeToInt(objects[6]));
+            if(!DataUtil.isNullOrZero(discount)) {
+                productDetailDTO.setRealPrice(DataUtil.safeToDouble(objects[5]));
+            }else {
+                productDetailDTO.setRealPrice(productDetailDTO.getPrice());
+            }
+            if(!DataUtil.isNullOrZero(discount)){
+                productDetailDTO.setDiscount(DataUtil.safeToInt(objects[6]));
+            }
             productDetailDTO.setUrlImage(list);
             productDetailDTO.setNoData(false);
             productDetailDTO.setCategoryName(DataUtil.safeToString(objects[7]));
+            productDetailDTO.setCategoryId(DataUtil.safeToLong(objects[8]));
             return productDetailDTO;
         } else
             productDetailDTO.setNoData(true);
