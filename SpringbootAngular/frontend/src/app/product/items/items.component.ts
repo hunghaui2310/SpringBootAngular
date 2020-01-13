@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Product} from '../../../model/Product';
-import {NgxPaginationModule} from 'ngx-pagination';
 import {QuickViewComponent} from '../quick-view/quick-view.component';
 import {SearchRequest} from '../../../model/search.request';
 import {HomeService} from '../../service/home.service';
@@ -26,6 +25,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   productDiscount;
   productDescription;
   categoryName;
+  categoryId;
   numLike;
   pageSize = config.pageSize;
 
@@ -39,6 +39,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getProducts();
+    this.cateProData(this.categoryId);
   }
 
   getProducts() {
@@ -105,6 +106,14 @@ export class ItemsComponent implements OnInit, AfterViewInit {
       data => {
         console.log('data search', data['data']);
         this.dataTables = data['data'];
+      }
+    );
+  }
+
+  cateProData(categoryId: any) {
+    this.productService.productCateAPI(this.categoryId).subscribe(
+      dataProCate => {
+        this.productList = dataProCate['data'];
       }
     );
   }

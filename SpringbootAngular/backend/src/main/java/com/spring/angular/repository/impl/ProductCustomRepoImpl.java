@@ -107,7 +107,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
             stringBuilder.append(" and p.product_name like :productName");
             hashMap.put("productName", "%" + searchRequest.getProductName() + "%");
         }
-        if(!DataUtil.isNullOrEmpty(searchRequest.getCategoryId())){
+        if(!DataUtil.isNullOrZero(searchRequest.getCategoryId())){
             stringBuilder.append(" and c.category_id = :categoryId");
             hashMap.put("categoryId", searchRequest.getCategoryId());
         }

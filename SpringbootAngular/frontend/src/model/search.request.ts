@@ -2,12 +2,12 @@ export class SearchRequest {
   productId: number;
   productName: string;
   categoryId: number;
-  price: number;
+  condition: string;
 
-  constructor(productId?: number, productName?: string, categoryId?: number, price?: number) {
-    this.categoryId = productId;
+  constructor(productId?: number, productName?: string, categoryId?: number, condition?: string) {
+    this.productId = productId;
     this.productName = productName;
     this.categoryId = categoryId;
-    this.price = price;
+    this.condition = condition;
   }
 }

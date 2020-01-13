@@ -30,4 +30,8 @@ export class ProductService {
   productDetailAPI(productId: Product) {
     return this.http.get<Product[]>(config.product_detail + '/' + productId);
   }
+
+  productCateAPI(categoryId: number) {
+    return this.http.get<Product[]>(config.product_cate_API + '/' + categoryId);
+  }
 }

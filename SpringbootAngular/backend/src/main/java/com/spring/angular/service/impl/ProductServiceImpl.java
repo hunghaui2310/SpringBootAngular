@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
             }
             productDTO.setCategoryName(cateName);
             productDTO.setUrlImage(img);
-            if(!DataUtil.isNullOrZero(price)){
+            if(DataUtil.isNullOrZero(discount)){
                 productDTO.setRealPrice(price);
             }else {
                 productDTO.setRealPrice(realPrice);

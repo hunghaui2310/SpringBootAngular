@@ -2335,7 +2335,7 @@ textarea:focus {
   position: relative;
 }
 .add-actions-link {
-  display: inherit;
+  display: inline-block;
   margin-top: 24px;
   padding-top: 20px;
   -webkit-transition: all 300ms ease-in 0s;
@@ -2346,7 +2346,7 @@ textarea:focus {
   line-height: 1;
   margin: 0 0 0 3px;
   background: #eef0f1;
-  display: inherit;
+  display: inline-block;
   border-radius: 4px;
   float: left;
   height: 35px;
@@ -2365,9 +2365,9 @@ textarea:focus {
   background: #fed700;
   border-color: #fed700;
 }
-.add-actions-link li span {
+.add-actions-link li a {
   color: #a4a4a4;
-  display: inherit;
+  display: block;
   font-size: 17px;
   font-weight: 400;
   padding: 0;
@@ -2376,20 +2376,21 @@ textarea:focus {
   -webkit-transition: all 300ms ease-in 0s;
   transition: all 300ms ease-in 0s;
 }
-.add-actions-link li.add-cart.active span {
+
+.add-actions-link li.add-cart.active a {
   color: #242424;
 }
-.add-actions-link li:hover span,
-.add-actions-link li.add-cart:hover span {
+.add-actions-link li:hover a,
+.add-actions-link li.add-cart:hover a {
   color: #242424;
 }
-.add-actions-link li.add-cart > span {
+.add-actions-link li.add-cart > a {
   color: #a4a4a4;
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
 }
-.add-actions-link li.add-cart > span i {
+.add-actions-link li.add-cart > a i {
   font-size: 16px;
   line-height: 22px;
 }

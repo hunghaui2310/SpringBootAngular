@@ -3,7 +3,7 @@ package com.spring.angular.helper;
 public class SearchRequest {
 
     private String productName;
-    private String categoryId;
+    private Long categoryId;
     private int price;
     private String condition;
 
@@ -15,11 +15,11 @@ public class SearchRequest {
         this.productName = productName;
     }
 
-    public String getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

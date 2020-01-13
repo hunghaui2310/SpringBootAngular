@@ -53,12 +53,12 @@
         <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
           <!-- Begin Header Middle Searchbox Area -->
           <form action="#" class="hm-searchbox row">
-            <select class="nice-select select-search-category col-3">
+            <select class="nice-select select-search-category col-3" [(ngModel)]="categoryId">
               <option [ngValue]="null" disabled>Thể loại</option>
               <option *ngFor="let eachCate of categories" value="{{eachCate.id}}">{{eachCate.nameCate}}</option>
             </select>
-            <input class="col-9" type="text" placeholder="Tìm kiếm ...">
-            <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
+            <input class="col-9" type="text" [(ngModel)]="productName" placeholder="Tìm kiếm ...">
+            <button class="li-btn" type="submit" (click)="search()"><i class="fa fa-search"></i></button>
           </form>
           <!-- Header Middle Searchbox Area End Here -->
           <!-- Begin Header Middle Right Area -->
@@ -139,10 +139,10 @@
             <nav>
               <ul>
                 <li><a routerLink="/home">Trang chủ</a></li>
-                <li><a routerLink="">Bàn ghế phòng khách</a></li>
-                <li><a routerLink="">Bàn ghế phòng ăn</a></li>
-                <li><a routerLink="">Tủ quần áo</a></li>
-                <li><a routerLink="">Kệ ti vi</a></li>
+                <li><a (click)="proCate(1)" routerLink="/product-category/1">Bàn ghế phòng khách</a></li>
+                <li><a (click)="proCate(2)" routerLink="/product-category/2">Bàn ghế phòng ăn</a></li>
+                <li><a (click)="proCate(3)" routerLink="/product-category/3">Tủ quần áo</a></li>
+                <li><a (click)="proCate(4)" routerLink="/product-category/4">Kệ ti vi</a></li>
                 <li><a routerLink="">Tin Tức</a></li>
                 <li><a routerLink="">Thông tin</a></li>
                 <li><a routerLink="">Liên hệ</a></li>

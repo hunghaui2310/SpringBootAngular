@@ -9,6 +9,7 @@ import {NotFoundComponent} from './account/not-found/not-found.component';
 import {ProfileComponent} from './account/profile/profile.component';
 import {ApiService} from '../api.service';
 import {SingleItemComponent} from './product/single-item/single-item.component';
+import {ItemsComponent} from './product/items/items.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -18,7 +19,9 @@ const routes: Routes = [
       path: 'home', component: HomeComponent, data: { title: 'Trang chủ'}
      }, {
        path: 'detail/:id', component: SingleItemComponent, data: { title: 'Chi tiết sản phẩm' }
-     }
+     }, {
+      path: 'product-category/:id', component: ItemsComponent, data: { title: 'Sản phẩm'}
+    }
     ]
   },
   {path: 'profile', component: ProfileComponent, canActivate: [ApiService], data: { title: 'Tài khoản của tôi'}},

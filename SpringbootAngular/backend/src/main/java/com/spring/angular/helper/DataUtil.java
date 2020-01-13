@@ -94,4 +94,12 @@ public class DataUtil {
     public static boolean isNullOrZero(Integer value) {
         return (value == null || value.equals(0));
     }
+
+    public static boolean isNullOrZero(Double value) {
+        return (value == null || value == 0);
+    }
+
+    public static boolean isNullOrZero(Long value) {
+        return (value == null || value.equals(0L));
+    }
 }
