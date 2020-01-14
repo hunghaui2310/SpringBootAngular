@@ -3,7 +3,7 @@ package com.spring.angular.dto;
 public class BlogDetailDTO extends BlogDTO{
 
     private String header;
-    private String content;
+    private String contentDetail;
     private String footer;
 
     public String getHeader() {
@@ -14,12 +14,12 @@ public class BlogDetailDTO extends BlogDTO{
         this.header = header;
     }
 
-    public String getContent() {
-        return content;
+    public String getContentDetail() {
+        return contentDetail;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContentDetail(String contentDetail) {
+        this.contentDetail = contentDetail;
     }
 
     public String getFooter() {

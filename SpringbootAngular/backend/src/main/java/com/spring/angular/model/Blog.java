@@ -70,7 +70,7 @@ public class Blog {
         this.numSee = numSee;
     }
 
-    @Column(name = "detail-content")
+    @Column(name = "detail_content")
     public String getDetailContent() {
         return detailContent;
     }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {config} from '../../../app-config/application.config';
 import {Blog} from '../../../model/blog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-blog-list',
@@ -10,9 +11,11 @@ import {Blog} from '../../../model/blog';
 })
 export class BlogListComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   blogList: Blog[] = [];
+  blogId;
 
   ngOnInit() {
     this.getBlogList();
@@ -28,5 +31,9 @@ export class BlogListComponent implements OnInit {
         this.blogList = dataBlog['data'];
       }
     );
+  }
+
+  blogDetail(id: number) {
+    this.router.navigate(['/detail-blog/' + id]);
   }
 }

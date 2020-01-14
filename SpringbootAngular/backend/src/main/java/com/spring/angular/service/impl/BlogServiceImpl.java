@@ -1,9 +1,13 @@
 package com.spring.angular.service.impl;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.spring.angular.dto.BlogDTO;
 import com.spring.angular.dto.BlogDetailDTO;
+import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
+import com.spring.angular.model.Blog;
 import com.spring.angular.repository.BlogRepo;
 import com.spring.angular.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +41,29 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogDetailDTO> lstContentDetail(Long blogId) throws Exception {
-        Object[] detailBlog = blogRepo.getBlogDetail(blogId);
-        String metaData = DataUtil.safeToString(detailBlog[6]);
+        List<BlogDetailDTO> lstData = new ArrayList<>();
+        Blog detailBlog = blogRepo.getBlogDetail(blogId);
+        BlogDetailDTO blogDetailDTO = new BlogDetailDTO();
+        blogDetailDTO.setId(detailBlog.getId());
+        blogDetailDTO.setTitle(detailBlog.getTitle());
+        blogDetailDTO.setContent(detailBlog.getContent());
+        blogDetailDTO.setCreateDate(detailBlog.getCreateDate());
+        blogDetailDTO.setImg(detailBlog.getImg());
+        blogDetailDTO.setNumSee(detailBlog.getNumSee());
+        String metaData = detailBlog.getDetailContent();
         JsonArray jsonArray;
-        return null;
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject = (JsonObject) jsonParser.parse(metaData);
+        jsonArray = (JsonArray) jsonObject.get(Contains.BLOG_DETAIL.DETAIL);
+        if(jsonArray != null){
+            for(int i= 0;i < jsonArray.size(); i++){
+                JsonObject json = (JsonObject) jsonArray.get(i);
+                blogDetailDTO.setHeader(json.get(Contains.BLOG_DETAIL.HEADER).getAsString());
+                blogDetailDTO.setContentDetail(json.get(Contains.BLOG_DETAIL.CONTENT).getAsString());
+                blogDetailDTO.setFooter(json.get(Contains.BLOG_DETAIL.FOOTER).getAsString());
+            }
+        }
+        lstData.add(blogDetailDTO);
+        return lstData;
     }
 }

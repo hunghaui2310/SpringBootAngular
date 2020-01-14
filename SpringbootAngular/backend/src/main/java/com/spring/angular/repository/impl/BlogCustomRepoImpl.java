@@ -1,5 +1,6 @@
 package com.spring.angular.repository.impl;
 
+import com.spring.angular.model.Blog;
 import com.spring.angular.repository.BlogCustomRepo;
 
 import javax.persistence.EntityManager;
@@ -22,13 +23,13 @@ public class BlogCustomRepoImpl implements BlogCustomRepo {
     }
 
     @Override
-    public Object[] getBlogDetail(Long blogId) throws Exception {
+    public Blog getBlogDetail(Long blogId) throws Exception {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("select b from Blog b where b.id = :blogId");
             Query query = entityManager.createQuery(stringBuilder.toString());
             query.setParameter("blogId", blogId);
-            return (Object[]) query.getSingleResult();
+            return (Blog) query.getSingleResult();
         }catch (NoResultException e){
             e.printStackTrace();
             return null;

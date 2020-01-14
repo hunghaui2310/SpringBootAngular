@@ -14,6 +14,7 @@ import {AppComponent} from './app.component';
 import {ShowCartComponent} from './cart/show-cart/show-cart.component';
 import {CheckoutComponent} from './cart/checkout/checkout.component';
 import {BlogListComponent} from './blog/blog-list/blog-list.component';
+import {BlogDetailComponent} from './blog/blog-detail/blog-detail.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -32,6 +33,8 @@ const routes: Routes = [
       path: 'checkout', component: CheckoutComponent, data: { title: 'Thanh toán'}
     }, {
       path: 'blog', component: BlogListComponent, data: { title: 'Tin tức'}
+    }, {
+      path: 'detail-blog/:id', component: BlogDetailComponent, data: { title: 'Tin nổi bật'}
     }
     ]
   },

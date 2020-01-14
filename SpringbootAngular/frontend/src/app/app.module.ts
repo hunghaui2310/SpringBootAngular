@@ -21,6 +21,7 @@ import { ProCateComponent } from './product/pro-cate/pro-cate.component';
 import { ShowCartComponent } from './cart/show-cart/show-cart.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { BlogListComponent } from './blog/blog-list/blog-list.component';
+import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { BlogListComponent } from './blog/blog-list/blog-list.component';
     ShowCartComponent,
     CheckoutComponent,
     BlogListComponent,
+    BlogDetailComponent,
   ],
   imports: [
     BrowserModule,

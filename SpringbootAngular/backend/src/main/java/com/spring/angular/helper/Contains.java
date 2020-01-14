@@ -13,4 +13,12 @@ public class Contains {
     public static final String PRICE_DESC = "PRICE_DESC";
     public static final String PRICE_ASC = "PRICE_ASC";
     public static final String NAME = "NAME";
+
+
+    public interface BLOG_DETAIL{
+        public static final String DETAIL = "detail";
+        public static final String HEADER = "header";
+        public static final String CONTENT = "content";
+        public static final String FOOTER = "footer";
+    }
 }

@@ -20,11 +20,11 @@
           <div class="col-lg-6 col-md-6" *ngFor="let eachBlog of blogList">
             <div class="li-blog-single-item pb-25">
               <div class="li-blog-banner">
-                <a href="blog-details-left-sidebar.html"><img class="img-full" src="assets/images/blog-banner/{{eachBlog.img}}" alt=""></a>
+                <a (click)="blogDetail(eachBlog.id)"><img class="img-full" src="assets/images/blog-banner/{{eachBlog.img}}" alt=""></a>
               </div>
               <div class="li-blog-content">
                 <div class="li-blog-details">
-                  <h3 class="li-blog-heading pt-25"><a href="blog-details-left-sidebar.html">{{eachBlog.title}}</a></h3>
+                  <h3 class="li-blog-heading pt-25"><a (click)="blogDetail(eachBlog.id)">{{eachBlog.title}}</a></h3>
                   <div class="li-blog-meta">
                     <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
                     <a class="comment" href="#"><i class="fa fa-comment-o"></i> {{eachBlog.numSee}} lượt truy cập</a>
