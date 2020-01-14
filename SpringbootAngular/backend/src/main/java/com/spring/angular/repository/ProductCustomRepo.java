@@ -18,5 +18,5 @@ public interface ProductCustomRepo {
 
     List<String> lstImageProduct(Long productId);
 
-    List<Object[]> getProOrderByNumLike();
+    Object[] getProInCart(Long productId, String urlImage) throws Exception;
 }

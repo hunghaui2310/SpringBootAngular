@@ -9,7 +9,7 @@ public interface CartRepo {
 
     void updateNumCart(Long userId, BigInteger cartNum) throws Exception;
 
-    List<Object[]> getCartByUser(Long userId) throws Exception;
+    List<BigInteger> getCartByUser(Long userId) throws Exception;
 
     List<Object[]> checkDuplicate(Long userId, Long productId) throws Exception;
 }

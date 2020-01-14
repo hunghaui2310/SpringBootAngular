@@ -87,14 +87,22 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     }
 
     @Override
-    public List<Object[]> getProOrderByNumLike() {
-        StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("select p.product_id,p.product_name,p.price,p.num_like,p.discount,f.url" +
-                " FROM product p, file_info f,category c" +
-                " WHERE f.file_type_id = 1 AND p.product_id = f.product_id AND p.category_id = c.category_id" +
-                " order by p.num_like desc");
-        Query query = entityManager.createNativeQuery(sqlBuilder.toString());
-        return query.getResultList();
+    public Object[] getProInCart(Long productId, String urlImage) throws Exception {
+        try {
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("select p.product_id, p.product_name, p.discount,p.price,p.price-(p.price*p.discount/100) AS real_price, f.url" +
+                    " from product p, file_info f" +
+                    " where p.product_id = f.product_id" +
+                    " and f.file_type_id =2 and p.product_id = :productId" +
+                    " and f.url = :urlImg");
+            Query query = entityManager.createNativeQuery(sqlBuilder.toString());
+            query.setParameter("productId", productId);
+            query.setParameter("urlImg", urlImage);
+            return (Object[]) query.getSingleResult();
+        }catch (NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){

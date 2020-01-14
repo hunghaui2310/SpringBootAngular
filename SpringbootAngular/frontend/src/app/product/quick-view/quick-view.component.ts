@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-quick-view',
@@ -8,7 +8,8 @@ import {MatDialogRef} from '@angular/material';
 })
 export class QuickViewComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<QuickViewComponent>) {
+  constructor(private dialogRef: MatDialogRef<QuickViewComponent>,
+              @Inject(MAT_DIALOG_DATA) public data) {
     dialogRef.disableClose = true;
   }
 
