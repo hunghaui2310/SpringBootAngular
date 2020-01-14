@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OtherService} from '../../service/other.service';
 import {ActivatedRoute} from '@angular/router';
+import {Blog} from '../../../model/blog';
 
 @Component({
   selector: 'app-blog-detail',
@@ -9,8 +10,9 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class BlogDetailComponent implements OnInit {
 
+  blogList: Blog[] = [];
   blogId;
-  title;
+  title = 'fff';
   contentDetail;
   header;
   footer;
@@ -23,6 +25,7 @@ export class BlogDetailComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getDataDetailBlog();
   }
 
   getDataDetailBlog() {
@@ -30,15 +33,24 @@ export class BlogDetailComponent implements OnInit {
     console.log('blogId', this.blogId);
     this.blogService.blogDetailAPI(this.blogId).subscribe(
       dataDetailBlog => {
-          this.dataDetail = dataDetailBlog['data'];
-          this.blogId = this.dataDetail['id'];
-          this.contentDetail = this.dataDetail['contentDetail'];
-          this.title = this.dataDetail['title'];
-          this.createDate = this.dataDetail['createDate'];
-          this.numSee = this.dataDetail['numSee'];
-          this.img = this.dataDetail['img'];
-          this.header = this.dataDetail['header'];
-          this.footer = this.dataDetail['footer'];
+        console.log(dataDetailBlog['data']);
+        this.dataDetail = dataDetailBlog['data'];
+        this.blogId = this.dataDetail['id'];
+        this.contentDetail = this.dataDetail['contentDetail'];
+        this.title = this.dataDetail['title'];
+        this.createDate = this.dataDetail['createDate'];
+        this.numSee = this.dataDetail['numSee'];
+        this.img = this.dataDetail['img'];
+        this.header = this.dataDetail['header'];
+        this.footer = this.dataDetail['footer'];
+      }
+    );
+  }
+
+  getBlogList() {
+    this.blogService.getBlogAPI().subscribe(
+      dataBlog => {
+        this.blogList = dataBlog['data'];
       }
     );
   }

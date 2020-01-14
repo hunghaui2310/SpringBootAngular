@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {config} from '../../../app-config/application.config';
 import {Blog} from '../../../model/blog';
 import {Router} from '@angular/router';
+import {OtherService} from '../../service/other.service';
 
 @Component({
   selector: 'app-blog-list',
@@ -12,21 +13,17 @@ import {Router} from '@angular/router';
 export class BlogListComponent implements OnInit {
 
   constructor(private http: HttpClient,
-              private router: Router) { }
+              private router: Router,
+              private blogService: OtherService) { }
 
   blogList: Blog[] = [];
-  blogId;
 
   ngOnInit() {
     this.getBlogList();
   }
 
-  getBlogAPI() {
-    return this.http.get(config.blog_API);
-  }
-
   getBlogList() {
-    this.getBlogAPI().subscribe(
+    this.blogService.getBlogAPI().subscribe(
       dataBlog => {
         this.blogList = dataBlog['data'];
       }

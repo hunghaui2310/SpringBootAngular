@@ -10,7 +10,11 @@ export class OtherService {
 
   constructor(private http: HttpClient) { }
 
-  blogDetailAPI(blogId: Blog) {
+  blogDetailAPI(blogId: number) {
     return this.http.get(config.blog_detail_API + '/' + blogId);
+  }
+
+  getBlogAPI() {
+    return this.http.get(config.blog_API);
   }
 }

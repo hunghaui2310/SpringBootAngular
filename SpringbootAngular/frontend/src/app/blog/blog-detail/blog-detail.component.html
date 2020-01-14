@@ -47,38 +47,16 @@
             </ul>
           </div>
           <div class="li-blog-sidebar">
-            <h4 class="li-blog-sidebar-title">Recent Post</h4>
-            <div class="li-recent-post pb-30">
+            <h4 class="li-blog-sidebar-title">Bài viết nổi bật</h4>
+            <div class="li-recent-post pb-30" *ngFor="let lstBlog of blogList">
               <div class="li-recent-post-thumb">
                 <a href="blog-details.html">
-                  <img class="img-full" src="assets/images/product/small-size/3.jpg" alt="Li's Product Image">
+                  <img class="img-full" src="assets/images/product/small-size/{{lstBlog.img}}" alt="Li's Product Image">
                 </a>
               </div>
               <div class="li-recent-post-des">
-                <span><a href="blog-details.html">First Blog Post</a></span>
-                <span class="li-post-date">25.11.2018</span>
-              </div>
-            </div>
-            <div class="li-recent-post pb-30">
-              <div class="li-recent-post-thumb">
-                <a href="blog-details.html">
-                  <img class="img-full" src="assets/images/product/small-size/2.jpg" alt="Li's Product Image">
-                </a>
-              </div>
-              <div class="li-recent-post-des">
-                <span><a href="blog-details.html">First Blog Post</a></span>
-                <span class="li-post-date">25.11.2018</span>
-              </div>
-            </div>
-            <div class="li-recent-post pb-30">
-              <div class="li-recent-post-thumb">
-                <a href="blog-details.html">
-                  <img class="img-full" src="assets/images/product/small-size/5.jpg" alt="Li's Product Image">
-                </a>
-              </div>
-              <div class="li-recent-post-des">
-                <span><a href="blog-details.html">First Blog Post</a></span>
-                <span class="li-post-date">25.11.2018</span>
+                <span><a href="blog-details.html">{{lstBlog.content}}</a></span>
+                <span class="li-post-date">{{lstBlog.numSee}}</span>
               </div>
             </div>
           </div>
@@ -106,7 +84,7 @@
               </div>
               <div class="li-blog-content">
                 <div class="li-blog-details">
-                  <h3 class="li-blog-heading pt-25"><a href="#">{{title}}</a></h3>
+                  <h3 class="li-blog-heading pt-25"><span>{{title}}</span></h3>
                   <div class="li-blog-meta">
                     <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
                     <a class="comment" href="#"><i class="fa fa-comment-o"></i> {{numSee}} lượt truy cập</a>

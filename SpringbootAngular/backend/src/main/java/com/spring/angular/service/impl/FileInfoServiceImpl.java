@@ -18,7 +18,7 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public List<FileInfo> getListByProId(Long productId) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("select f from FileInfo f where productId = :productId");
+        stringBuilder.append("select f from FileInfo f where f.productId = :productId and f.fileTypeId = 2");
         Query query = entityManager.createQuery(stringBuilder.toString());
         query.setParameter("productId", productId);
         return query.getResultList();

@@ -4234,11 +4234,11 @@ thead {
 }
 .li-blog-single-item .li-blog-content .li-blog-details h3 {
   color: #242424;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 30px;
   font-weight: 600;
   text-transform: capitalize;
-  font-family: Poppins;
+  font-family: unset;
   padding-bottom: 15px;
   margin: 0;
 }

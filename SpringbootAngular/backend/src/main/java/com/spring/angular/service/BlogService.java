@@ -9,5 +9,5 @@ public interface BlogService {
 
     List<BlogDTO> getListBlog() throws Exception;
 
-    List<BlogDetailDTO> lstContentDetail(Long blogId) throws Exception;
+    BlogDetailDTO lstContentDetail(Long blogId) throws Exception;
 }

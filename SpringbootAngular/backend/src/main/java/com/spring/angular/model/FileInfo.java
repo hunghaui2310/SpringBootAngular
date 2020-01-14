@@ -10,7 +10,6 @@ public class FileInfo {
     private String url;
     private Long fileTypeId;
     private Long productId;
-    private String info;
 
     @Id
     @GeneratedValue
@@ -41,21 +40,12 @@ public class FileInfo {
         this.fileTypeId = fileTypeId;
     }
 
-    @Column(name = "productId", nullable = false)
+    @Column(name = "product_id", nullable = false)
     public Long getProductId() {
         return productId;
     }
 
     public void setProductId(Long productId) {
         this.productId = productId;
-    }
-
-    @Column(name = "info")
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 }

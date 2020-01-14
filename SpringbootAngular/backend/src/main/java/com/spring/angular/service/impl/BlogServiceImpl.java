@@ -40,8 +40,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<BlogDetailDTO> lstContentDetail(Long blogId) throws Exception {
-        List<BlogDetailDTO> lstData = new ArrayList<>();
+    public BlogDetailDTO lstContentDetail(Long blogId) throws Exception {
+
         Blog detailBlog = blogRepo.getBlogDetail(blogId);
         BlogDetailDTO blogDetailDTO = new BlogDetailDTO();
         blogDetailDTO.setId(detailBlog.getId());
@@ -63,7 +63,7 @@ public class BlogServiceImpl implements BlogService {
                 blogDetailDTO.setFooter(json.get(Contains.BLOG_DETAIL.FOOTER).getAsString());
             }
         }
-        lstData.add(blogDetailDTO);
-        return lstData;
+
+        return blogDetailDTO;
     }
 }
