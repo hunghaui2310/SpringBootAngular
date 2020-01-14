@@ -6,7 +6,9 @@ public class CartDTO {
 
     private Long id;
     private Long userId;
+    private long numCart;
     private Long productId;
+    private double subtotal;
     private List<ProductDTO> productDTOList;
 
     public Long getId() {
@@ -39,5 +41,21 @@ public class CartDTO {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public long getNumCart() {
+        return numCart;
+    }
+
+    public void setNumCart(long numCart) {
+        this.numCart = numCart;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 }

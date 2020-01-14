@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
+import java.util.List;
 
 @RestController
 @RequestMapping("cart")
@@ -67,8 +68,8 @@ public class CartController {
     public ApiResponse getNumCart(@RequestBody CartDTO cartDTO) throws Exception{
         try{
             Long userId = cartDTO.getUserId();
-            BigInteger numCart = cartService.getNumCart(userId);
-            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", numCart);
+            CartDTO cartByUser = cartService.getCartByUser(userId);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", cartByUser);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, Contains.ERROR, null);

@@ -16,6 +16,8 @@ public class ProductDTO {
     private double realPrice;
     private boolean isNew;
     private Long categoryId;
+    private Long numProInCart;
+    private double total;
 
     public Long getId() {
         return id;
@@ -111,5 +113,21 @@ public class ProductDTO {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Long getNumProInCart() {
+        return numProInCart;
+    }
+
+    public void setNumProInCart(Long numProInCart) {
+        this.numProInCart = numProInCart;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

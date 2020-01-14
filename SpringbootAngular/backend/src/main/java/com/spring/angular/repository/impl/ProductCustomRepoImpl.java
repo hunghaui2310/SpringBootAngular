@@ -21,7 +21,6 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
 
     @Override
     public List<Object[]> getProduct() {
-        HashMap hashMap = new HashMap();
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new, c.category_id" +
                 " FROM product p, file_info f, category c" +

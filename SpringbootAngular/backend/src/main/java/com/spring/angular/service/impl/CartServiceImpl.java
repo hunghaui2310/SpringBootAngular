@@ -56,6 +56,8 @@ public class CartServiceImpl implements CartService {
         List<ProductDTO> productDTOList = productService.getAllProduct();
         String img; Long proIdKey;
         Map<Long, String> mapIdAndUrl = new HashMap<>();
+        double subtotal = 0L;
+        List<Double> listTotal = new ArrayList<>();
 
         for(ProductDTO productDTO : productDTOList){
             proIdKey = productDTO.getId();
@@ -63,10 +65,12 @@ public class CartServiceImpl implements CartService {
             mapIdAndUrl.put(proIdKey, img);
         }
         long count = 0;
+        double total;
         List<ProductDTO> lstProductDTO = new ArrayList<>();
-        List<BigInteger> lstObject = cartRepo.getCartByUser(userId);
-        for(BigInteger productId: lstObject) {
-            Long proIdCast = productId.longValue();
+        List<Object[]> lstObject = cartRepo.getCartByUser(userId);
+        for(Object[] objects: lstObject) {
+            Long proIdCast = DataUtil.safeToLong(objects[0]);
+            Long numPro = DataUtil.safeToLong(objects[1]);
             Object[] object = productRepo.getProInCart(proIdCast, mapIdAndUrl.get(proIdCast));
             if(!DataUtil.isNullOrEmpty(object)) {
                 Long proId = DataUtil.safeToLong(object[0]);
@@ -86,14 +90,24 @@ public class CartServiceImpl implements CartService {
                 } else {
                     productDTO.setRealPrice(price);
                 }
+
                 productDTO.setUrlImage(urlImg);
+                productDTO.setNumProInCart(numPro);
+                total = productDTO.getRealPrice() * numPro;
+                productDTO.setTotal(total);
                 lstProductDTO.add(productDTO);
+                listTotal.add(total);
             }
+        }
+        for(Double dataTotal : listTotal){
+            subtotal = subtotal + dataTotal;
         }
         CartDTO cartDTO = new CartDTO();
         cartDTO.setId(count++);
         cartDTO.setProductDTOList(lstProductDTO);
         cartDTO.setUserId(userId);
+        cartDTO.setSubtotal(subtotal);
+        cartDTO.setNumCart(lstProductDTO.size());
         return cartDTO;
     }
 

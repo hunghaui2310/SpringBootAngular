@@ -3,9 +3,11 @@ import {Observable} from 'rxjs';
 import {Category} from '../../../model/Category';
 import {HttpClient} from '@angular/common/http';
 import {config} from '../../../app-config/application.config';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SearchRequest} from '../../../model/search.request';
 import {ProductService} from '../../service/product.service';
+import {CartService} from '../../service/cart.service';
+import {Product} from '../../../model/product';
 
 @Component({
   selector: 'app-header',
@@ -21,14 +23,22 @@ export class HeaderComponent implements OnInit {
   productName;
   searchRequest: SearchRequest;
   products;
+  cartNum;
+  userId;
+  dataCart;
+  productInCart: Product[] = [];
+  subtotal;
 
   constructor(private http: HttpClient,
               private router: Router,
-              private productService: ProductService) { }
+              private productService: ProductService,
+              private cartService: CartService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getComboboxCate();
     this.categoryId = null;
+    this.getNumCart();
   }
 
   getCategoryAPI(): Observable<Category[]> {
@@ -62,6 +72,20 @@ export class HeaderComponent implements OnInit {
         },
       () => {
         console.log('ok');
+      }
+    );
+  }
+
+  getNumCart() {
+ //   this.userId = this.route.snapshot.params['userId'];
+    this.userId = 2;
+    console.log('userId', this.userId);
+    this.cartService.getNumCartAPI(this.userId).subscribe(
+      numCart => {
+        this.dataCart = numCart['data'];
+        this.cartNum = this.dataCart['numCart'];
+        this.productInCart = this.dataCart['productDTOList'];
+        this.subtotal = this.dataCart['subtotal'];
       }
     );
   }

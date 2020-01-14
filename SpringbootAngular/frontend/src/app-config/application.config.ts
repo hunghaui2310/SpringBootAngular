@@ -12,5 +12,6 @@ export const config = {
   cart_show: URL_BASE + '/cart/show',
   add_cart: URL_BASE + '/cart/addCart',
   get_num_cart: URL_BASE + '/cart/getNum',
-  remove_cart: URL_BASE + '/cart/remove'
+  remove_cart: URL_BASE + '/cart/remove',
+  blog_API: URL_BASE + '/blog/getBlog'
 };

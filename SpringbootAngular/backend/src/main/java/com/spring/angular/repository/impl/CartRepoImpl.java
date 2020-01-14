@@ -60,15 +60,15 @@ public class CartRepoImpl implements CartRepo {
     }
 
     /**
-     * lay du lieu cua cart theo user dang nhap
+     * lay du lieu cua product theo user dang nhap
      *
      * @param userId, cartNum
      * @throws Exception
      */
     @Override
-    public List<BigInteger> getCartByUser(Long userId) throws Exception {
+    public List<Object[]> getCartByUser(Long userId) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("select cp.product_id from cart_product cp" +
+        sqlBuilder.append("select cp.product_id, cp.num_pro from cart_product cp" +
                 " where cp.cart_id = (select uc.cart_id from user_cart uc where uc.user_id = :userId)");
         Query query = entityManager.createNativeQuery(sqlBuilder.toString());
         query.setParameter("userId",userId);

@@ -18,6 +18,9 @@ import { ItemsComponent } from './product/items/items.component';
 import { QuickViewComponent } from './product/quick-view/quick-view.component';
 import { SingleItemComponent } from './product/single-item/single-item.component';
 import { ProCateComponent } from './product/pro-cate/pro-cate.component';
+import { ShowCartComponent } from './cart/show-cart/show-cart.component';
+import { CheckoutComponent } from './cart/checkout/checkout.component';
+import { BlogListComponent } from './blog/blog-list/blog-list.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { ProCateComponent } from './product/pro-cate/pro-cate.component';
     QuickViewComponent,
     SingleItemComponent,
     ProCateComponent,
+    ShowCartComponent,
+    CheckoutComponent,
+    BlogListComponent,
   ],
   imports: [
     BrowserModule,
