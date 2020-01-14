@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {OtherService} from '../../service/other.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Blog} from '../../../model/blog';
 
 @Component({
@@ -22,10 +22,12 @@ export class BlogDetailComponent implements OnInit {
   dataDetail;
 
   constructor(private blogService: OtherService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.getDataDetailBlog();
+    this.getBlogList();
   }
 
   getDataDetailBlog() {
@@ -51,7 +53,12 @@ export class BlogDetailComponent implements OnInit {
     this.blogService.getBlogAPI().subscribe(
       dataBlog => {
         this.blogList = dataBlog['data'];
+        console.log('data-list-blog', this.blogList);
       }
     );
+  }
+
+  blogDetail(id: number) {
+    this.router.navigate(['/detail-blog/' + id]);
   }
 }

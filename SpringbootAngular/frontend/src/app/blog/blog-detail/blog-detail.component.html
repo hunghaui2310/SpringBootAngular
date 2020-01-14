@@ -55,8 +55,8 @@
                 </a>
               </div>
               <div class="li-recent-post-des">
-                <span><a href="blog-details.html">{{lstBlog.content}}</a></span>
-                <span class="li-post-date">{{lstBlog.numSee}}</span>
+                <span><a (click)="blogDetail(lstBlog.id)">{{lstBlog.title}}</a></span>
+                <span class="li-post-date">{{lstBlog.createDate}}</span>
               </div>
             </div>
           </div>
