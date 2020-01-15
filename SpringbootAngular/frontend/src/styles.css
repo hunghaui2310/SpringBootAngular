@@ -1343,7 +1343,6 @@ textarea:focus {
   align-self: stretch;
 }
 .ht-menu > li::after {
-  content: "";
   position: absolute;
   background: #2424;
   height: 15px;

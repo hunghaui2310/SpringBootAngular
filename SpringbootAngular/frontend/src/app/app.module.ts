@@ -23,6 +23,8 @@ import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { BlogListComponent } from './blog/blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
 import { AboutComponent } from './static/about/about.component';
+import { ContactComponent } from './static/contact/contact.component';
+import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { AboutComponent } from './static/about/about.component';
     BlogListComponent,
     BlogDetailComponent,
     AboutComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,7 @@ import { AboutComponent } from './static/about/about.component';
     HttpClientModule,
     NgxPaginationModule,
     FormsModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

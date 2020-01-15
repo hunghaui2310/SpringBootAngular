@@ -81,13 +81,10 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> searchProduct(SearchRequest searchRequest) throws Exception {
         List<Object[]> lstObject = productRepo.searchProduct(searchRequest);
         List<ProductDTO> productDTOList = new ArrayList<>();
-
-        String proName; String cateName; String des;
-        int price;
-        Long numLike; int dataIsNew;
+        String proName; String cateName; String des; String img;
+        int price; int dataIsNew;
+        Long numLike; Long lngId;
         double realPrice;
-        String img;
-        Long lngId;
         for (Object[] objects : lstObject) {
             ProductDTO productDTO = new ProductDTO();
             lngId = DataUtil.safeToLong(objects[0]);

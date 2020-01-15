@@ -4,6 +4,7 @@ import com.spring.angular.dto.CartDTO;
 import com.spring.angular.helper.ApiResponse;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.model.Cart;
+import com.spring.angular.model.User;
 import com.spring.angular.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,13 +62,13 @@ public class CartController {
     /**
      * api get ra so luong san pham co trong gio hang theo user dang nhap
      *
-     * @param cartDTO
+     * @param user
      * @throws Exception
      */
     @PostMapping("/getNum")
-    public ApiResponse getNumCart(@RequestBody CartDTO cartDTO) throws Exception{
+    public ApiResponse getNumCart(@RequestBody User user) throws Exception{
         try{
-            Long userId = cartDTO.getUserId();
+            Long userId = user.getId();
             CartDTO cartByUser = cartService.getCartByUser(userId);
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", cartByUser);
         }catch (Exception e){

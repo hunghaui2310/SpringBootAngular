@@ -34,9 +34,11 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/product-category")
-    public ApiResponse getProCategory(@RequestBody SearchRequest searchRequest) {
+    @GetMapping("/product-category/{id}")
+    public ApiResponse getProCategory(@PathVariable(value = "id") Long cartId) {
         try {
+            SearchRequest searchRequest = new SearchRequest();
+            searchRequest.setCategoryId(cartId);
             List<ProductDTO> productDTOList = productService.searchProduct(searchRequest);
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", productDTOList);
         } catch (Exception e) {

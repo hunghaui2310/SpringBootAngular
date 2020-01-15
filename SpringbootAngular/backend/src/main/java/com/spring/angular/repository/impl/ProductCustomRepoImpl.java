@@ -152,10 +152,10 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
                     stringBuilder.append(" order by p.num_buy desc");
                     break;
                 case Contains.PRICE_DESC: // gia giam dan
-                    stringBuilder.append(" order by p.price desc");
+                    stringBuilder.append(" order by real_price desc");
                     break;
                 case Contains.PRICE_ASC: // gia tang dan
-                    stringBuilder.append(" order by p.price asc");
+                    stringBuilder.append(" order by real_price asc");
                     break;
                 case Contains.NAME: // ten tu A-Z
                     stringBuilder.append(" order by p.product_name");

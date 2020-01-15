@@ -1,6 +1,7 @@
 const URL_BASE = 'http://localhost:8084';
 
 export const config = {
+  routeAPI : URL_BASE,
   pageSize: 15,
   category_API: URL_BASE + '/category/getCategory',
   product_API: URL_BASE + '/product/getProduct',

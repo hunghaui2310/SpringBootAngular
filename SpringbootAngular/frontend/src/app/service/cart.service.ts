@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {config} from '../../app-config/application.config';
 import {Cart} from '../../model/cart';
+import {User} from '../../model/model.user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class CartService {
     return this.http.post(config.cart_show, userId);
   }
 
-  getNumCartAPI(userId: Cart) {
+  getNumCartAPI(userId: User) {
     return this.http.post(config.get_num_cart, userId);
   }
 }

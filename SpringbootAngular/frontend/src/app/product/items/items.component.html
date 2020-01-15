@@ -130,7 +130,7 @@
                       <div class="single-product-wrap">
                         <div class="product-image">
                           <a (click)="productDetail(eachProduct.id)">
-                            <img src="assets/images/product/large-size/{{eachProduct.urlImage}}" alt="Li's Product Image">
+                            <img src="assets/images/product/large-size/{{eachProduct.categoryId}}/{{eachProduct.urlImage}}" alt="Li's Product Image">
                           </a>
                           <span class="sticker" *ngIf="eachProduct.isNew != false">NEW</span>
                         </div>
@@ -178,7 +178,7 @@
                       <div class="col-lg-3 col-md-5 ">
                         <div class="product-image">
                           <a (click)="productDetail(eachProduct.id)">
-                            <img src="assets/images/product/large-size/{{eachProduct.urlImage}}" alt="Li's Product Image">
+                            <img src="assets/images/product/large-size/{{eachProduct.categoryId}}/{{eachProduct.urlImage}}" alt="Li's Product Image">
                           </a>
                           <span class="sticker" *ngIf="eachProduct.isNew != false">NEW</span>
                         </div>

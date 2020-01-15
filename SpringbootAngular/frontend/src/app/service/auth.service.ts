@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AppComponent} from '../app.component';
 import {User} from '../../model/model.user';
+import {config} from '../../app-config/application.config';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
       authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
 
-    this.http.get(AppComponent.API_URL + '/account/login', {headers})
+    this.http.get(config.routeAPI + '/account/login', {headers})
       .subscribe((response) => {
         let data: any ;
         data = response;
@@ -43,7 +44,7 @@ export class AuthService {
     console.log(headers);
     // const options = new RequestOptions();
 
-    return this.http.get(AppComponent.API_URL + '/account/login', {headers});
+    return this.http.get(config.routeAPI + '/account/login', {headers});
   }
 
   logout() {

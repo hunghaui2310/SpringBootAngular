@@ -16,6 +16,7 @@ import {CheckoutComponent} from './cart/checkout/checkout.component';
 import {BlogListComponent} from './blog/blog-list/blog-list.component';
 import {BlogDetailComponent} from './blog/blog-detail/blog-detail.component';
 import {AboutComponent} from './static/about/about.component';
+import {ContactComponent} from './static/contact/contact.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -38,6 +39,8 @@ const routes: Routes = [
       path: 'detail-blog/:id', component: BlogDetailComponent, data: { title: 'Tin nổi bật'}
     }, {
       path: 'about', component: AboutComponent, data: { title: 'Giới thiệu'}
+    }, {
+      path: 'contact', component: ContactComponent, data: { title: 'Liên hệ'}
     }
     ]
   },

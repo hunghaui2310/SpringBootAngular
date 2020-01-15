@@ -7,6 +7,5 @@ import { MatDialog, MatDialogModule} from '@angular/material/dialog';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  static API_URL = 'http://localhost:8083';
   title = 'Đồ gỗ Huy Hùng';
 }
