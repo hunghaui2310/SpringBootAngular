@@ -20,6 +20,7 @@ export class BlogDetailComponent implements OnInit {
   numSee;
   img;
   dataDetail;
+  imgBanner;
 
   constructor(private blogService: OtherService,
               private route: ActivatedRoute,
@@ -45,6 +46,7 @@ export class BlogDetailComponent implements OnInit {
         this.img = this.dataDetail['img'];
         this.header = this.dataDetail['header'];
         this.footer = this.dataDetail['footer'];
+        this.imgBanner = this.dataDetail['imgBanner'];
       }
     );
   }

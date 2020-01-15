@@ -22,6 +22,7 @@ import { ShowCartComponent } from './cart/show-cart/show-cart.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { BlogListComponent } from './blog/blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
+import { AboutComponent } from './static/about/about.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
     CheckoutComponent,
     BlogListComponent,
     BlogDetailComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

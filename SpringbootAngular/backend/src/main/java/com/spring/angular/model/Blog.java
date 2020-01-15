@@ -13,6 +13,7 @@ public class Blog {
     private String img;
     private int numSee;
     private String detailContent;
+    private String imgBanner;
 
     @Id
     @GeneratedValue
@@ -77,5 +78,14 @@ public class Blog {
 
     public void setDetailContent(String detailContent) {
         this.detailContent = detailContent;
+    }
+
+    @Column(name = "img_banner")
+    public String getImgBanner() {
+        return imgBanner;
+    }
+
+    public void setImgBanner(String imgBanner) {
+        this.imgBanner = imgBanner;
     }
 }

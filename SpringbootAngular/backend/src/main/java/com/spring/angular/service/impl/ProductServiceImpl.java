@@ -1,5 +1,6 @@
 package com.spring.angular.service.impl;
 
+import com.spring.angular.dto.AboutDTO;
 import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.DataUtil;
@@ -34,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
         String proName; String cateName; String des;
         int price;
         Long numLike; int dataIsNew;
-        int discount = 0;
         double realPrice;
         String img;
         Long lngId;
@@ -45,9 +45,7 @@ public class ProductServiceImpl implements ProductService {
             price = DataUtil.safeToInt(objects[2]);
             numLike = DataUtil.safeToLong(objects[3]);
             cateName = DataUtil.safeToString(objects[4]);
-            if(objects[5] != null) {
-                discount = (int) objects[5];
-            }
+            int discount = DataUtil.safeToInt(objects[5]);
             img = String.valueOf(objects[6]);
             realPrice = DataUtil.safeToDouble(objects[7]);
             des = DataUtil.safeToString(objects[8]);
@@ -62,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
             }
             productDTO.setCategoryName(cateName);
             productDTO.setUrlImage(img);
-            if(DataUtil.isNullOrZero(discount)){
+            if(DataUtil.isNullOrZero(productDTO.getDiscount())){
                 productDTO.setRealPrice(price);
             }else {
                 productDTO.setRealPrice(realPrice);
@@ -87,7 +85,6 @@ public class ProductServiceImpl implements ProductService {
         String proName; String cateName; String des;
         int price;
         Long numLike; int dataIsNew;
-        int discount = 0;
         double realPrice;
         String img;
         Long lngId;
@@ -98,9 +95,7 @@ public class ProductServiceImpl implements ProductService {
             price = DataUtil.safeToInt(objects[2]);
             numLike = DataUtil.safeToLong(objects[3]);
             cateName = DataUtil.safeToString(objects[4]);
-            if(objects[5] != null) {
-                discount = (int) objects[5];
-            }
+            int discount = DataUtil.safeToInt(objects[5]);
             img = String.valueOf(objects[6]);
             realPrice = DataUtil.safeToDouble(objects[7]);
             des = DataUtil.safeToString(objects[8]);
@@ -115,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
             }
             productDTO.setCategoryName(cateName);
             productDTO.setUrlImage(img);
-            if(DataUtil.isNullOrZero(discount)){
+            if(DataUtil.isNullOrZero(productDTO.getDiscount())){
                 productDTO.setRealPrice(price);
             }else {
                 productDTO.setRealPrice(realPrice);
@@ -176,5 +171,35 @@ public class ProductServiceImpl implements ProductService {
         List<String> lstSting = productRepo.lstImageProduct(id);
         return lstSting;
     }
+
+    @Override
+    public AboutDTO getAboutDTO() throws Exception {
+        AboutDTO aboutDTO = new AboutDTO();
+        List<Long> lstNumLike = new ArrayList<>();
+        List<Long> lstNumBuy = new ArrayList<>();
+        long numLike; long totalNumLike = 0;
+        long numBuy; long totalNumBuy = 0;
+        List<Object[]> list = productRepo.getListAbout();
+        Long totalProduct = productRepo.totalProduct(false);
+        Long totalIsNew = productRepo.totalProduct(true);
+        for(Object[] object : list){
+            numLike = DataUtil.safeToLong(object[0]);
+            numBuy = DataUtil.safeToLong(object[1]);
+            lstNumLike.add(numLike);
+            lstNumBuy.add(numBuy);
+        }
+        for(int i =0;i < lstNumLike.size(); i++){
+            totalNumLike = lstNumLike.get(i) + totalNumLike;
+        }
+        for(int i =0;i < lstNumBuy.size(); i++){
+            totalNumBuy = lstNumBuy.get(i) + totalNumBuy;
+        }
+        aboutDTO.setTotalIsNew(totalIsNew);
+        aboutDTO.setTotalNumBuy(totalNumBuy);
+        aboutDTO.setTotalNumLike(totalNumLike);
+        aboutDTO.setTotalProduct(totalProduct);
+        return aboutDTO;
+    }
+
 
 }

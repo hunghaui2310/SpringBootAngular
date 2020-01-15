@@ -17,7 +17,7 @@
       <!-- Begin Li's Main Content Area -->
       <div class="col-lg-12">
         <div class="row li-main-content">
-          <div class="col-lg-6 col-md-6" *ngFor="let eachBlog of blogList">
+          <div class="col-lg-6 col-md-6" *ngFor="let eachBlog of blogList | paginate: {id: 'page', itemsPerPage: 4, currentPage: currentP, totalItems: blogList.length}">
             <div class="li-blog-single-item pb-25">
               <div class="li-blog-banner">
                 <a (click)="blogDetail(eachBlog.id)"><img class="img-full" src="assets/images/blog-banner/{{eachBlog.img}}" alt=""></a>
@@ -31,12 +31,25 @@
                     <a class="post-time" href="#"><i class="fa fa-calendar"></i> {{eachBlog.createDate}}</a>
                   </div>
                   <p>{{eachBlog.content}}</p>
-                  <a class="read-more" href="blog-details-left-sidebar.html">Xem thêm...</a>
+                  <a class="read-more" (click)="blogDetail(eachBlog.id)">Xem thêm...</a>
                 </div>
               </div>
             </div>
           </div>
-
+          <div class="col-lg-12">
+            <div class="li-paginatoin-area text-center pt-25">
+              <div class="row" *ngIf="blogList">
+                <div class="col-lg-12">
+                  <ul class="li-pagination-box">
+                    <pagination-controls id="page" (pageChange)="pageBlog($event)" maxSize="5"
+                    directionLinks="true" autoHide="false" responsive="false" previousLabel="Trước"
+                    nextLabel="Tiếp" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                    </pagination-controls>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Li's Main Content Area End Here -->

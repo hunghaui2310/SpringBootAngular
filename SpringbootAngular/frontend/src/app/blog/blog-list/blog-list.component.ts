@@ -16,7 +16,8 @@ export class BlogListComponent implements OnInit {
               private router: Router,
               private blogService: OtherService) { }
 
-  blogList: Blog[] = [];
+  blogList: Blog[];
+  currentP = 1;
 
   ngOnInit() {
     this.getBlogList();
@@ -32,5 +33,15 @@ export class BlogListComponent implements OnInit {
 
   blogDetail(id: number) {
     this.router.navigate(['/detail-blog/' + id]);
+  }
+
+  pageBlog(page: number) {
+    let total = this.currentP * 4;
+    console.log('total', total);
+    if (this.currentP * 4 > this.blogList.length) {
+      total = this.blogList.length;
+    }
+    this.currentP = page;
+    console.log('page', this.currentP);
   }
 }

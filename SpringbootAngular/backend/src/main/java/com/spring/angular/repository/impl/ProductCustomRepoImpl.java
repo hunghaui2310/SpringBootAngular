@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 
@@ -102,6 +103,26 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public List<Object[]> getListAbout() throws Exception {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("select numLike, numBuy from Product");
+        Query query = entityManager.createQuery(sqlBuilder.toString());
+        return query.getResultList();
+    }
+
+    @Override
+    public Long totalProduct(boolean isNew) throws Exception {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("select count(*) from product");
+        if (isNew == true){
+            sqlBuilder.append(" where is_new = 1");
+        }
+        Query query = entityManager.createNativeQuery(sqlBuilder.toString());
+        BigInteger total = (BigInteger) query.getSingleResult();
+        return total.longValue();
     }
 
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){

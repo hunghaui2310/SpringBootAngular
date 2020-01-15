@@ -33,10 +33,8 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   sortList: Sort[] = sort;
   sortCondition;
   searchRequest: SearchRequest;
-
   categories;
   categoryId;
-  products;
 
   constructor(private productService: ProductService,
               private router: Router,

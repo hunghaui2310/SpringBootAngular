@@ -50,6 +50,7 @@ public class BlogServiceImpl implements BlogService {
         blogDetailDTO.setCreateDate(detailBlog.getCreateDate());
         blogDetailDTO.setImg(detailBlog.getImg());
         blogDetailDTO.setNumSee(detailBlog.getNumSee());
+        blogDetailDTO.setImgBanner(detailBlog.getImgBanner());
         String metaData = detailBlog.getDetailContent();
         JsonArray jsonArray;
         JsonParser jsonParser = new JsonParser();

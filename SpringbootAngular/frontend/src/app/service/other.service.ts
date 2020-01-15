@@ -17,4 +17,8 @@ export class OtherService {
   getBlogAPI() {
     return this.http.get(config.blog_API);
   }
+
+  getDataInAbout() {
+    return this.http.get(config.about_API);
+  }
 }

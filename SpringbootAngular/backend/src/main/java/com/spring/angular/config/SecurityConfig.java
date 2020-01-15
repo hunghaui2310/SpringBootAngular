@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .authorizeRequests()
                 .antMatchers("/account/**","/logout","/not-found").permitAll()
-                .antMatchers("/product/**","/cart/**","/order/**","/category/**","/blog/**").permitAll()
+                .antMatchers("/product/**","/cart/**","/order/**","/category/**","/blog/**","/about/**").permitAll()
         .anyRequest().fullyAuthenticated().and()
         .logout().permitAll()
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout","POST"))

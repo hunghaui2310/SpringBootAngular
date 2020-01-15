@@ -5,6 +5,7 @@ public class BlogDetailDTO extends BlogDTO{
     private String header;
     private String contentDetail;
     private String footer;
+    private String imgBanner;
 
     public String getHeader() {
         return header;
@@ -28,5 +29,13 @@ public class BlogDetailDTO extends BlogDTO{
 
     public void setFooter(String footer) {
         this.footer = footer;
+    }
+
+    public String getImgBanner() {
+        return imgBanner;
+    }
+
+    public void setImgBanner(String imgBanner) {
+        this.imgBanner = imgBanner;
     }
 }
