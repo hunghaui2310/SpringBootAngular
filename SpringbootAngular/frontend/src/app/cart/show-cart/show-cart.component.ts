@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CartService} from '../../service/cart.service';
 import {ActivatedRoute} from '@angular/router';
 import {Product} from '../../../model/product';
+import {User} from '../../../model/model.user';
 
 @Component({
   selector: 'app-show-cart',
@@ -10,14 +11,16 @@ import {Product} from '../../../model/product';
 })
 export class ShowCartComponent implements OnInit {
 
-  userId;
   dataCart;
   cartNum;
-  productInCart: Product[] = [];
+  productInCart: Product[];
   subtotal;
+  currentUser;
 
   constructor(private cartService: CartService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  }
 
   ngOnInit() {
     this.showProInCart();
@@ -25,13 +28,15 @@ export class ShowCartComponent implements OnInit {
 
   showProInCart() {
     //   this.userId = this.route.snapshot.params['userId'];
-    this.userId = 2;
-    console.log('userId', this.userId);
-    this.cartService.getNumCartAPI(this.userId).subscribe(
-      numCart => {
-        this.dataCart = numCart['data'];
+    this.currentUser = new User(this.currentUser.id, null, null, null);
+    console.log('userIdssss', this.currentUser.id);
+    this.cartService.getNumCartAPI(this.currentUser).subscribe(
+      dataCarts => {
+        this.dataCart = dataCarts['data'];
+        console.log('proInCartfdasdas', dataCarts);
         this.cartNum = this.dataCart['numCart'];
         this.productInCart = this.dataCart['productDTOList'];
+        console.log('proInCart', this.productInCart);
         this.subtotal = this.dataCart['subtotal'];
       }
     );

@@ -30,10 +30,10 @@ export class HeaderComponent implements OnInit {
   productInCart: Product[] = [];
   subtotal;
   currentUser: User;
-  li1;
-  li2;
-  router1;
-  router2;
+  // li1;
+  // li2;
+  // router1;
+  // router2;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
     this.getComboboxCate();
     this.categoryId = null;
     this.getNumCart();
-    this.directional();
+    console.log('currentUser', this.currentUser.username);
   }
 
   getCategoryAPI(): Observable<Category[]> {
@@ -85,12 +85,11 @@ export class HeaderComponent implements OnInit {
   }
 
   getNumCart() {
-    this.userId = this.currentUser.id;
-    console.log('userId', this.userId);
-    this.cartService.getNumCartAPI(this.userId).subscribe(
+    this.currentUser = new User(this.currentUser.id, null, null, null);
+    console.log('userId', this.currentUser.id);
+    this.cartService.getNumCartAPI(this.currentUser).subscribe(
       numCart => {
         this.dataCart = numCart['data'];
-        console.log('dataCart', this.dataCart);
         this.cartNum = this.dataCart['numCart'];
         this.productInCart = this.dataCart['productDTOList'];
         this.subtotal = this.dataCart['subtotal'];
@@ -104,17 +103,17 @@ export class HeaderComponent implements OnInit {
     console.log('currentUser', localStorage.removeItem('currentUser'));
   }
 
-  directional() {
-    if (JSON.parse(localStorage.getItem('currentUser')) != null) {
-      this.li1 = this.currentUser.username;
-      this.router1 = '/profile';
-      this.li2 = 'Đăng xuất';
-      this.router2 = '/logout';
-    } else {
-      this.li1 = 'Đăng nhập';
-      this.router1 = '/login';
-      this.li2 = 'Đăng kí';
-      this.router2 = '/register';
-    }
-  }
+  // directional() {
+  //   if (JSON.parse(localStorage.getItem('currentUser')) != null) {
+  //     this.li1 = this.currentUser.username;
+  //     this.router1 = '/profile';
+  //     this.li2 = 'Đăng xuất';
+  //     this.router2 = '/logout';
+  //   } else {
+  //     this.li1 = 'Đăng nhập';
+  //     this.router1 = '/login';
+  //     this.li2 = 'Đăng kí';
+  //     this.router2 = '/register';
+  //   }
+  // }
 }

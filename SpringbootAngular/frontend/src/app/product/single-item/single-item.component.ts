@@ -33,6 +33,7 @@ export class SingleItemComponent implements OnInit {
   categoryId;
   sameProList: Product[];
   numSamePro;
+  listImg;
 
   ngOnInit() {
     this.getProDetail();
@@ -47,6 +48,7 @@ export class SingleItemComponent implements OnInit {
       data => {
     console.log('data detail', data['data']);
     this.dataProduct = data['data'];
+    this.listImg = this.dataProduct['urlImage'];
     this.productName = this.dataProduct['productName'];
     this.price = this.dataProduct['price'];
     this.numLike = this.dataProduct['numLike'];
@@ -60,9 +62,9 @@ export class SingleItemComponent implements OnInit {
     });
   }
 
-  getSamePro(ss: number) {
+  getSamePro(cateId: number) {
     // console.log('cateId', this.categoryId);
-    this.productService.sameProAPI(ss).subscribe(
+    this.productService.sameProAPI(cateId).subscribe(
         dataSame => {
           console.log(dataSame['data']);
           this.sameProList = dataSame['data']['productDTOList'];

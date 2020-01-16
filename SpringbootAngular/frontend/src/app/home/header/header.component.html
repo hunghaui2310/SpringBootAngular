@@ -77,8 +77,8 @@
               <!-- Begin Header Mini Cart Area -->
               <li class="hm-minicart">
                 <div class="hm-minicart-trigger">
-                  <span class="item-icon"></span>
-                  <span class="item-text">{{subtotal}}
+                  <span class="item-icon" routerLink="/cart"></span>
+                  <span class="item-text">{{subtotal * 1000000 | number}}
                     <span class="cart-item-count" routerLink="/cart ">{{cartNum}}</span>
                   </span>
                 </div>

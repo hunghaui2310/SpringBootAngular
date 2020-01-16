@@ -31,7 +31,7 @@
                 <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
                 <td class="li-product-thumbnail"><a href="#"><img src="assets/images/product/small-size/{{proInCart.urlImage}}" alt="Li's Product Image"></a></td>
                 <td class="li-product-name"><a href="#">{{proInCart.productName}}</a></td>
-                <td class="li-product-price"><span class="amount">{{proInCart.realPrice}}</span></td>
+                <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>
                 <td class="quantity">
                   <div class="cart-plus-minus">
                     <input class="cart-plus-minus-box" value="{{proInCart.numProInCart}}" type="text">
@@ -39,7 +39,7 @@
                     <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                   </div>
                 </td>
-                <td class="product-subtotal"><span class="amount">{{proInCart.total}}</span></td>
+                <td class="product-subtotal"><span class="amount">{{proInCart.total * 1000000 | number}}</span></td>
               </tr>
               </tbody>
             </table>
