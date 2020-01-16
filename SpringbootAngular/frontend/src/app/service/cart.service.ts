@@ -18,4 +18,8 @@ export class CartService {
   getNumCartAPI(userId: User) {
     return this.http.post(config.get_num_cart, userId);
   }
+
+  removeProCartAPI(cart: Cart) {
+    return this.http.post(config.remove_cart, cart);
+  }
 }

@@ -77,11 +77,16 @@ public class CartController {
         }
     }
 
+    /**
+     * api xoa han san pham trong cart theo userId va productId
+     *
+     * @param cartDTO
+     * @throws Exception
+     */
     @PostMapping("/remove")
     public ApiResponse removeProFromCart(@RequestBody CartDTO cartDTO) throws Exception{
         try {
-            Long userId = cartDTO.getUserId();
-            String message = cartService.removeProFromCart(userId);
+            String message = cartService.removeProFromCart(cartDTO);
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
         }catch (Exception e){
             e.printStackTrace();

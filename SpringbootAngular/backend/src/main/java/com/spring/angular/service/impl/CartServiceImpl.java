@@ -30,12 +30,6 @@ public class CartServiceImpl implements CartService {
     private ProductService productService;
 
     @Override
-    public BigInteger getNumCart(Long userId) throws Exception {
-        BigInteger numCart = cartRepo.getNumCart(userId);
-        return numCart;
-    }
-
-    @Override
     public String updateNumCart(Long userId, Long productId) throws Exception {
         String message;
         List<Object[]> lstObject = cartRepo.checkDuplicate(userId,productId);
@@ -112,11 +106,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String removeProFromCart(Long userId) throws Exception {
+    public String removeProFromCart(CartDTO cartDTO) throws Exception {
         String message;
-        BigInteger oldNumCart = cartRepo.getNumCart(userId);
-        BigInteger newNumCart = oldNumCart.subtract(BigInteger.valueOf(1));
-        cartRepo.updateNumCart(userId,newNumCart);
+        cartRepo.deleteProInCart(cartDTO);
         message = Contains.SUCCESS;
         return message;
     }

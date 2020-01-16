@@ -333,7 +333,7 @@ button.li-btn:hover {
 }
 a.links,
 a.links-2,
-a.review-links {
+button.review-links {
   background: #fed700 none repeat scroll 0 0;
   color: #242424;
   display: inline-block;
@@ -353,14 +353,15 @@ a.links-2:hover {
   background: #333333 none repeat scroll 0 0;
   color: #fff;
 }
-a.review-links {
-  background: #242424;
+button.review-links {
+  background: orange;
   color: #ffffff;
   width: 205px;
   height: 40px;
   line-height: 40px;
+  border-radius: 10px;
 }
-a.review-links:hover {
+button.review-links:hover {
   background: #fed700;
 }
 /*----------------------------------------*/

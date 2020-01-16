@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CartService} from '../../service/cart.service';
 import {User} from '../../../model/model.user';
 import {Product} from '../../../model/product';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -16,7 +17,8 @@ export class CheckoutComponent implements OnInit {
   dataCart;
   subtotal;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,
+              private toastr: ToastrService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -38,5 +40,11 @@ export class CheckoutComponent implements OnInit {
         this.subtotal = this.dataCart['subtotal'];
       }
     );
+  }
+
+  showSuccess() {
+    this.toastr.success('Đặt hàng thành công, chúng tôi sẽ liên hệ với bạn sớm nhất', 'Thông báo',{
+      timeOut: 2000, progressBar: false
+    });
   }
 }

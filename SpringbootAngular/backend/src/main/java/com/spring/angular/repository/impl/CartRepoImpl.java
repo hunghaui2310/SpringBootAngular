@@ -1,5 +1,6 @@
 package com.spring.angular.repository.impl;
 
+import com.spring.angular.dto.CartDTO;
 import com.spring.angular.repository.CartRepo;
 import org.springframework.stereotype.Repository;
 
@@ -88,6 +89,19 @@ public class CartRepoImpl implements CartRepo {
         query.setParameter("userId",userId);
         query.setParameter("productId",productId);
         return query.getResultList();
+    }
+
+    @Transactional
+    @Override
+    public void deleteProInCart(CartDTO cartDTO) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("delete from cart_product cp" +
+                " where cp.product_id = :productId" +
+                " and cp.cart_id = (select uc.cart_id from user_cart uc where uc.user_id = :userId)");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("productId", cartDTO.getProductId());
+        query.setParameter("userId", cartDTO.getUserId());
+        query.executeUpdate();
     }
 
 }

@@ -3,6 +3,8 @@ import {ProductService} from '../../service/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {Product} from '../../../model/Product';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import {MatDialog} from '@angular/material';
+import {WriteReviewComponent} from '../write-review/write-review.component';
 
 @Component({
   selector: 'app-single-item',
@@ -14,6 +16,7 @@ export class SingleItemComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
+              private dialog: MatDialog,
               config: NgbCarouselConfig) {
     config.interval = 4000;
     config.wrap = true;
@@ -73,5 +76,9 @@ export class SingleItemComponent implements OnInit {
           console.log('numSamePro', this.numSamePro);
         }
       );
+  }
+
+  openDialog() {
+    this.dialog.open(WriteReviewComponent);
   }
 }

@@ -28,7 +28,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let proInCart of productInCart">
-                <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
+                <td class="li-product-remove"><span (click)="removeProInCart(proInCart.id)" style="cursor: pointer"><i class="fa fa-times"></i></span></td>
                 <td class="li-product-thumbnail"><a href="#"><img src="assets/images/product/small-size/{{proInCart.urlImage}}" alt="Li's Product Image"></a></td>
                 <td class="li-product-name"><a href="#">{{proInCart.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>

@@ -1,5 +1,7 @@
 package com.spring.angular.repository;
 
+import com.spring.angular.dto.CartDTO;
+
 import java.math.BigInteger;
 import java.util.List;
 
@@ -12,4 +14,6 @@ public interface CartRepo {
     List<Object[]> getCartByUser(Long userId) throws Exception;
 
     List<Object[]> checkDuplicate(Long userId, Long productId) throws Exception;
+
+    void deleteProInCart(CartDTO cartDTO) throws Exception;
 }
