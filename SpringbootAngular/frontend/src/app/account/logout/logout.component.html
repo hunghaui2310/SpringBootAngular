@@ -1,6 +1,6 @@
 <div class="container">
   <div class="alert alert-info text-center" role="alert">
-    We are glad having you among us, see you soon !
+    Đăng xuất thành công. Đăng nhập để nhận nhiều ưu đãi lớn
   </div>
   <div class="card card-container">
     <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
@@ -11,21 +11,21 @@
       <div class="alert alert-danger" role="alert" *ngIf="errorMessage">{{errorMessage}}</div>
       <span id="reauth-email" class="reauth-email"></span>
       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-        <label for="username">Username</label>
+        <label for="username">Tên đăng nhập</label>
         <input type="text" class="form-control" id="username" name="username" pattern="[^ @]*@[^ @]*" [(ngModel)]="user.username" #username="ngModel" required />
-        <div *ngIf="f.submitted && !username.valid" class="help-block">an valid email is required</div>
+        <div *ngIf="f.submitted && !username.valid" class="help-block">Tên đăng nhập không được để trống</div>
       </div>
       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-        <label for="password">Password</label>
+        <label for="password">Mật khẩu</label>
         <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" #password="ngModel" required />
-        <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+        <div *ngIf="f.submitted && !password.valid" class="help-block">Mật khẩu không được để trống</div>
       </div>
       <div id="remember" class="checkbox">
 
       </div>
-      <button class="btn btn-success btn-block" type="submit">Sign in</button>
+      <button class="btn btn-success btn-block" type="submit">Đăng nhập</button>
     </form><!-- /form -->
-    <a [routerLink]="['/register']" class="btn btn-link">Create new Account!</a>
+    <a [routerLink]="['/register']" class="btn btn-link">Tạo tài khoản!</a>
   </div><!-- /card-container -->
 </div><!-- /container -->
 
