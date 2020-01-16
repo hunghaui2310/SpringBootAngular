@@ -22,4 +22,8 @@ export class CartService {
   removeProCartAPI(cart: Cart) {
     return this.http.post(config.remove_cart, cart);
   }
+
+  addCartAPI(cart: Cart) {
+    return this.http.post(config.add_cart, cart);
+  }
 }

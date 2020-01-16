@@ -18,45 +18,24 @@ public class CartRepoImpl implements CartRepo {
     @PersistenceContext
     EntityManager entityManager;
 
-    /**
-     * lay ra so luong san pham cua user dang nhap trong gio hang
-     *
-     * @param userId
-     * @return so luong san pham trong gio hang
-     * @throws Exception
-     */
-    @Override
-    public BigInteger getNumCart(Long userId){
-        try {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.append("SELECT c.cart_num from cart c, user_cart uc, user u" +
-                    " WHERE u.id = uc.user_id" +
-                    " AND c.id = uc.cart_id" +
-                    " AND u.id = :userId");
-            Query query = entityManager.createNativeQuery(sqlBuilder.toString());
-            query.setParameter("userId",userId);
-            return (BigInteger) query.getSingleResult();
-        }catch (NoResultException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     /**
      * thuc hien cap nhat lai gio hang theo user dang nhap
      *
-     * @param userId, cartNum
+     * @param cartDTO
      * @throws Exception
      */
     @Transactional
     @Override
-    public void updateNumCart(Long userId, BigInteger cartNum) {
+    public void updateNumCart(CartDTO cartDTO) {
         StringBuilder sql = new StringBuilder();
-        sql.append("update cart c set c.cart_num = :cartNum " +
-                "where c.id = (select uc.cart_id from user_cart uc,user u where u.id = uc.user_id and u.id = :userId)");
+        sql.append("update cart_product cp set cp.num_pro = :numPro" +
+                " where cp.product_id = :productId" +
+                " and cp.cart_id = (select uc.cart_id from user_cart uc where uc.user_id = :userId)");
         Query query = entityManager.createNativeQuery(sql.toString());
-        query.setParameter("userId",userId);
-        query.setParameter("cartNum",cartNum);
+        query.setParameter("numPro", cartDTO.getNumCart());
+        query.setParameter("productId", cartDTO.getProductId());
+        query.setParameter("userId", cartDTO.getUserId());
         query.executeUpdate();
     }
 
@@ -78,17 +57,19 @@ public class CartRepoImpl implements CartRepo {
 
     @Override
     public List<Object[]> checkDuplicate(Long userId, Long productId) throws Exception {
-        StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("select p.product_id,p.product_name,p.price,p.num_like,p.discount,f.url,c.category_name" +
-                " from product p, file_info f, category c" +
-                " where p.product_id = f.product_id" +
-                " and c.category_id = p.category_id" +
-                " and p.cart_id = (select uc.cart_id from user_cart uc where uc.user_id = :userId)" +
-                " and p.product_id = :productId");
-        Query query = entityManager.createNativeQuery(sqlBuilder.toString());
-        query.setParameter("userId",userId);
-        query.setParameter("productId",productId);
-        return query.getResultList();
+        try {
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("select * from cart_product cp where" +
+                    " cp.product_id = :productId" +
+                    " and cp.cart_id = (select cart_id from user_cart where user_id = :userId)");
+            Query query = entityManager.createNativeQuery(sqlBuilder.toString());
+            query.setParameter("userId", userId);
+            query.setParameter("productId", productId);
+            return query.getResultList();
+        }catch (NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Transactional
@@ -102,6 +83,34 @@ public class CartRepoImpl implements CartRepo {
         query.setParameter("productId", cartDTO.getProductId());
         query.setParameter("userId", cartDTO.getUserId());
         query.executeUpdate();
+    }
+
+    @Transactional
+    @Override
+    public void createProInCart(CartDTO cartDTO) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("insert into cart_product(product_id, cart_id, num_pro) values(:productId, :cartId, :numPro)");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("productId", cartDTO.getProductId());
+        query.setParameter("cartId", cartDTO.getId());
+        query.setParameter("numPro", cartDTO.getNumCart());
+        query.executeUpdate();
+    }
+
+    /**
+     * lay ra cart cua user dang nhap
+     *
+     * @param userId
+     * @return so luong san pham trong gio hang
+     * @throws Exception
+     */
+    @Override
+    public Long getCartIdByUser(Long userId) throws Exception {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("select cartId from UserCart where userId = :userId");
+        Query query = entityManager.createQuery(sqlBuilder.toString());
+        query.setParameter("userId", userId);
+        return (Long) query.getSingleResult();
     }
 
 }

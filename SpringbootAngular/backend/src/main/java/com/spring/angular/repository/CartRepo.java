@@ -7,13 +7,15 @@ import java.util.List;
 
 public interface CartRepo {
 
-    BigInteger getNumCart(Long userId) throws Exception;
-
-    void updateNumCart(Long userId, BigInteger cartNum) throws Exception;
+    void updateNumCart(CartDTO cartDTO) throws Exception;
 
     List<Object[]> getCartByUser(Long userId) throws Exception;
 
     List<Object[]> checkDuplicate(Long userId, Long productId) throws Exception;
 
     void deleteProInCart(CartDTO cartDTO) throws Exception;
+
+    void createProInCart(CartDTO cartDTO) throws Exception;
+
+    Long getCartIdByUser(Long userId) throws Exception;
 }

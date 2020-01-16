@@ -10,6 +10,10 @@ import {sort, Sort} from '../../../model/sort';
 import {Observable} from 'rxjs';
 import {Category} from '../../../model/category';
 import {HttpClient} from '@angular/common/http';
+import {User} from '../../../model/model.user';
+import {Cart} from '../../../model/cart';
+import {CartService} from '../../service/cart.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-items',
@@ -35,11 +39,17 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   searchRequest: SearchRequest;
   categories;
   categoryId;
+  currentUser: User;
+  conditionAddCart;
+  notificationMessage;
 
   constructor(private productService: ProductService,
               private router: Router,
               private http: HttpClient,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private cartService: CartService,
+              private toastr: ToastrService) {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
  // productList: any = [];
@@ -188,6 +198,28 @@ export class ItemsComponent implements OnInit, AfterViewInit {
         console.log('ok');
       }
     );
+  }
+
+  addProToCart(productId: number) {
+    this.conditionAddCart = new Cart(this.currentUser.id, productId);
+    console.log('this.currentUser.id', this.currentUser.id);
+    console.log('productIdToAddCart', productId);
+    this.cartService.addCartAPI(this.conditionAddCart).subscribe(
+      message => {
+        this.notificationMessage = message['data'];
+        console.log('this.notificationMessage', this.notificationMessage);
+        this.notificationSuccess(this.notificationMessage);
+      },
+      error => this.notificationError()
+    );
+  }
+
+  notificationSuccess(notification: string) {
+    this.toastr.success(notification, 'Thông báo');
+  }
+
+  notificationError() {
+    this.toastr.error('Lỗi', 'Thông báo');
   }
 
 }

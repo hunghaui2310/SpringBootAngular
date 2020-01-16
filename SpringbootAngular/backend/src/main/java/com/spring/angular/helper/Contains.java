@@ -13,6 +13,8 @@ public class Contains {
     public static final String PRICE_DESC = "PRICE_DESC";
     public static final String PRICE_ASC = "PRICE_ASC";
     public static final String NAME = "NAME";
+    public static final String UPDATE = "UPDATE";
+    public static final String CREATE = "CREATE";
 
 
     public interface BLOG_DETAIL{

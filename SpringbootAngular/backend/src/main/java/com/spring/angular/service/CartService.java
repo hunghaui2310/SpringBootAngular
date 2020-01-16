@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 public interface CartService {
 
-    String updateNumCart(Long userId, Long productId) throws Exception;
+    String updateNumCart(CartDTO cartDTO) throws Exception;
 
     CartDTO getCartByUser(Long userId) throws Exception;
 

@@ -29,17 +29,33 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private ProductService productService;
 
+    /**
+     * them moi neu chua co san pham trong gio hang, cap nhat neu da co san pham trong gio hang
+     *
+     * @param cartDTO
+     * @return thong bao
+     * @throws Exception
+     */
     @Override
-    public String updateNumCart(Long userId, Long productId) throws Exception {
-        String message;
-        List<Object[]> lstObject = cartRepo.checkDuplicate(userId,productId);
-        if(lstObject.size() > 0) {
-            message = Contains.DUPLICATE;
-        }else {
-            BigInteger oldNumCart = cartRepo.getNumCart(userId);
-            BigInteger newNumCart = oldNumCart.add(BigInteger.valueOf(1));
-            cartRepo.updateNumCart(userId, newNumCart);
-            message = Contains.SUCCESS;
+    public String updateNumCart(CartDTO cartDTO) throws Exception {
+        String message = null;
+        List<Object[]> lstObject = cartRepo.checkDuplicate(cartDTO.getUserId(), cartDTO.getProductId());
+        if(lstObject != null) {
+            long cartNum = 0;
+            for(Object[] objects : lstObject){
+                cartNum = DataUtil.safeToLong(objects[3]);
+            }
+            if (lstObject.size() > 0) {
+                cartDTO.setNumCart(cartNum + 1);
+                cartRepo.updateNumCart(cartDTO);
+                message = Contains.UPDATE;
+            } else {
+                Long cartId = cartRepo.getCartIdByUser(cartDTO.getUserId());
+                cartDTO.setNumCart(1);
+                cartDTO.setId(cartId);
+                cartRepo.createProInCart(cartDTO);
+                message = Contains.CREATE;
+            }
         }
         return message;
     }
