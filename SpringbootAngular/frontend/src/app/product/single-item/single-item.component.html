@@ -14,25 +14,47 @@
 <div class="content-wraper">
   <div class="container">
     <div class="row single-product-area">
-      <div class="col-lg-5 col-md-6">
+      <div class="col-lg-5 col-md-5">
         <!-- Product Details Left -->
         <div class="product-details-left">
-          <div class="product-details-images slider-navigation-1">
-            <div class="lg-image" *ngFor="let img of dataProduct['urlImage']">
-              <a class="popup-img venobox vbox-item" href="assets/images/product/large-size/{{categoryId}}/{{img}}" data-gall="myGallery">
-                <img src="assets/images/product/large-size/{{categoryId}}/{{img}}" alt="product image">
-              </a>
-            </div>
-
-          </div>
-          <div class="product-details-thumbs slider-thumbs-1">
-            <div class="sm-image" *ngFor="let img of dataProduct['urlImage']"><img src="assets/images/product/small-size/{{img}}" alt="product image thumb"></div>
-          </div>
+          <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let img of dataProduct['urlImage']">
+              <img src="assets/images/product/large-size/{{categoryId}}/{{img}}" alt="Random first slide">
+            </ng-template>
+          </ngb-carousel>
+        </div>
+        <div class="block-reassurance">
+          <ul>
+            <li>
+              <div class="reassurance-item">
+                <div class="reassurance-icon">
+                  <i class="fa fa-check-square-o"></i>
+                </div>
+                <p>Bảo mật tuyệt đối thông tin khách hàng</p>
+              </div>
+            </li>
+            <li>
+              <div class="reassurance-item">
+                <div class="reassurance-icon">
+                  <i class="fa fa-truck"></i>
+                </div>
+                <p>Miễn phí vận chuyển, cam kết chất lượng sản phẩm trong quá trình vận chuyển</p>
+              </div>
+            </li>
+            <li>
+              <div class="reassurance-item">
+                <div class="reassurance-icon">
+                  <i class="fa fa-exchange"></i>
+                </div>
+                <p>Bảo hành lên tới 3 năm.</p>
+              </div>
+            </li>
+          </ul>
         </div>
         <!--// Product Details Left -->
       </div>
 
-      <div class="col-lg-7 col-md-6">
+      <div class="col-lg-7 col-md-7">
         <div class="product-details-view-content pt-60">
           <div class="product-info">
             <h2>{{productName}}</h2>
@@ -74,40 +96,13 @@
               <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Yêu thích</a>
               <div class="product-social-sharing pt-25">
                 <ul>
+                  <p><i class="fa fa-share"> Chia sẻ</i></p>
                   <li class="facebook"><a href="https://www.facebook.com"><i class="fa fa-facebook"></i>Facebook</a></li>
                   <li class="twitter"><a href="https://twitter.com"><i class="fa fa-twitter"></i>Twitter</a></li>
                   <li class="google-plus"><a href="https://www.google.com"><i class="fa fa-google-plus"></i>Google +</a></li>
                   <li class="instagram"><a href="https://www.instagram.com"><i class="fa fa-instagram"></i>Instagram</a></li>
                 </ul>
               </div>
-            </div>
-            <div class="block-reassurance">
-              <ul>
-                <li>
-                  <div class="reassurance-item">
-                    <div class="reassurance-icon">
-                      <i class="fa fa-check-square-o"></i>
-                    </div>
-                    <p>Bảo mật tuyệt đối thông tin khách hàng</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="reassurance-item">
-                    <div class="reassurance-icon">
-                      <i class="fa fa-truck"></i>
-                    </div>
-                    <p>Miễn phí vận chuyển, cam kết chất lượng sản phẩm trong quá trình vận chuyển</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="reassurance-item">
-                    <div class="reassurance-icon">
-                      <i class="fa fa-exchange"></i>
-                    </div>
-                    <p>Bảo hành lên tới 3 năm.</p>
-                  </div>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

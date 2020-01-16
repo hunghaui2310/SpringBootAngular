@@ -25,6 +25,8 @@ import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
 import { AboutComponent } from './static/about/about.component';
 import { ContactComponent } from './static/contact/contact.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WriteReviewComponent } from './product/write-review/write-review.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BlogDetailComponent,
     AboutComponent,
     ContactComponent,
+    WriteReviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     NgxPaginationModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],
