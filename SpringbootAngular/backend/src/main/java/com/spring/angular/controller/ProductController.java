@@ -1,5 +1,6 @@
 package com.spring.angular.controller;
 
+import com.spring.angular.dto.CartDTO;
 import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.ApiResponse;
@@ -67,11 +68,17 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/sameProduct")
-    public ApiResponse getSameProduct(@RequestBody SearchRequest searchRequest){
+    /**
+     * lay ra san pham cung the loai trong chi tiet san pham
+     *
+     * @param categoryId
+     * @throws Exception
+     */
+    @GetMapping("/sameProduct/{cateId}")
+    public ApiResponse getSameProduct(@PathVariable(value = "cateId") Long categoryId){
         try {
-            List<ProductDTO> list = productService.searchProduct(searchRequest);
-            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", list);
+            CartDTO cartDTO = productService.lstSamePro(categoryId);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", cartDTO);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);

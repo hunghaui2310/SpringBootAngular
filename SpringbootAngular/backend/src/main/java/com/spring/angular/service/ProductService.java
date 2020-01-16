@@ -1,6 +1,7 @@
 package com.spring.angular.service;
 
 import com.spring.angular.dto.AboutDTO;
+import com.spring.angular.dto.CartDTO;
 import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.SearchRequest;
@@ -20,5 +21,7 @@ public interface ProductService {
     List<String> getImageByProId(Long id);
 
     AboutDTO getAboutDTO() throws Exception;
+
+    CartDTO lstSamePro(Long categoryId) throws Exception;
 
 }

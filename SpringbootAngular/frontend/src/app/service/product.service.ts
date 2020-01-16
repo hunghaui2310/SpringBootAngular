@@ -37,7 +37,7 @@ export class ProductService {
     return this.http.get<Product[]>(config.product_cate_API + '/' + categoryId);
   }
 
-  sameProAPI(categoryId: SearchRequest) {
-    return this.http.post<Product[]>(config.same_product_API, categoryId);
+  sameProAPI(categoryId: number) {
+    return this.http.get(config.same_product_API + '/' + categoryId);
   }
 }

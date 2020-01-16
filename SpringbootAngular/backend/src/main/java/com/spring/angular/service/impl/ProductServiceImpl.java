@@ -1,6 +1,7 @@
 package com.spring.angular.service.impl;
 
 import com.spring.angular.dto.AboutDTO;
+import com.spring.angular.dto.CartDTO;
 import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.DataUtil;
@@ -196,6 +197,64 @@ public class ProductServiceImpl implements ProductService {
         aboutDTO.setTotalNumLike(totalNumLike);
         aboutDTO.setTotalProduct(totalProduct);
         return aboutDTO;
+    }
+
+    @Override
+    public CartDTO lstSamePro(Long categoryId) throws Exception {
+        long numLimitSet = 15;
+        List<Object[]> lstSamePro =  productRepo.getListSamePro(categoryId, numLimitSet);
+        CartDTO cartDTO = new CartDTO();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        long numLimit = lstSamePro.size();
+        if(numLimit > 15){
+            cartDTO.setNumLimit(15);
+        }else {
+            cartDTO.setNumLimit(numLimit);
+        }
+        String proName; String cateName; String des;
+        int price;
+        Long numLike; int dataIsNew;
+        double realPrice;
+        String img;
+        Long lngId;
+        for (Object[] objects : lstSamePro) {
+            ProductDTO productDTO = new ProductDTO();
+            lngId = DataUtil.safeToLong(objects[0]);
+            proName = String.valueOf(objects[1]);
+            price = DataUtil.safeToInt(objects[2]);
+            numLike = DataUtil.safeToLong(objects[3]);
+            cateName = DataUtil.safeToString(objects[4]);
+            int discount = DataUtil.safeToInt(objects[5]);
+            img = String.valueOf(objects[6]);
+            realPrice = DataUtil.safeToDouble(objects[7]);
+            des = DataUtil.safeToString(objects[8]);
+            dataIsNew = DataUtil.safeToInt(objects[9]);
+
+            productDTO.setId(lngId);
+            productDTO.setProductName(proName);
+            productDTO.setPrice(price);
+            productDTO.setNumLike(numLike);
+            if (!DataUtil.isNullOrZero(discount)) {
+                productDTO.setDiscount(discount);
+            }
+            productDTO.setCategoryName(cateName);
+            productDTO.setUrlImage(img);
+            if (DataUtil.isNullOrZero(productDTO.getDiscount())) {
+                productDTO.setRealPrice(price);
+            } else {
+                productDTO.setRealPrice(realPrice);
+            }
+            productDTO.setDescription(des);
+            if (dataIsNew == 1) {
+                productDTO.setNew(true);
+            } else {
+                productDTO.setNew(false);
+            }
+            productDTO.setCategoryId(DataUtil.safeToLong(objects[10]));
+            productDTOList.add(productDTO);
+        }
+        cartDTO.setProductDTOList(productDTOList);
+        return cartDTO;
     }
 
 

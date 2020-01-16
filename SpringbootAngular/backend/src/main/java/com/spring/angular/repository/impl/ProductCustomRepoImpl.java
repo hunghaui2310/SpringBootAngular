@@ -125,6 +125,21 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
         return total.longValue();
     }
 
+    @Override
+    public List<Object[]> getListSamePro(Long categoryId, long numLimit) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new, c.category_id" +
+                " FROM product p, file_info f, category c" +
+                " WHERE f.file_type_id = 1 AND p.product_id = f.product_id" +
+                " AND c.category_id = p.category_id" +
+                " AND c.category_id = :categoryId" +
+                " LIMIT :number");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("categoryId", categoryId);
+        query.setParameter("number", numLimit);
+        return query.getResultList();
+    }
+
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" WHERE 1 = 1");

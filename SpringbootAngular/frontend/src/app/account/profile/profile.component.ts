@@ -23,5 +23,6 @@ export class ProfileComponent implements OnInit {
     // localStorage.removeItem('currentUser');
     localStorage.removeItem('currentUser');
     this.router.navigate(['/logout']);
+    console.log('currentUser', localStorage.removeItem('currentUser'));
   }
 }

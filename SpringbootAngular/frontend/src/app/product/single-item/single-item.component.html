@@ -19,8 +19,8 @@
         <div class="product-details-left">
           <div class="product-details-images slider-navigation-1">
             <div class="lg-image" *ngFor="let img of dataProduct['urlImage']">
-              <a class="popup-img venobox vbox-item" href="assets/images/product/large-size/{{img}}" data-gall="myGallery">
-                <img src="images/product/large-size/{{img}}" alt="product image">
+              <a class="popup-img venobox vbox-item" href="assets/images/product/large-size/{{categoryId}}/{{img}}" data-gall="myGallery">
+                <img src="assets/images/product/large-size/{{categoryId}}/{{img}}" alt="product image">
               </a>
             </div>
 
@@ -254,7 +254,7 @@
       <div class="col-lg-12">
         <div class="li-section-title">
           <h2>
-            <span>{{sameProList.length}} sản phẩm cùng thể loại:</span>
+            <span>{{numSamePro}} sản phẩm cùng thể loại:</span>
           </h2>
         </div>
         <div class="row">
@@ -264,7 +264,7 @@
               <div class="single-product-wrap">
                 <div class="product-image">
                   <a href="single-product.html">
-                    <img src="assets/images/product/large-size/{{samePro.urlImage}}" alt="Li's Product Image">
+                    <img src="assets/images/product/large-size/{{categoryId}}/{{samePro.urlImage}}" alt="Li's Product Image">
                   </a>
                   <span class="sticker">New</span>
                 </div>

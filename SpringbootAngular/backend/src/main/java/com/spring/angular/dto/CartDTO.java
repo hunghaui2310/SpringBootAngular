@@ -7,6 +7,7 @@ public class CartDTO {
     private Long id;
     private Long userId;
     private long numCart;
+    private long numLimit;
     private Long productId;
     private double subtotal;
     private List<ProductDTO> productDTOList;
@@ -57,5 +58,13 @@ public class CartDTO {
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public long getNumLimit() {
+        return numLimit;
+    }
+
+    public void setNumLimit(long numLimit) {
+        this.numLimit = numLimit;
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../../service/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {Product} from '../../../model/Product';
+import {SearchRequest} from '../../../model/search.request';
 
 @Component({
   selector: 'app-single-item',
@@ -24,6 +25,14 @@ export class SingleItemComponent implements OnInit {
   discount;
   categoryId;
   sameProList: Product[];
+  searchRequest;
+  numSamePro;
+
+  ngOnInit() {
+    this.getProDetail();
+    // tslint:disable-next-line:no-unused-expression
+    this.categoryId;
+  }
 
   getProDetail() {
     this.productId = this.route.snapshot.params['id'];
@@ -39,24 +48,24 @@ export class SingleItemComponent implements OnInit {
     this.cateName = this.dataProduct['categoryName'];
     this.realPrice = this.dataProduct['realPrice'];
     this.discount = this.dataProduct['discount'];
-    this.categoryId = this.dataProduct['categoyId'];
+    this.categoryId = this.dataProduct['categoryId'];
+    console.log('cateId', this.categoryId);
+    this.getSamePro(this.dataProduct['categoryId']);
     });
+
+
   }
 
-  getSamePro() {
-    this.categoryId = this.route.snapshot.params['categoryId'];
-    console.log(this.categoryId);
-    this.productService.sameProAPI(this.categoryId).subscribe(
-      sameProData => {
-        this.sameProList = sameProData['data'];
-      }
-    );
+  getSamePro(ss: number) {
+    // console.log('cateId', this.categoryId);
+    this.productService.sameProAPI(ss).subscribe(
+        dataSame => {
+          console.log(dataSame['data']);
+          this.sameProList = dataSame['data']['productDTOList'];
+          this.numSamePro = dataSame['data']['numLimit'];
+          console.log('sameProList', this.sameProList);
+          console.log('numSamePro', this.numSamePro);
+        }
+      );
   }
-
-  ngOnInit() {
-    this.getProDetail();
-    this.getSamePro();
-  }
-
-
 }

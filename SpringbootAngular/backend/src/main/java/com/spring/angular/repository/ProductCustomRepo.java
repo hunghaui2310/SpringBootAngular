@@ -23,4 +23,6 @@ public interface ProductCustomRepo {
     List<Object[]> getListAbout() throws Exception;
 
     Long totalProduct(boolean isNew) throws Exception;
+
+    List<Object[]> getListSamePro(Long categoryId, long numLimit) throws Exception;
 }

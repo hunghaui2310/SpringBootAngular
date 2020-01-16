@@ -24,7 +24,7 @@ import { BlogListComponent } from './blog/blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
 import { AboutComponent } from './static/about/about.component';
 import { ContactComponent } from './static/contact/contact.component';
-import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -53,6 +53,7 @@ import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
     HttpClientModule,
     NgxPaginationModule,
     FormsModule,
+    BrowserAnimationsModule,
     MatDialogModule
   ],
   providers: [],
