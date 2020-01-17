@@ -15,6 +15,7 @@ import {Cart} from '../../../model/cart';
 import {CartService} from '../../service/cart.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import {OtherService} from '../../service/other.service';
 
 @Component({
   selector: 'app-items',
@@ -44,6 +45,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   currentUser: User;
   conditionAddCart;
   notificationMessage;
+  comPareRequest;
 
   constructor(private productService: ProductService,
               private router: Router,
@@ -51,6 +53,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               private cartService: CartService,
               private toastr: ToastrService,
+              private compareService: OtherService,
               configCarousel: NgbCarouselConfig) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     configCarousel.interval = 4000;
@@ -229,6 +232,19 @@ export class ItemsComponent implements OnInit, AfterViewInit {
 
   notificationError() {
     this.toastr.error('Lỗi', 'Thông báo');
+  }
+
+  addProToCompare(productId: number) {
+    this.comPareRequest = new Cart(this.currentUser.id, productId);
+    console.log('compareRequest', this.comPareRequest);
+    this.compareService.addCompareAPI(this.comPareRequest).subscribe(
+      dataCompare => {
+        this.notificationMessage = dataCompare['data'];
+        console.log('qqqqqqqqMessage', this.notificationMessage);
+        this.notificationSuccess('Thêm so sánh thành công');
+      },
+      error => this.notificationError()
+    );
   }
 
 }

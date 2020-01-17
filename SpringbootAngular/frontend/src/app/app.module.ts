@@ -28,6 +28,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WriteReviewComponent } from './product/write-review/write-review.component';
 import {ToastrModule} from 'ngx-toastr';
+import { CompareComponent } from './product/compare/compare.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {ToastrModule} from 'ngx-toastr';
     AboutComponent,
     ContactComponent,
     WriteReviewComponent,
+    CompareComponent,
   ],
   imports: [
     BrowserModule,

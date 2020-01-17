@@ -4534,15 +4534,14 @@ thead {
 }
 .compare-pdoduct-image {
   max-width: 200px;
-  display: inline-block;
-  padding: 20px 0;
+  padding-left: 40px;
 }
 .compare-pdoduct-image a {
   display: inline-block;
 }
-.compare-pdoduct-image .ho-button {
-  margin-top: 25px;
-}
+.compare-pdoduct-image .ho-button span{
+   margin-top: 25px;
+ }
 h5.compare-product-name {
   font-size: 14px;
   font-weight: 700;

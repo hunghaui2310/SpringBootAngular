@@ -20,6 +20,7 @@ export class ShowCartComponent implements OnInit {
   currentUser;
   cartRequest;
   notification;
+  codeDiscount;
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,

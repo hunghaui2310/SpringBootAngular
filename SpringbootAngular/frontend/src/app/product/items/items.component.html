@@ -180,12 +180,18 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg-4">
-                        <div class="shop-add-action mb-xs-30">
+                      <div class="col-lg-4 row">
+                        <div class="shop-add-action mb-xs-30 col-lg-6">
                           <ul class="add-actions-link">
                             <li class="add-cart"><span (click)="addProToCart(eachProduct.id)">Thêm vào giỏ</span></li>
-                            <li class="wishlist"><a href="wishlist.html"><i class="fa fa-heart-o"></i>Yêu thích</a></li>
-                            <li><span class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" (click)="showData(eachProduct)"><i class="fa fa-eye"></i>Mua ngay</span></li>
+                            <li class="wishlist"><span ><i class="fa fa-heart-o"></i> Yêu thích</span></li>
+                            <li><span class="quick-view" (click)="showData(eachProduct)"><i class="fa fa-eye"></i> Mua ngay</span></li>
+                          </ul>
+                        </div>
+                        <div class="shop-add-action mb-xs-30 col-lg-6">
+                          <ul class="add-actions-link">
+                            <li class="add-cart"><span routerLink="/compare">Xem so sánh</span></li>
+                            <li class="wishlist"><span (click)="addProToCompare(eachProduct.id)"><i class="fa fa-plus"></i> Thêm so sánh</span></li>
                           </ul>
                         </div>
                       </div>

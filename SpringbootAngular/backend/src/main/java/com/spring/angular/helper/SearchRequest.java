@@ -7,6 +7,7 @@ public class SearchRequest {
     private int price;
     private String condition;
     private long numLimit;
+    private Long productId;
 
     public String getProductName() {
         return productName;
@@ -46,5 +47,13 @@ public class SearchRequest {
 
     public void setNumLimit(long numLimit) {
         this.numLimit = numLimit;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

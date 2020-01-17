@@ -18,3 +18,12 @@
 .add-actions .add-actions-link li span {
   cursor: pointer;
 }
+
+.shop-add-action .add-actions-link li span{
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.shop-add-action .add-actions-link li span:hover{
+  color: #00a9da;
+}

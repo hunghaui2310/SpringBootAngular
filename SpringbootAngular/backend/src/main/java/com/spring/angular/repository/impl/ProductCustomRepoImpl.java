@@ -90,7 +90,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     public Object[] getProInCart(Long productId, String urlImage) throws Exception {
         try {
             StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.append("select p.product_id, p.product_name, p.discount,p.price,p.price-(p.price*p.discount/100) AS real_price, f.url" +
+            sqlBuilder.append("select p.product_id, p.product_name, p.discount,p.price,p.price-(p.price*p.discount/100) AS real_price, f.url, p.category_id" +
                     " from product p, file_info f" +
                     " where p.product_id = f.product_id" +
                     " and f.file_type_id =2 and p.product_id = :productId" +
@@ -140,6 +140,19 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
         return query.getResultList();
     }
 
+    @Override
+    public Object[] findProById(Long productId) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT p.product_id,p.product_name,p.price,p.num_like,c.category_name,p.discount,f.url,p.price-(p.price*p.discount/100) AS real_price, p.des, p.is_new, c.category_id " +
+                "FROM product p, file_info f, category c " +
+                "WHERE p.product_id = f.product_id " +
+                "AND f.file_type_id = 1 AND c.category_id = p.category_id and p.product_id = :productId");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("productId", productId);
+        return (Object[]) query.getSingleResult();
+
+    }
+
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" WHERE 1 = 1");
@@ -153,6 +166,10 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
         if(!DataUtil.isNullOrZero(searchRequest.getCategoryId())){
             stringBuilder.append(" and c.category_id = :categoryId");
             hashMap.put("categoryId", searchRequest.getCategoryId());
+        }
+        if(!DataUtil.isNullOrZero(searchRequest.getProductId())) {
+            stringBuilder.append(" and p.product_id = :productId");
+            hashMap.put("productId", searchRequest.getProductId());
         }
         if(!DataUtil.isNullOrEmpty(searchRequest.getCondition())) {
             String condition = searchRequest.getCondition();

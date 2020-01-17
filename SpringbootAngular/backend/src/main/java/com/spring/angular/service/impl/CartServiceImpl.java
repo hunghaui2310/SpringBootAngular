@@ -100,7 +100,7 @@ public class CartServiceImpl implements CartService {
                 } else {
                     productDTO.setRealPrice(price);
                 }
-
+                productDTO.setCategoryId(DataUtil.safeToLong(object[6]));
                 productDTO.setUrlImage(urlImg);
                 productDTO.setNumProInCart(numPro);
                 total = productDTO.getRealPrice() * numPro;

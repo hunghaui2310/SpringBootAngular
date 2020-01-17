@@ -17,6 +17,7 @@ import {BlogListComponent} from './blog/blog-list/blog-list.component';
 import {BlogDetailComponent} from './blog/blog-detail/blog-detail.component';
 import {AboutComponent} from './static/about/about.component';
 import {ContactComponent} from './static/contact/contact.component';
+import {CompareComponent} from './product/compare/compare.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -41,6 +42,8 @@ const routes: Routes = [
       path: 'about', component: AboutComponent, data: { title: 'Giới thiệu'}
     }, {
       path: 'contact', component: ContactComponent, data: { title: 'Liên hệ'}
+    }, {
+      path: 'compare', component: CompareComponent, data: { title: 'So sánh sản phẩm'}
     }
     ]
   },
