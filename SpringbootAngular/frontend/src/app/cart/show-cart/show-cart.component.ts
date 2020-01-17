@@ -5,11 +5,12 @@ import {Product} from '../../../model/product';
 import {User} from '../../../model/model.user';
 import {Cart} from '../../../model/cart';
 import {ToastrService} from 'ngx-toastr';
+import {Blog} from '../../../model/blog';
 
 @Component({
   selector: 'app-show-cart',
   templateUrl: './show-cart.component.html',
-  styleUrls: ['./show-cart.component.css']
+  styleUrls: ['./show-cart.component.css'],
 })
 export class ShowCartComponent implements OnInit {
 
@@ -21,6 +22,9 @@ export class ShowCartComponent implements OnInit {
   cartRequest;
   notification;
   codeDiscount;
+  codeRequest;
+  dataCode: any;
+  discount;
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,
@@ -66,11 +70,37 @@ export class ShowCartComponent implements OnInit {
     });
   }
 
+  notificationWarning(notification: string) {
+    this.toastr.error(notification, 'Thông báo',{
+      timeOut: 1000, positionClass: 'toast-top-center'
+    });
+  }
+
   notificationError() {
     this.toastr.error('Lỗi', 'Thông báo');
   }
 
   updateNumCart(productId: number) {
 
+  }
+
+  getCodeDiscount(code: string) {
+    this.codeRequest = new Blog(null, null, code, null, null, null);
+    console.log('this.codeRequest', this.codeRequest);
+    this.cartService.codeDiscountAPI(this.codeRequest).subscribe(
+    dataCode => {
+      this.dataCode = dataCode['data'];
+      if (this.dataCode === 'EMPTY') {
+        this.notificationWarning('Chưa nhập mã khuyến mại!');
+        this.dataCode = null;
+      } else if (this.dataCode === 'CODE_NOT_EXIST') {
+        this.notificationWarning('Mã khuyến mại không tồn tại');
+        this.dataCode = null;
+      } else {
+        this.discount = this.dataCode;
+        console.log('dataCode', this.discount);
+      }
+    }, error => this.notificationError()
+    );
   }
 }

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {config} from '../../app-config/application.config';
 import {Cart} from '../../model/cart';
 import {User} from '../../model/model.user';
+import {Blog} from '../../model/blog';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,11 @@ export class CartService {
     return this.http.post(config.add_cart, cart);
   }
 
-  updateNumCartAPI(cart : Cart) {
+  updateNumCartAPI(cart: Cart) {
     return this.http.post(config.update_num_cart_API, cart);
+  }
+
+  codeDiscountAPI(blog: Blog) {
+    return this.http.post(config.cart_discount_API, blog);
   }
 }

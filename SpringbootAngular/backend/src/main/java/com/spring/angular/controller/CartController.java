@@ -1,11 +1,13 @@
 package com.spring.angular.controller;
 
+import com.spring.angular.dto.BlogDetailDTO;
 import com.spring.angular.dto.CartDTO;
 import com.spring.angular.helper.ApiResponse;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.model.Cart;
 import com.spring.angular.model.User;
 import com.spring.angular.service.CartService;
+import com.spring.angular.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +24,9 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private ProductService productService;
 
     /**
      * show du lieu cua cac san pham trong gio hang theo user dang nhap
@@ -98,6 +103,17 @@ public class CartController {
         try {
             String message = cartService.updateNumCart(cartDTO);
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
+
+    @PostMapping("/code-discount")
+    public ApiResponse getCodeDiscount(@RequestBody BlogDetailDTO blogDetailDTO) throws Exception{
+        try {
+            String code = blogDetailDTO.getContent();
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", productService.getDiscountCode(code));
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);

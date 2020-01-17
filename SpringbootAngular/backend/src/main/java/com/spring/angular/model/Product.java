@@ -8,7 +8,6 @@ import java.util.Date;
 public class Product {
 
     private Long id;
-    private Long cartId;
     private Long categoryId;
     private Date createDate;
     private String description;
@@ -18,6 +17,7 @@ public class Product {
     private String productName;
     private int isNew;
     private int numBuy;
+    private String codeDiscount;
 
     @Id
     @GeneratedValue
@@ -109,5 +109,14 @@ public class Product {
 
     public void setNumBuy(int numBuy) {
         this.numBuy = numBuy;
+    }
+
+    @Column(name = "code_discount")
+    public String getCodeDiscount() {
+        return codeDiscount;
+    }
+
+    public void setCodeDiscount(String codeDiscount) {
+        this.codeDiscount = codeDiscount;
     }
 }

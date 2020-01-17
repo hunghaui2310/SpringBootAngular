@@ -11,6 +11,7 @@ export const config = {
   product_detail: URL_BASE + '/product/detail',
   show_order: URL_BASE + '/order/showAll',
   cart_show: URL_BASE + '/cart/show',
+  cart_discount_API: URL_BASE + '/cart/code-discount',
   add_cart: URL_BASE + '/cart/addCart',
   get_num_cart: URL_BASE + '/cart/getNum',
   remove_cart: URL_BASE + '/cart/remove',

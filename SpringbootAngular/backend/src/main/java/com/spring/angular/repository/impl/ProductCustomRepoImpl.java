@@ -153,6 +153,20 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
 
     }
 
+    @Override
+    public String getCodeDiscount(String codeDiscount) throws Exception {
+        try {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("select codeDiscount from Product where codeDiscount = :codeDiscount");
+            Query query = entityManager.createQuery(stringBuilder.toString());
+            query.setParameter("codeDiscount", codeDiscount);
+            return (String) query.getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" WHERE 1 = 1");

@@ -4,6 +4,7 @@ import com.spring.angular.dto.AboutDTO;
 import com.spring.angular.dto.CartDTO;
 import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.dto.ProductDetailDTO;
+import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
 import com.spring.angular.helper.SearchRequest;
 import com.spring.angular.model.FileInfo;
@@ -255,6 +256,23 @@ public class ProductServiceImpl implements ProductService {
         }
         cartDTO.setProductDTOList(productDTOList);
         return cartDTO;
+    }
+
+    @Override
+    public String getDiscountCode(String codeDiscount) throws Exception {
+        String message;
+        if(codeDiscount != null && !codeDiscount.trim().equals("")) {
+            String strings = productRepo.getCodeDiscount(codeDiscount);
+            if (strings != null){
+                String[] code = strings.split("-");
+                message = code[0];
+            }else {
+                message = Contains.CODE_NOT_EXIST;
+            }
+        }else {
+            message = Contains.EMPTY;
+        }
+        return message;
     }
 
 

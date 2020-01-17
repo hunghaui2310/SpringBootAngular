@@ -1,10 +1,6 @@
 package com.spring.angular.repository;
 
-import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.helper.SearchRequest;
-import com.spring.angular.model.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -27,4 +23,6 @@ public interface ProductCustomRepo {
     List<Object[]> getListSamePro(Long categoryId, long numLimit) throws Exception;
 
     Object[] findProById(Long productId) throws Exception;
+
+    String getCodeDiscount(String codeDiscount) throws Exception;
 }

@@ -24,4 +24,6 @@ public interface ProductService {
 
     CartDTO lstSamePro(Long categoryId) throws Exception;
 
+    String getDiscountCode(String codeDiscount) throws Exception;
+
 }

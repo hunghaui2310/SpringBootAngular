@@ -48,11 +48,11 @@
             <div class="col-12">
               <div class="coupon-all">
                 <div class="coupon">
-                  <input class="input-text" name="coupon_code" value="{{codeDiscount}}" placeholder="Nhập mã khuyến mại" type="text">
-                  <input class="button" name="apply_coupon" value="Áp dụng" type="submit">
+                  <input class="input-text" name="coupon_code" [(ngModel)]="codeDiscount" placeholder="Nhập mã khuyến mại" type="text">
+                  <button class="button" name="apply_coupon" (click)="getCodeDiscount(codeDiscount)" type="submit">Áp dụng</button>
                 </div>
                 <div class="coupon2">
-                  <input class="button" name="update_cart" value="Cập nhật" type="submit">
+                  <input class="button" name="update_cart" value="Cập nhật giỏ hàng" type="submit">
                 </div>
               </div>
             </div>
@@ -63,8 +63,8 @@
                 <h2>Hóa đơn</h2>
                 <ul>
                   <li>Tổng tiền <span>{{subtotal * 1000000 | number}}</span></li>
-                  <li>Khuyến mại áp dụng <span>$130.00</span></li>
-                  <li>Thanh toán <span>$130.00</span></li>
+                  <li>Khuyến mại áp dụng <span *ngIf="dataCode != null">{{dataCode}} %</span></li>
+                  <li>Thanh toán <span>{{subtotal * 1000000 - (dataCode * subtotal * 10000) | number}}</span></li>
                 </ul>
                 <a routerLink="/checkout">Thanh toán</a>
               </div>

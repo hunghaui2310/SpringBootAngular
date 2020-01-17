@@ -15,6 +15,8 @@ public class Contains {
     public static final String NAME = "NAME";
     public static final String UPDATE = "UPDATE";
     public static final String CREATE = "CREATE";
+    public static final String EMPTY = "EMPTY";
+    public static final String CODE_NOT_EXIST = "CODE_NOT_EXIST";
 
 
     public interface BLOG_DETAIL{
