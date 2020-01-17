@@ -87,7 +87,7 @@
                   <ul class="minicart-product-list">
                     <li *ngFor="let viewCartData of productInCart">
                       <a href="single-product.html" class="minicart-product-image">
-                        <img src="assets/images/product/small-size/{{viewCartData.urlImage}}" alt="cart products">
+                        <img src="assets/images/product/small-size/{{viewCartData.categoryId}}/{{viewCartData.urlImage}}" alt="cart products">
                       </a>
                       <div class="minicart-product-details">
                         <h6><a href="single-product.html">{{viewCartData.productName}}</a></h6>
