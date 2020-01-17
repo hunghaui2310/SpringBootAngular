@@ -28,7 +28,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WriteReviewComponent } from './product/write-review/write-review.component';
 import {ToastrModule} from 'ngx-toastr';
-import {timeout} from 'rxjs/operators';
 
 @NgModule({
   declarations: [
@@ -59,7 +58,7 @@ import {timeout} from 'rxjs/operators';
     NgxPaginationModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({timeOut: 2000, progressBar: false, positionClass: 'toast-top-center'}),
     MatDialogModule,
     NgbModule
   ],

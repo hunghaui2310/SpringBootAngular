@@ -10,3 +10,11 @@
   justify-content: center;
   display: flex;
 }
+
+.add-actions .add-actions-link li span i{
+  padding-top: 8px;
+}
+
+.add-actions .add-actions-link li span {
+  cursor: pointer;
+}

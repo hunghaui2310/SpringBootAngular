@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {CartService} from '../../service/cart.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../../../model/product';
 import {User} from '../../../model/model.user';
 import {Cart} from '../../../model/cart';
-import {MatDialog} from '@angular/material';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -23,7 +22,8 @@ export class ShowCartComponent implements OnInit {
   notification;
 
   constructor(private cartService: CartService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private router: Router) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -52,7 +52,7 @@ export class ShowCartComponent implements OnInit {
     this.cartService.removeProCartAPI(this.cartRequest).subscribe(
       removes => {
         this.notification = removes['data'];
-        this.notificationSuccess(this.notification);
+        this.notificationSuccess('Xóa thành công');
         console.log('notification', this.notification);
       },
       error => this.notificationError()
@@ -60,7 +60,9 @@ export class ShowCartComponent implements OnInit {
   }
 
   notificationSuccess(notification: string) {
-    this.toastr.success(notification, 'Thông báo');
+    this.toastr.success(notification, '', {
+      timeOut: 1000, positionClass: 'toast-top-center'
+    });
   }
 
   notificationError() {

@@ -29,7 +29,7 @@
               <tbody>
               <tr *ngFor="let proInCart of productInCart">
                 <td class="li-product-remove"><span (click)="removeProInCart(proInCart.id)" style="cursor: pointer"><i class="fa fa-times"></i></span></td>
-                <td class="li-product-thumbnail"><a href="#"><img src="assets/images/product/small-size/{{proInCart.urlImage}}" alt="Li's Product Image"></a></td>
+                <td class="li-product-thumbnail"><a href="#"><img src="assets/images/product/small-size/{{proInCart.categoryId}}/{{proInCart.urlImage}}" alt="Li's Product Image"></a></td>
                 <td class="li-product-name"><a href="#">{{proInCart.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>
                 <td class="quantity">
@@ -48,7 +48,7 @@
             <div class="col-12">
               <div class="coupon-all">
                 <div class="coupon">
-                  <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Nhập mã khuyến mại" type="text">
+                  <input class="input-text" name="coupon_code" value="" placeholder="Nhập mã khuyến mại" type="text">
                   <input class="button" name="apply_coupon" value="Áp dụng" type="submit">
                 </div>
                 <div class="coupon2">
@@ -62,7 +62,7 @@
               <div class="cart-page-total">
                 <h2>Hóa đơn</h2>
                 <ul>
-                  <li>Tổng tiền <span>{{subtotal}}</span></li>
+                  <li>Tổng tiền <span>{{subtotal * 1000000 | number}}</span></li>
                   <li>Khuyến mại áp dụng <span>$130.00</span></li>
                   <li>Thanh toán <span>$130.00</span></li>
                 </ul>
