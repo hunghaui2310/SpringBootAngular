@@ -1,6 +1,7 @@
 package com.spring.angular.repository.impl;
 
 import com.spring.angular.dto.CartDTO;
+import com.spring.angular.model.User;
 import com.spring.angular.repository.CartRepo;
 import org.springframework.stereotype.Repository;
 
@@ -111,6 +112,26 @@ public class CartRepoImpl implements CartRepo {
         Query query = entityManager.createQuery(sqlBuilder.toString());
         query.setParameter("userId", userId);
         return (Long) query.getSingleResult();
+    }
+
+    @Transactional
+    @Override
+    public void saveUserCart(User user, Long cartId) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("insert into user_cart(user_id, cart_id) values (:userId, :cartId)");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("userId", user.getId());
+        query.setParameter("cartId", cartId);
+        query.executeUpdate();
+    }
+
+    @Override
+    public Long getLastCartId() throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("select cart_id from user_cart order by id desc limit 1");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        BigInteger cartId = (BigInteger) query.getSingleResult();
+        return cartId.longValue();
     }
 
 }

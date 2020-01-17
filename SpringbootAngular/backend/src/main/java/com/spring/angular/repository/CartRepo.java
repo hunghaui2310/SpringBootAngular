@@ -1,8 +1,8 @@
 package com.spring.angular.repository;
 
 import com.spring.angular.dto.CartDTO;
+import com.spring.angular.model.User;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public interface CartRepo {
@@ -18,4 +18,8 @@ public interface CartRepo {
     void createProInCart(CartDTO cartDTO) throws Exception;
 
     Long getCartIdByUser(Long userId) throws Exception;
+
+    void saveUserCart(User user, Long cartId) throws Exception;
+
+    Long getLastCartId() throws Exception;
 }

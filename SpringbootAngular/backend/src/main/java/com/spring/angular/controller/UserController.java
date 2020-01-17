@@ -30,7 +30,7 @@ public class UserController {
     public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody User newUser){
+    public ResponseEntity<?> createUser(@RequestBody User newUser) throws Exception {
         User user1 = userService.findByUserName(newUser.getUsername());
         if(user1 != null){
             logger.error("User Name Already exist " + newUser.getUsername());
