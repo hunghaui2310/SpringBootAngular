@@ -66,4 +66,8 @@ export class ShowCartComponent implements OnInit {
   notificationError() {
     this.toastr.error('Lỗi', 'Thông báo');
   }
+
+  updateNumCart(productId: number) {
+
+  }
 }

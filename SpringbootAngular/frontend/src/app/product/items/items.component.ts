@@ -14,11 +14,13 @@ import {User} from '../../../model/model.user';
 import {Cart} from '../../../model/cart';
 import {CartService} from '../../service/cart.service';
 import {ToastrService} from 'ngx-toastr';
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.css']
+  styleUrls: ['./items.component.css'],
+  providers: [NgbCarouselConfig]
 })
 export class ItemsComponent implements OnInit, AfterViewInit {
    @Input() productList: Product[];
@@ -48,8 +50,13 @@ export class ItemsComponent implements OnInit, AfterViewInit {
               private http: HttpClient,
               public dialog: MatDialog,
               private cartService: CartService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              configCarousel: NgbCarouselConfig) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    configCarousel.interval = 4000;
+    configCarousel.wrap = true;
+    configCarousel.keyboard = false;
+    configCarousel.pauseOnHover = true;
   }
 
  // productList: any = [];

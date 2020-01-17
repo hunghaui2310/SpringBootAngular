@@ -50,7 +50,7 @@ public class CartController {
     @PostMapping("/addCart")
     public ApiResponse addToCart(@RequestBody CartDTO cartDTO) throws Exception{
         try {
-            String message = cartService.updateNumCart(cartDTO);
+            String message = cartService.updateCart(cartDTO);
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
         }catch (Exception e){
             e.printStackTrace();
@@ -90,6 +90,17 @@ public class CartController {
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, Contains.ERROR, null);
+        }
+    }
+
+    @PostMapping("/updateNumCart")
+    public ApiResponse updateNumCart(@RequestBody List<CartDTO> cartDTO) throws Exception{
+        try {
+            String message = cartService.updateNumCart(cartDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
 }

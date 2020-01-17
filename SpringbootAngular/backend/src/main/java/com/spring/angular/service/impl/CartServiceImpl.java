@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
      * @throws Exception
      */
     @Override
-    public String updateNumCart(CartDTO cartDTO) throws Exception {
+    public String updateCart(CartDTO cartDTO) throws Exception {
         String message = null;
         List<Object[]> lstObject = cartRepo.checkDuplicate(cartDTO.getUserId(), cartDTO.getProductId());
         if(lstObject != null) {
@@ -125,6 +125,18 @@ public class CartServiceImpl implements CartService {
     public String removeProFromCart(CartDTO cartDTO) throws Exception {
         String message;
         cartRepo.deleteProInCart(cartDTO);
+        message = Contains.SUCCESS;
+        return message;
+    }
+
+    @Override
+    public String updateNumCart(List<CartDTO> list) throws Exception {
+        String message;
+        for(CartDTO cartDTO : list) {
+            Long userId = cartRepo.getCartIdByUser(cartDTO.getUserId());
+            cartDTO.setId(userId);
+            cartRepo.updateNumCart(cartDTO);
+        }
         message = Contains.SUCCESS;
         return message;
     }

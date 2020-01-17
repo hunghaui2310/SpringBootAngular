@@ -26,4 +26,8 @@ export class CartService {
   addCartAPI(cart: Cart) {
     return this.http.post(config.add_cart, cart);
   }
+
+  updateNumCartAPI(cart : Cart) {
+    return this.http.post(config.update_num_cart_API, cart);
+  }
 }

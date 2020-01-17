@@ -5,6 +5,8 @@ import {Product} from '../../../model/Product';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 import {MatDialog} from '@angular/material';
 import {WriteReviewComponent} from '../write-review/write-review.component';
+import {Cart} from '../../../model/cart';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-single-item',
@@ -14,10 +16,14 @@ import {WriteReviewComponent} from '../write-review/write-review.component';
 })
 export class SingleItemComponent implements OnInit {
 
+  currentUser;
+
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
               private dialog: MatDialog,
+              private toastr: ToastrService,
               config: NgbCarouselConfig) {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     config.interval = 4000;
     config.wrap = true;
     config.keyboard = false;
@@ -37,6 +43,9 @@ export class SingleItemComponent implements OnInit {
   sameProList: Product[];
   numSamePro;
   listImg;
+  conditionCart;
+  cartService;
+  notificationMessage;
 
   ngOnInit() {
     this.getProDetail();
@@ -80,5 +89,27 @@ export class SingleItemComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(WriteReviewComponent);
+  }
+
+  addProCart(productId: number) {
+    this.conditionCart = new Cart(this.currentUser.id, productId);
+    console.log('this.currentUser.id', this.currentUser.id);
+    console.log('productIdToAddCart', productId);
+    this.cartService.addCartAPI(this.conditionCart).subscribe(
+      message => {
+        this.notificationMessage = message['data'];
+        console.log('this.notificationMessage', this.notificationMessage);
+        this.notificationSuccess(this.notificationMessage);
+      },
+      error => this.notificationError()
+    );
+  }
+
+  notificationSuccess(notification: string) {
+    this.toastr.success(notification, 'Thông báo');
+  }
+
+  notificationError() {
+    this.toastr.error('Lỗi', 'Thông báo');
   }
 }
