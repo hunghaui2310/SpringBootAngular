@@ -9,7 +9,6 @@ export const config = {
   same_product_API: URL_BASE + '/product/sameProduct',
   product_cate_API: URL_BASE + 'category/product-category',
   product_detail: URL_BASE + '/product/detail',
-  show_order: URL_BASE + '/order/showAll',
   cart_show: URL_BASE + '/cart/show',
   cart_discount_API: URL_BASE + '/cart/code-discount',
   add_cart: URL_BASE + '/cart/addCart',
@@ -20,5 +19,8 @@ export const config = {
   about_API: URL_BASE + '/about/show-about',
   update_num_cart_API: URL_BASE + '/cart/updateNumCart',
   add_compare_API: URL_BASE + '/compare/add',
-  show_compare_API: URL_BASE + '/compare/show'
+  show_compare_API: URL_BASE + '/compare/show',
+  data_user_API: URL_BASE + '/account/get-data',
+  data_order_API: URL_BASE + '/order/show',
+  update_order_API: URL_BASE + 'order/update'
 };

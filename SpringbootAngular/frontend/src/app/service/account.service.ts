@@ -14,4 +14,8 @@ export class AccountService {
   createAccount(user: User) {
     return this.http.post(config.routeAPI + '/account/register', user);
   }
+
+  getDataUser(user: User) {
+    return this.http.post(config.data_user_API, user);
+  }
 }

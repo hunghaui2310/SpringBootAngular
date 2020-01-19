@@ -32,11 +32,11 @@ public class CartRepoImpl implements CartRepo {
         StringBuilder sql = new StringBuilder();
         sql.append("update cart_product cp set cp.num_pro = :numPro" +
                 " where cp.product_id = :productId" +
-                " and cp.cart_id = (select uc.cart_id from user_cart uc where uc.user_id = :userId)");
+                " and cp.cart_id = :cartId");
         Query query = entityManager.createNativeQuery(sql.toString());
         query.setParameter("numPro", cartDTO.getNumCart());
         query.setParameter("productId", cartDTO.getProductId());
-        query.setParameter("userId", cartDTO.getUserId());
+        query.setParameter("cartId", cartDTO.getId());
         query.executeUpdate();
     }
 
@@ -96,42 +96,6 @@ public class CartRepoImpl implements CartRepo {
         query.setParameter("cartId", cartDTO.getId());
         query.setParameter("numPro", cartDTO.getNumCart());
         query.executeUpdate();
-    }
-
-    /**
-     * lay ra cart cua user dang nhap
-     *
-     * @param userId
-     * @return so luong san pham trong gio hang
-     * @throws Exception
-     */
-    @Override
-    public Long getCartIdByUser(Long userId) throws Exception {
-        StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("select cartId from UserCart where userId = :userId");
-        Query query = entityManager.createQuery(sqlBuilder.toString());
-        query.setParameter("userId", userId);
-        return (Long) query.getSingleResult();
-    }
-
-    @Transactional
-    @Override
-    public void saveUserCart(User user, Long cartId) throws Exception {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("insert into user_cart(user_id, cart_id) values (:userId, :cartId)");
-        Query query = entityManager.createNativeQuery(stringBuilder.toString());
-        query.setParameter("userId", user.getId());
-        query.setParameter("cartId", cartId);
-        query.executeUpdate();
-    }
-
-    @Override
-    public Long getLastCartId() throws Exception {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("select cart_id from user_cart order by id desc limit 1");
-        Query query = entityManager.createNativeQuery(stringBuilder.toString());
-        BigInteger cartId = (BigInteger) query.getSingleResult();
-        return cartId.longValue();
     }
 
 }

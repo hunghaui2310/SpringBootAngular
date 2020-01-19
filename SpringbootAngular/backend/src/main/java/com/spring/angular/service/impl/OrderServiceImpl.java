@@ -2,14 +2,24 @@ package com.spring.angular.service.impl;
 
 import com.spring.angular.dto.OrderDTO;
 import com.spring.angular.dto.ProductDTO;
+import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
+import com.spring.angular.model.Order;
+import com.spring.angular.model.User;
 import com.spring.angular.repository.OrderRepo;
+import com.spring.angular.repository.UserCartRepo;
+import com.spring.angular.repository.UserRepo;
 import com.spring.angular.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -17,40 +27,78 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepo orderRepo;
 
-    @Override
-    public List<OrderDTO> getList(Long userId) {
-        List<OrderDTO> orderDTOList = new ArrayList<>();
-        List<ProductDTO> dtoList = new ArrayList<>();
-        List<Object[]> list = orderRepo.getListOrder(userId);
-        String orderCode = null;
-        for(Object[] object : list){
-            Long proId = DataUtil.safeToLong(object[0]);
-            Long numLike = DataUtil.safeToLong(object[1]);
-            int price = DataUtil.safeToInt(object[2]);
-            String proName = DataUtil.safeToString(object[3]);
-            String des = DataUtil.safeToString(object[4]);
-            int discount = DataUtil.safeToInt(object[5]);
-            String cateName = DataUtil.safeToString(object[6]);
-            String url = DataUtil.safeToString(object[7]);
-            orderCode = DataUtil.safeToString(object[8]);
+    @Autowired
+    private UserRepo userRepo;
 
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.setId(proId);
-            productDTO.setNumLike(numLike);
-            productDTO.setPrice(price);
-            productDTO.setProductName(proName);
-            productDTO.setDescription(des);
-            productDTO.setDiscount(discount);
-            productDTO.setCategoryName(cateName);
-            productDTO.setUrlImage(url);
-            dtoList.add(productDTO);
-        }
+    @Autowired
+    private UserCartRepo userCartRepo;
+
+    @Override
+    public OrderDTO getOderByUser(String orderCode, Long userId) throws Exception {
+        Object[] objects = orderRepo.getOrder(orderCode);
         OrderDTO orderDTO = new OrderDTO();
-        long index = 0;
-        orderDTO.setId(index++);
-        orderDTO.setOrderCode(orderCode);
-        orderDTO.setProductDTOList(dtoList);
-        orderDTOList.add(orderDTO);
-        return orderDTOList;
+        orderDTO.setOrderCode(DataUtil.safeToString(objects[2]));
+        if(objects[5] != null) {
+            orderDTO.setCity(DataUtil.safeToString(objects[5]));
+        }
+        if(objects[4] != null) {
+            orderDTO.setNotes(DataUtil.safeToString(objects[4]));
+        }
+        User user = userRepo.getOne(userId);
+        orderDTO.setAddress(user.getAddress());
+        orderDTO.setFullName(user.getFullName());
+        orderDTO.setEmail(user.getUsername());
+        orderDTO.setPhoneNumber(user.getPhoneNumber());
+        Date date = (Date) objects[3];
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        orderDTO.setCreateDate(simpleDateFormat.format(date));
+        return orderDTO;
+    }
+
+    @Override
+    public String updateOrder(OrderDTO orderDTO) throws Exception {
+        String message;
+        OrderDTO orderDTO1 = new OrderDTO();
+        if (!DataUtil.isNullOrEmpty(orderDTO.getFirstName()) && !DataUtil.isNullOrEmpty(orderDTO.getLastName())) {
+            orderDTO1.setFullName(orderDTO.getFirstName() + orderDTO.getLastName());
+        } else if (DataUtil.isNullOrEmpty(orderDTO.getFirstName()) && !DataUtil.isNullOrEmpty(orderDTO.getLastName())) {
+            orderDTO1.setFullName(orderDTO.getLastName());
+        } else {
+            orderDTO1.setFullName(orderDTO.getFirstName());
+        }
+        if (!DataUtil.isNullOrEmpty(orderDTO.getPhoneNumber())) {
+            orderDTO1.setPhoneNumber(orderDTO.getPhoneNumber());
+        }
+        if (!DataUtil.isNullOrEmpty(orderDTO.getAddress())) {
+            orderDTO1.setAddress(orderDTO.getAddress());
+        }
+        orderDTO1.setUserId(orderDTO.getUserId());
+        userCartRepo.updateUser(orderDTO1);
+
+        if (!DataUtil.isNullOrEmpty(orderDTO.getCity())) {
+            orderDTO1.setCity(orderDTO.getCity());
+        }
+        if (!DataUtil.isNullOrEmpty(orderDTO.getNotes())) {
+            orderDTO1.setNotes(orderDTO.getNotes());
+        }
+        Stream<Integer> list = DataUtil.autoGenCode(5);
+        List<Integer> result = list.collect(Collectors.toList());
+        for (Integer integer : result) {
+            if (integer > 0) {
+                orderDTO1.setOrderCode(Contains.HD + "-" + integer);
+            } else {
+                orderDTO1.setOrderCode(Contains.HD + integer);
+            }
+        }
+        orderDTO1.setUserId(orderDTO.getUserId());
+        // xet xem hoa don co ton tai ko, neu ko thi them moi, neu co thi cap nhat
+        if(DataUtil.isNullOrEmpty(orderDTO.getOrderCode())) {
+            orderRepo.createOrder(orderDTO1);
+            message = Contains.CREATE;
+        }else {
+            orderRepo.updateOrder(orderDTO1);
+            message = Contains.UPDATE;
+        }
+        return message;
     }
 }

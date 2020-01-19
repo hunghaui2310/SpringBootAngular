@@ -2,7 +2,12 @@ package com.spring.angular.helper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DataUtil {
 
@@ -102,4 +107,9 @@ public class DataUtil {
     public static boolean isNullOrZero(Long value) {
         return (value == null || value.equals(0L));
     }
+
+    public static Stream<Integer> autoGenCode(int limit) {
+        return Stream.generate(new Random()::nextInt).limit(limit);
+    }
+
 }

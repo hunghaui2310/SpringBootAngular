@@ -6,6 +6,7 @@ import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
 import com.spring.angular.repository.CartRepo;
 import com.spring.angular.repository.ProductRepo;
+import com.spring.angular.repository.UserCartRepo;
 import com.spring.angular.service.CartService;
 import com.spring.angular.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserCartRepo userCartRepo;
+
     /**
      * them moi neu chua co san pham trong gio hang, cap nhat neu da co san pham trong gio hang
      *
@@ -47,10 +51,12 @@ public class CartServiceImpl implements CartService {
             }
             if (lstObject.size() > 0) {
                 cartDTO.setNumCart(cartNum + 1);
+                Long cartId = userCartRepo.findCartByUserId(cartDTO.getUserId());
+                cartDTO.setId(cartId);
                 cartRepo.updateNumCart(cartDTO);
                 message = Contains.UPDATE;
             } else {
-                Long cartId = cartRepo.getCartIdByUser(cartDTO.getUserId());
+                Long cartId = userCartRepo.findCartByUserId(cartDTO.getUserId());
                 cartDTO.setNumCart(1);
                 cartDTO.setId(cartId);
                 cartRepo.createProInCart(cartDTO);
@@ -133,8 +139,8 @@ public class CartServiceImpl implements CartService {
     public String updateNumCart(List<CartDTO> list) throws Exception {
         String message;
         for(CartDTO cartDTO : list) {
-            Long userId = cartRepo.getCartIdByUser(cartDTO.getUserId());
-            cartDTO.setId(userId);
+            Long cartId = userCartRepo.findCartByUserId(cartDTO.getUserId());
+            cartDTO.setId(cartId);
             cartRepo.updateNumCart(cartDTO);
         }
         message = Contains.SUCCESS;

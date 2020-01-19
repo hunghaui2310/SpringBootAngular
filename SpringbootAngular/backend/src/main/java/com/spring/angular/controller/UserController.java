@@ -1,5 +1,7 @@
 package com.spring.angular.controller;
 
+import com.spring.angular.dto.UserDTO;
+import com.spring.angular.helper.ApiResponse;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.CustomErrorType;
 import com.spring.angular.model.User;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @RestController
@@ -47,7 +50,17 @@ public class UserController {
 
     @RequestMapping("/login")
     public Principal login(Principal principal){
-        logger.info("USER LOGGED" + principal);
         return principal;
+    }
+
+    @PostMapping("/get-data")
+    public ApiResponse getDataUser(@RequestBody User user) throws Exception{
+        try {
+            UserDTO userDTO = userService.getDataUser(user.getId());
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", userDTO);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
     }
 }

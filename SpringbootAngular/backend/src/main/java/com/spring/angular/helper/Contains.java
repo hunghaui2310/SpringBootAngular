@@ -17,6 +17,7 @@ public class Contains {
     public static final String CREATE = "CREATE";
     public static final String EMPTY = "EMPTY";
     public static final String CODE_NOT_EXIST = "CODE_NOT_EXIST";
+    public static final String HD = "HD";
 
 
     public interface BLOG_DETAIL{

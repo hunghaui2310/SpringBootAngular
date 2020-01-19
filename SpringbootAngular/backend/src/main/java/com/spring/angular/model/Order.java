@@ -9,8 +9,10 @@ public class Order {
 
     private Long id;
     private String orderCode;
-    private Long productId;
+    private Long userId;
     private Date createDate;
+    private String notes;
+    private String city;
 
     @Id
     @GeneratedValue
@@ -32,13 +34,13 @@ public class Order {
         this.orderCode = orderCode;
     }
 
-    @Column(name = "product_id")
-    public Long getProductId() {
-        return productId;
+    @Column(name = "user_id")
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Column(name = "create_date")
@@ -48,5 +50,23 @@ public class Order {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    @Column(name = "note")
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    @Column(name = "city")
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

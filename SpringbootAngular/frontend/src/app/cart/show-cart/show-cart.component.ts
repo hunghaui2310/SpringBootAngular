@@ -38,7 +38,7 @@ export class ShowCartComponent implements OnInit {
 
   showProInCart() {
     //   this.userId = this.route.snapshot.params['userId'];
-    this.currentUser = new User(this.currentUser.id, null, null, null);
+    this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
     this.cartService.getNumCartAPI(this.currentUser).subscribe(
       dataCarts => {
         this.dataCart = dataCarts['data'];

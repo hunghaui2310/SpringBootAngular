@@ -1,13 +1,12 @@
 package com.spring.angular.dto;
 
-import java.util.List;
-
-public class OrderDTO {
+public class OrderDTO extends UserDTO{
 
     private Long id;
-    private Long userId;
     private String orderCode;
-    private List<ProductDTO> productDTOList;
+    private String notes;
+    private String city;
+    private String createDate;
 
     public Long getId() {
         return id;
@@ -15,14 +14,6 @@ public class OrderDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getOrderCode() {
@@ -33,11 +24,27 @@ public class OrderDTO {
         this.orderCode = orderCode;
     }
 
-    public List<ProductDTO> getProductDTOList() {
-        return productDTOList;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setProductDTOList(List<ProductDTO> productDTOList) {
-        this.productDTOList = productDTOList;
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 }

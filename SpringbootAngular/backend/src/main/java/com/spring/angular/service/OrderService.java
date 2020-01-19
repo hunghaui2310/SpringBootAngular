@@ -2,9 +2,9 @@ package com.spring.angular.service;
 
 import com.spring.angular.dto.OrderDTO;
 
-import java.util.List;
-
 public interface OrderService {
 
-    List<OrderDTO> getList(Long userId);
+    OrderDTO getOderByUser(String orderCode, Long userId) throws Exception;
+
+    String updateOrder(OrderDTO orderDTO) throws Exception;
 }

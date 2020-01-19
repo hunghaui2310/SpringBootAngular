@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../../../model/model.user';
 import {AuthService} from '../../service/auth.service';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,15 @@ export class LoginComponent implements OnInit {
 
   user: User = new User();
   errorMessage: string;
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService,
+              private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
   }
   login() {
     this.authService.authenticate(this.user, (e) => {
+      this.notificationSuccess('Đăng nhập thành công')
       this.router.navigateByUrl('/home');
       console.log(e);
       let resp: any;
@@ -30,4 +34,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  notificationSuccess(notification: string) {
+    this.toastr.success(notification, '', {
+      timeOut: 1000, positionClass: 'toast-top-center'
+    });
+  }
 }

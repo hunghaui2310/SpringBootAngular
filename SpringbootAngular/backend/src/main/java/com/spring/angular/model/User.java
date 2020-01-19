@@ -1,11 +1,5 @@
 package com.spring.angular.model;
 
-
-/*******************************************************************************
- * 2017, this is the user entity class ,
- * this class implements users details of the spring security framework
- *******************************************************************************/
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -19,11 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-/**
- * Description of User.
- *
- * @author kamal berriga
- */
+
 @Entity
 @Table(name="User")
 @Scope("session")
@@ -53,6 +43,10 @@ public  class User implements UserDetails{
      * Description of the property full name.
      */
     private String fullName;
+
+    private String address;
+
+    private String phoneNumber;
 
     public User(){
 
@@ -141,6 +135,19 @@ public  class User implements UserDetails{
         return id;
     }
 
+    public String getAddress() {
+        return address;
+    }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

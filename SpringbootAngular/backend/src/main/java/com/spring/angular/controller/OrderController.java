@@ -19,14 +19,27 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/showAll")
+    @PostMapping("/show")
     public ApiResponse orderProduct(@RequestBody OrderDTO orderDTO){
         try {
-            List<OrderDTO> orderDTOList = orderService.getList(orderDTO.getUserId());
+            String orderCode = orderDTO.getOrderCode();
+            Long userId = orderDTO.getUserId();
+            OrderDTO orderDTOList = orderService.getOderByUser(orderCode, userId);
             return ApiResponse.build(HttpServletResponse.SC_OK,true,"", orderDTOList);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,false, e.getMessage(),null);
+        }
+    }
+
+    @PostMapping("/update")
+    public ApiResponse updateOrder(@RequestBody OrderDTO orderDTO) throws Exception{
+        try {
+            String message = orderService.updateOrder(orderDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
 }

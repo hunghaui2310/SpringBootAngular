@@ -16,10 +16,4 @@ public interface CartRepo {
     void deleteProInCart(CartDTO cartDTO) throws Exception;
 
     void createProInCart(CartDTO cartDTO) throws Exception;
-
-    Long getCartIdByUser(Long userId) throws Exception;
-
-    void saveUserCart(User user, Long cartId) throws Exception;
-
-    Long getLastCartId() throws Exception;
 }

@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getNumCart() {
-    this.currentUser = new User(this.currentUser.id, null, null, null);
+    this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
     console.log('userId', this.currentUser.id);
     this.cartService.getNumCartAPI(this.currentUser).subscribe(
       numCart => {
