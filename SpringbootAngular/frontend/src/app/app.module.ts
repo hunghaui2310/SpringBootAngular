@@ -29,6 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WriteReviewComponent } from './product/write-review/write-review.component';
 import {ToastrModule} from 'ngx-toastr';
 import { CompareComponent } from './product/compare/compare.component';
+import { OrderInfoComponent } from './cart/order-info/order-info.component';
+import { IndexComponent } from './admin/index/index.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { CompareComponent } from './product/compare/compare.component';
     ContactComponent,
     WriteReviewComponent,
     CompareComponent,
+    OrderInfoComponent,
+    IndexComponent,
   ],
   imports: [
     BrowserModule,

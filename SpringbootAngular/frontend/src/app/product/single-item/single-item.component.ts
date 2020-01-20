@@ -24,7 +24,7 @@ export class SingleItemComponent implements OnInit {
               private toastr: ToastrService,
               config: NgbCarouselConfig) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    config.interval = 4000;
+    config.interval = 3000;
     config.wrap = true;
     config.keyboard = false;
     config.pauseOnHover = true;

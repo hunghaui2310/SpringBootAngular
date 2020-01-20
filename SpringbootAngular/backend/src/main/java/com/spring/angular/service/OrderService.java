@@ -4,7 +4,7 @@ import com.spring.angular.dto.OrderDTO;
 
 public interface OrderService {
 
-    OrderDTO getOderByUser(String orderCode, Long userId) throws Exception;
+    OrderDTO getOderByUser(Long id, Long userId) throws Exception;
 
-    String updateOrder(OrderDTO orderDTO) throws Exception;
+    Long updateOrder(OrderDTO orderDTO) throws Exception;
 }

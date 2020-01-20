@@ -1,0 +1,73 @@
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li class="active">Xác nhận đơn hàng</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- Begin Contact Main Page Area -->
+<div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
+        <div class="contact-page-side-content">
+          <h3 class="contact-page-title">Đơn hàng</h3>
+          <p class="contact-page-message mb-25">Mã hóa đơn: {{orderCode}}</p>
+          <div class="single-contact-block">
+            <h4><i class="fa fa-fax"></i> Địa chỉ</h4>
+            <p>{{address}}</p>
+          </div>
+          <div class="single-contact-block">
+            <h4><i class="fa fa-phone"></i> Số điện thoại</h4>
+            <p>{{phoneNumber}}</p>
+          </div>
+          <div class="single-contact-block last-child">
+            <h4><i class="fa fa-envelope-o"></i> Email</h4>
+            <p>{{email}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 order-2 order-lg-1">
+        <div class="contact-form-content pt-sm-55 pt-xs-55">
+          <h3 class="contact-page-title">Thông tin khách hàng:</h3>
+          <div class="contact-form">
+            <form  id="contact-form" action="http://demo.hasthemes.com/limupa-v3/limupa/mail.php" method="post">
+              <div class="form-group">
+                <label>Thành phố </label>
+                <input type="text" name="customerName" value="{{city}}" disabled>
+              </div>
+              <div class="form-group">
+                <label>Họ và tên </label>
+                <input type="text" name="customerName" value="{{fullName}}" disabled>
+              </div>
+              <div class="form-group">
+                <label>Email </label>
+                <input type="email" name="customerEmail" value="{{email}}" disabled>
+              </div>
+              <div class="form-group">
+                <label>Địa chỉ </label>
+                <input type="text" name="contactSubject" value="{{address}}" disabled>
+              </div>
+              <div class="form-group mb-30">
+                <label>Số điện thoại </label>
+                <input type="text" name="contactSubject" value="{{phoneNumber}}" disabled>
+              </div>
+              <div class="form-group row">
+                <button type="submit" value="submit" class="li-btn-3 col-6" name="submit">Xác nhận đơn hàng</button>
+                <button type="submit" value="submit" class="li-btn-3 col-6" name="submit">Sửa lại thông tin</button>
+              </div>
+            </form>
+          </div>
+          <p class="form-messege"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Contact Main Page Area End Here -->
+

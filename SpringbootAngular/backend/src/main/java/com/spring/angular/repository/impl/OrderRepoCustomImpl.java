@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,9 +18,16 @@ public class OrderRepoCustomImpl implements OrderRepoCustom {
     @PersistenceContext
     EntityManager entityManager;
 
+    /**
+     * thuc hien them moi sau do lay id ban ghi vua them moi
+     *
+     * @param orderDTO
+     * @return id ban ghi vua them moi
+     * @throws Exception
+     */
     @Transactional
     @Override
-    public void createOrder(OrderDTO orderDTO) throws Exception {
+    public BigInteger createOrder(OrderDTO orderDTO) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("insert into `order`(user_id,order_code,create_date,note,city) values" +
                 " (:userId,:orderCode,:createDate,:note,:city)");
@@ -32,14 +40,17 @@ public class OrderRepoCustomImpl implements OrderRepoCustom {
         query.setParameter("note", orderDTO.getNotes());
         query.setParameter("city", orderDTO.getCity());
         query.executeUpdate();
+        Query query1 = entityManager.createNativeQuery("SELECT LAST_INSERT_ID()");
+        BigInteger bigInteger = (BigInteger) query1.getSingleResult();
+        return bigInteger;
     }
 
     @Override
-    public Object[] getOrder(String orderCode) throws Exception {
+    public Object[] getOrder(Long id) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("select * from `order` o where o.order_code = :orderCode");
+        sqlBuilder.append("select * from `order` o where o.id = :id");
         Query query = entityManager.createNativeQuery(sqlBuilder.toString());
-        query.setParameter("orderCode", orderCode);
+        query.setParameter("id", id);
         List<Object[]> list = query.getResultList();
         if(list.size() > 0){
             return list.get(0);
@@ -48,8 +59,8 @@ public class OrderRepoCustomImpl implements OrderRepoCustom {
     }
 
     @Override
-    public boolean checkExistOrder(String orderCode) throws Exception {
-        Object[] order = getOrder(orderCode);
+    public boolean checkExistOrder(Long id) throws Exception {
+        Object[] order = getOrder(id);
         if(order != null){
             return true;
         } else

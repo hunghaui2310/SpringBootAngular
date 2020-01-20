@@ -93,7 +93,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
             sqlBuilder.append("select p.product_id, p.product_name, p.discount,p.price,p.price-(p.price*p.discount/100) AS real_price, f.url, p.category_id" +
                     " from product p, file_info f" +
                     " where p.product_id = f.product_id" +
-                    " and f.file_type_id =2 and p.product_id = :productId" +
+                    " and f.file_type_id = 2 and p.product_id = :productId" +
                     " and f.url = :urlImg");
             Query query = entityManager.createNativeQuery(sqlBuilder.toString());
             query.setParameter("productId", productId);

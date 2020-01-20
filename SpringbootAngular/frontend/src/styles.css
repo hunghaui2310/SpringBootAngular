@@ -65,7 +65,6 @@
 	font-family: 'Rubik', sans-serif;
 */
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Rubik:300,300i,400,400i,500,500i,700,700i,900,900i');
-@import '~ngx-toastr/toastr';
 /*----------------------------------------*/
 /*  01. Dfault Style
 /*----------------------------------------*/
@@ -334,7 +333,7 @@ button.li-btn:hover {
 }
 a.links,
 a.links-2,
-button.review-links {
+a.review-links {
   background: #fed700 none repeat scroll 0 0;
   color: #242424;
   display: inline-block;
@@ -354,15 +353,14 @@ a.links-2:hover {
   background: #333333 none repeat scroll 0 0;
   color: #fff;
 }
-button.review-links {
-  background: orange;
+a.review-links {
+  background: #242424;
   color: #ffffff;
   width: 205px;
   height: 40px;
   line-height: 40px;
-  border-radius: 10px;
 }
-button.review-links:hover {
+a.review-links:hover {
   background: #fed700;
 }
 /*----------------------------------------*/
@@ -453,7 +451,7 @@ textarea:focus {
 /*----------------------------------------*/
 /*Home One | Slider Background Image*/
 .bg-1, .bg-2, .bg-3 {
-  background-image: url(/assets/images/slider/1.jpg);
+  background-image: url(assets/images/slider/1.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -461,10 +459,10 @@ textarea:focus {
   width: 100%;
 }
 .bg-2 {
-  background-image: url(/assets/images/slider/2.jpg);
+  background-image: url(assets/images/slider/2.jpg);
 }
 .bg-3 {
-  background-image: url(/assets/images/slider/3.jpg);
+  background-image: url(assets/images/slider/3.jpg);
 }
 /*Home Two | Slider Background Image*/
 .bg-4, .bg-5, .bg-6 {
@@ -1345,6 +1343,7 @@ textarea:focus {
   align-self: stretch;
 }
 .ht-menu > li::after {
+  content: "";
   position: absolute;
   background: #2424;
   height: 15px;
@@ -1512,8 +1511,9 @@ textarea:focus {
   text-align: center;
   height: 45px;
   line-height: 45px;
-  display: inherit;
+  display: block;
   transition: all 0.3s ease-in-out;
+  padding-top: 12px;
 }
 .hm-wishlist > a:hover {
   border-color: #fed700;
@@ -2227,7 +2227,6 @@ textarea:focus {
   position: absolute;
   left: 5px;
   top: 0;
-  padding-left: 5px;
   font-family: fontawesome;
   color: #7a7a7a;
   font-size: 13px;
@@ -2377,7 +2376,6 @@ textarea:focus {
   -webkit-transition: all 300ms ease-in 0s;
   transition: all 300ms ease-in 0s;
 }
-
 .add-actions-link li.add-cart.active a {
   color: #242424;
 }
@@ -3729,7 +3727,7 @@ p.checkout-coupon input[type="submit"]:hover {
 }
 .country-select label span.required,
 .checkout-form-list label span.required {
-  color: red;
+  color: #fed700;
   display: inline-block;
   font-size: 24px;
   line-height: 16px;
@@ -4053,7 +4051,7 @@ thead {
   font-size: 13px;
   border-radius: 0;
   height: 42px;
-  width: 400px;
+  width: 120px;
 }
 .coupon-all input.button {
   background-color: #333;
@@ -4191,8 +4189,7 @@ thead {
   display: flex;
 }
 .li-blog-sidebar .li-recent-post .li-recent-post-thumb {
-  width: 200px;
-  height: 15px;
+  width: 65px;
   border: 1px solid #e1e1e1;
 }
 .li-blog-sidebar .li-recent-post .li-recent-post-des {
@@ -4236,11 +4233,11 @@ thead {
 }
 .li-blog-single-item .li-blog-content .li-blog-details h3 {
   color: #242424;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 30px;
   font-weight: 600;
   text-transform: capitalize;
-  font-family: unset;
+  font-family: Poppins;
   padding-bottom: 15px;
   margin: 0;
 }
@@ -4534,14 +4531,15 @@ thead {
 }
 .compare-pdoduct-image {
   max-width: 200px;
-  padding-left: 40px;
+  display: inline-block;
+  padding: 20px 0;
 }
 .compare-pdoduct-image a {
   display: inline-block;
 }
-.compare-pdoduct-image .ho-button span{
-   margin-top: 25px;
- }
+.compare-pdoduct-image .ho-button {
+  margin-top: 25px;
+}
 h5.compare-product-name {
   font-size: 14px;
   font-weight: 700;
@@ -5086,7 +5084,6 @@ span.required {
   margin-right: 5px;
 }
 .block-reassurance {
-  padding-top: 50px;
   float: left;
   width: 100%;
 }

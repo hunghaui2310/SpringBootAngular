@@ -29,7 +29,7 @@ export class CheckoutComponent implements OnInit {
   email;
   address;
   notes;
-  dataOrder;
+  id;
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,
@@ -61,9 +61,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   showSuccess(message: string) {
-    this.toastr.success(message, 'Thông báo', {
-    });
-    this.router.navigate(['/home']);
+    this.toastr.success(message, '', {
+    timeOut: 500, positionClass: 'toast-top-center'});
+    this.router.navigate(['/order-info']);
   }
 
   showError(message: string) {
@@ -91,13 +91,9 @@ export class CheckoutComponent implements OnInit {
     console.log('this.order', this.conditionUser);
     this.orderService.updateOrderAPI(this.conditionUser).subscribe(
       dataUpdateOrder => {
-        this.dataOrder = dataUpdateOrder['data'];
-        console.log('dataOrder', this.dataOrder);
-        if (this.dataOrder === 'CREATE') {
-        this.showSuccess('Đặt hàng thành công');
-        } else {
-          this.showError('Đã xảy ra lỗi');
-        }
+        this.id = dataUpdateOrder['data'];
+        console.log('dataOrder', this.id);
+        this.showSuccess('Xác nhận thông tin! Đang chuyển hướng');
       }, error => this.showError('Lỗi')
     );
   }

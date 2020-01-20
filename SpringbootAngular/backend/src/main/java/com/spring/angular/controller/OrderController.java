@@ -2,14 +2,13 @@ package com.spring.angular.controller;
 
 import com.spring.angular.dto.OrderDTO;
 import com.spring.angular.helper.ApiResponse;
+import com.spring.angular.repository.OrderRepo;
 import com.spring.angular.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -19,12 +18,15 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderRepo orderRepo;
+
     @PostMapping("/show")
     public ApiResponse orderProduct(@RequestBody OrderDTO orderDTO){
         try {
-            String orderCode = orderDTO.getOrderCode();
+            Long id = orderDTO.getId();
             Long userId = orderDTO.getUserId();
-            OrderDTO orderDTOList = orderService.getOderByUser(orderCode, userId);
+            OrderDTO orderDTOList = orderService.getOderByUser(id, userId);
             return ApiResponse.build(HttpServletResponse.SC_OK,true,"", orderDTOList);
         }catch (Exception e){
             e.printStackTrace();
@@ -35,8 +37,8 @@ public class OrderController {
     @PostMapping("/update")
     public ApiResponse updateOrder(@RequestBody OrderDTO orderDTO) throws Exception{
         try {
-            String message = orderService.updateOrder(orderDTO);
-            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
+            Long id = orderService.updateOrder(orderDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", id);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);

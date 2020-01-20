@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,8 +35,8 @@ public class OrderServiceImpl implements OrderService {
     private UserCartRepo userCartRepo;
 
     @Override
-    public OrderDTO getOderByUser(String orderCode, Long userId) throws Exception {
-        Object[] objects = orderRepo.getOrder(orderCode);
+    public OrderDTO getOderByUser(Long id, Long userId) throws Exception {
+        Object[] objects = orderRepo.getOrder(id);
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderCode(DataUtil.safeToString(objects[2]));
         if(objects[5] != null) {
@@ -56,8 +57,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String updateOrder(OrderDTO orderDTO) throws Exception {
-        String message;
+    public Long updateOrder(OrderDTO orderDTO) throws Exception {
         OrderDTO orderDTO1 = new OrderDTO();
         if (!DataUtil.isNullOrEmpty(orderDTO.getFirstName()) && !DataUtil.isNullOrEmpty(orderDTO.getLastName())) {
             orderDTO1.setFullName(orderDTO.getFirstName() + orderDTO.getLastName());
@@ -91,14 +91,9 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         orderDTO1.setUserId(orderDTO.getUserId());
-        // xet xem hoa don co ton tai ko, neu ko thi them moi, neu co thi cap nhat
-        if(DataUtil.isNullOrEmpty(orderDTO.getOrderCode())) {
-            orderRepo.createOrder(orderDTO1);
-            message = Contains.CREATE;
-        }else {
-            orderRepo.updateOrder(orderDTO1);
-            message = Contains.UPDATE;
-        }
-        return message;
+        // tra cho front-end id ban ghi vua them moi trong order
+        BigInteger bigInteger = orderRepo.createOrder(orderDTO1);
+        Long id = bigInteger.longValue();
+        return id;
     }
 }
