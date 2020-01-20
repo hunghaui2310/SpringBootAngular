@@ -123,8 +123,9 @@
           </div>
           <div class="payment-method">
             <div class="payment-accordion">
-              <div class="order-button-payment">
-                <button type="submit" (click)="checkOut()">Thanh toán</button>
+              <div class="order-button-payment row">
+                <button class="col-sm-6" type="submit" routerLink="/cart">Quay lại giỏ hàng</button>
+                <button class="col-sm-6" type="submit" (click)="checkOut()" routerLink="/order-info">Thanh toán</button>
               </div>
             </div>
           </div>

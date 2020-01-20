@@ -55,7 +55,7 @@ import { IndexComponent } from './admin/index/index.component';
     WriteReviewComponent,
     CompareComponent,
     OrderInfoComponent,
-    IndexComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,

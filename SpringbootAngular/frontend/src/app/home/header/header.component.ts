@@ -56,7 +56,8 @@ export class HeaderComponent implements OnInit {
   getComboboxCate() {
     this.getCategoryAPI().subscribe(
       data => {
-      this.categories = data['data'];
+        console.log('dataCategory', data);
+        this.categories = data['data'];
       },
       error => (console.log('NO DATA!'))
     );
