@@ -58,6 +58,7 @@ export class ShowCartComponent implements OnInit {
       removes => {
         this.notification = removes['data'];
         this.notificationSuccess('Xóa thành công');
+        this.showProInCart();
         console.log('notification', this.notification);
       },
       error => this.notificationError()
@@ -85,11 +86,16 @@ export class ShowCartComponent implements OnInit {
   }
 
   getCodeDiscount(code: string) {
+    this.toastr.success(':ddd', 'sss' , {
+      timeOut: 10000,
+      positionClass: 'toast-top-center'
+    });
     this.codeRequest = new Blog(null, null, code, null, null, null);
     console.log('this.codeRequest', this.codeRequest);
     this.cartService.codeDiscountAPI(this.codeRequest).subscribe(
     dataCode => {
       this.dataCode = dataCode['data'];
+      console.log('dataCode', this.dataCode);
       if (this.dataCode === 'EMPTY') {
         this.notificationWarning('Chưa nhập mã khuyến mại!');
         this.dataCode = null;

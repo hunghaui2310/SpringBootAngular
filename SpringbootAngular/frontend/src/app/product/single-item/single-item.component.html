@@ -24,7 +24,7 @@
           </ngb-carousel>
         </div>
         <div class="single-add-to-cart">
-          <form action="#" class="cart-quantity">
+          <form class="cart-quantity">
             <div class="quantity">
               <label>Số lượng</label>
               <div class="cart-plus-minus">
@@ -64,7 +64,7 @@
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
                 <li class="review-item"><a href="#">Xem phản hồi</a></li>
-                <li class="review-item"><a href="#">Viết phản hồi</a></li>
+                <li class="review-item"><span (click)="openDialog()">Viết phản hồi</span></li>
               </ul>
             </div>
             <div class="price-box pt-20 row">

@@ -4,6 +4,7 @@ import {config} from '../../app-config/application.config';
 import {Cart} from '../../model/cart';
 import {User} from '../../model/model.user';
 import {Blog} from '../../model/blog';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,13 @@ import {Blog} from '../../model/blog';
 export class CartService {
 
   constructor(private http: HttpClient) { }
+
+  service: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  service$: Observable<any> = this.service.asObservable();
+
+  setService(service: any) {
+    this.service.next(service);
+  }
 
   showCartAPI(userId: number) {
     return this.http.post(config.cart_show, userId);

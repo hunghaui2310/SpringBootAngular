@@ -18,12 +18,16 @@ export class LoginComponent implements OnInit {
               private toastr: ToastrService) { }
 
   ngOnInit() {
+
   }
+
   login() {
+    console.log('fffffr');
     this.authService.authenticate(this.user, (e) => {
-      this.notificationSuccess('Đăng nhập thành công')
-      this.router.navigateByUrl('/home');
-      console.log(e);
+      this.notificationSuccess('Đăng nhập thành công');
+      console.log('fffffr', e);
+      window.location.replace('/home');
+      console.log('fffffre', e);
       let resp: any;
       resp = e.principal;
       // this.user.fullName = 'ndh';
