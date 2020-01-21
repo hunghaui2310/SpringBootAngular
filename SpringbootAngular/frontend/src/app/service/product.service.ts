@@ -16,10 +16,16 @@ export class ProductService {
   service: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   service$: Observable<any> = this.service.asObservable();
 
+  id: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  id$: Observable<any> = this.id.asObservable();
+
   setService(service: any) {
     this.service.next(service);
   }
 
+  setId(id: any) {
+    this.id.next(id);
+  }
   productAPI(): Observable<Product[]> {
     // @ts-ignore
     return this.http.get(config.product_API);

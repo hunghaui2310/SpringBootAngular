@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {AccountService} from '../../service/account.service';
 import {Order} from '../../../model/order';
 import {OrderService} from '../../service/order.service';
+import {ProductService} from '../../service/product.service';
 
 @Component({
   selector: 'app-checkout',
@@ -35,6 +36,7 @@ export class CheckoutComponent implements OnInit {
               private toastr: ToastrService,
               private router: Router,
               private accountService: AccountService,
+              private productService: ProductService,
               private orderService: OrderService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
@@ -86,15 +88,20 @@ export class CheckoutComponent implements OnInit {
   }
 
   checkOut() {
-    // tslint:disable-next-line:max-line-length
-    this.conditionUser = new Order(null, this.notes, null, this.currentUser.id, this.lastName, this.firstName, this.address, this.phoneNumber, this.city);
-    console.log('this.order', this.conditionUser);
+    this.conditionUser = new Order(null, this.notes, null,
+      this.currentUser.id, this.lastName, this.firstName, this.address,
+      this.phoneNumber, this.city);
+    // console.log('this.lastName', this.lastName);
+    console.log('this.orderuuu', this.conditionUser);
     this.orderService.updateOrderAPI(this.conditionUser).subscribe(
       dataUpdateOrder => {
+        console.log('dataOrderdddddd', dataUpdateOrder);
         this.id = dataUpdateOrder['data'];
-        console.log('dataOrder', this.id);
+        // this.productService.setId();
+        console.log('dataOrderdddddd', dataUpdateOrder);
         this.showSuccess('Xác nhận thông tin! Đang chuyển hướng');
       }, error => this.showError('Lỗi')
     );
+    console.log('ket thuc');
   }
 }
