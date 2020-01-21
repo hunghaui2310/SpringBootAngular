@@ -27,7 +27,8 @@ public class UserCartRepoImpl implements UserCartRepo {
                     " and u.id = :userId");
             Query query = entityManager.createNativeQuery(sqlBuilder.toString());
             query.setParameter("userId", userId);
-            return null;
+            BigInteger bigInteger = (BigInteger) query.getSingleResult();
+            return bigInteger.longValue();
         }catch (NoResultException e){
             e.printStackTrace();
             return null;

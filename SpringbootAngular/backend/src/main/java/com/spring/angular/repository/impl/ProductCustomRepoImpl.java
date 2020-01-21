@@ -87,17 +87,15 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     }
 
     @Override
-    public Object[] getProInCart(Long productId, String urlImage) throws Exception {
+    public Object[] getProInCart(Long productId) throws Exception {
         try {
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.append("select p.product_id, p.product_name, p.discount,p.price,p.price-(p.price*p.discount/100) AS real_price, f.url, p.category_id" +
                     " from product p, file_info f" +
                     " where p.product_id = f.product_id" +
-                    " and f.file_type_id = 2 and p.product_id = :productId" +
-                    " and f.url = :urlImg");
+                    " and f.file_type_id = 1 and p.product_id = :productId");
             Query query = entityManager.createNativeQuery(sqlBuilder.toString());
             query.setParameter("productId", productId);
-            query.setParameter("urlImg", urlImage);
             return (Object[]) query.getSingleResult();
         }catch (NoResultException e){
             e.printStackTrace();

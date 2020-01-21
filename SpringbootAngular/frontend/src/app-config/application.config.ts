@@ -9,7 +9,6 @@ export const config = {
   same_product_API: URL_BASE + '/product/sameProduct',
   product_cate_API: URL_BASE + 'category/product-category',
   product_detail: URL_BASE + '/product/detail',
-  cart_show: URL_BASE + '/cart/show',
   cart_discount_API: URL_BASE + '/cart/code-discount',
   add_cart: URL_BASE + '/cart/addCart',
   get_num_cart: URL_BASE + '/cart/getNum',

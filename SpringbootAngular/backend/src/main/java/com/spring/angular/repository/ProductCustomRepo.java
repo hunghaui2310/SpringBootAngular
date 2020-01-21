@@ -14,7 +14,7 @@ public interface ProductCustomRepo {
 
     List<String> lstImageProduct(Long productId);
 
-    Object[] getProInCart(Long productId, String urlImage) throws Exception;
+    Object[] getProInCart(Long productId) throws Exception;
 
     List<Object[]> getListAbout() throws Exception;
 

@@ -42,7 +42,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogDetailDTO lstContentDetail(Long blogId) throws Exception {
 
-        Blog detailBlog = blogRepo.getBlogDetail(blogId);
+        Blog detailBlog = blogRepo.getOne(blogId);
         BlogDetailDTO blogDetailDTO = new BlogDetailDTO();
         blogDetailDTO.setId(detailBlog.getId());
         blogDetailDTO.setTitle(detailBlog.getTitle());

@@ -11,7 +11,7 @@ public interface CartRepo {
 
     List<Object[]> getCartByUser(Long userId) throws Exception;
 
-    List<Object[]> checkDuplicate(Long userId, Long productId) throws Exception;
+    List<Object[]> checkDuplicate(Long cartId, Long productId) throws Exception;
 
     void deleteProInCart(CartDTO cartDTO) throws Exception;
 

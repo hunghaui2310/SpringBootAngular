@@ -29,24 +29,6 @@ public class CartController {
     private ProductService productService;
 
     /**
-     * show du lieu cua cac san pham trong gio hang theo user dang nhap
-     *
-     * @param cartDTO
-     * @throws Exception
-     */
-    @PostMapping("/show")
-    public ApiResponse getCartByUser(@RequestBody CartDTO cartDTO) throws Exception{
-        try {
-            Long userId = cartDTO.getUserId();
-            CartDTO showCart = cartService.getCartByUser(userId);
-            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", showCart);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, Contains.ERROR, null);
-        }
-    }
-
-    /**
      * api them 1 san pham vao cart theo user dang nhap
      *
      * @param cartDTO

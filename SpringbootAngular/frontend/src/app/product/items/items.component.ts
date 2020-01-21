@@ -218,7 +218,11 @@ export class ItemsComponent implements OnInit, AfterViewInit {
       message => {
         this.notificationMessage = message['data'];
         console.log('this.notificationMessage', this.notificationMessage);
-        this.notificationSuccess('Thêm thành công');
+        if (this.notificationMessage === 'CREATE' || this.notificationMessage === 'UPDATE') {
+          this.notificationSuccess('Thêm thành công');
+        } else {
+          this.notificationError();
+        }
       },
       error => this.notificationError()
     );

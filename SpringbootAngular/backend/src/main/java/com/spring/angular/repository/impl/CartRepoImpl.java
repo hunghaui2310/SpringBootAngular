@@ -43,28 +43,28 @@ public class CartRepoImpl implements CartRepo {
     /**
      * lay du lieu cua product theo user dang nhap
      *
-     * @param userId, cartNum
+     * @param cartId
      * @throws Exception
      */
     @Override
-    public List<Object[]> getCartByUser(Long userId) throws Exception {
+    public List<Object[]> getCartByUser(Long cartId) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("select cp.product_id, cp.num_pro from cart_product cp" +
-                " where cp.cart_id = (select uc.cart_id from user_cart uc where uc.user_id = :userId)");
+                " where cp.cart_id = :cartId");
         Query query = entityManager.createNativeQuery(sqlBuilder.toString());
-        query.setParameter("userId",userId);
+        query.setParameter("cartId",cartId);
         return query.getResultList();
     }
 
     @Override
-    public List<Object[]> checkDuplicate(Long userId, Long productId) throws Exception {
+    public List<Object[]> checkDuplicate(Long cartId, Long productId) throws Exception {
         try {
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.append("select * from cart_product cp where" +
                     " cp.product_id = :productId" +
-                    " and cp.cart_id = (select cart_id from user_cart where user_id = :userId)");
+                    " and cp.cart_id = :cartId");
             Query query = entityManager.createNativeQuery(sqlBuilder.toString());
-            query.setParameter("userId", userId);
+            query.setParameter("cartId", cartId);
             query.setParameter("productId", productId);
             return query.getResultList();
         }catch (NoResultException e){

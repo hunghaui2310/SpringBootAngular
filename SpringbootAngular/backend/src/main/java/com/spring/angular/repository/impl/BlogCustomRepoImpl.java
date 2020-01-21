@@ -22,19 +22,4 @@ public class BlogCustomRepoImpl implements BlogCustomRepo {
         return query.getResultList();
     }
 
-    @Override
-    public Blog getBlogDetail(Long blogId) throws Exception {
-        try {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("select b from Blog b where b.id = :blogId");
-            Query query = entityManager.createQuery(stringBuilder.toString());
-            query.setParameter("blogId", blogId);
-            return (Blog) query.getSingleResult();
-        }catch (NoResultException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
 }

@@ -8,6 +8,4 @@ public interface BlogCustomRepo {
 
     List<Object[]> lstBlog() throws Exception;
 
-    Blog getBlogDetail(Long blogId) throws Exception;
-
 }

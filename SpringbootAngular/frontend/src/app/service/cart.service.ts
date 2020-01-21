@@ -20,10 +20,6 @@ export class CartService {
     this.service.next(service);
   }
 
-  showCartAPI(userId: number) {
-    return this.http.post(config.cart_show, userId);
-  }
-
   getNumCartAPI(userId: User) {
     return this.http.post(config.get_num_cart, userId);
   }

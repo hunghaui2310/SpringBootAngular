@@ -43,7 +43,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public String updateCart(CartDTO cartDTO) throws Exception {
         String message = null;
-        List<Object[]> lstObject = cartRepo.checkDuplicate(cartDTO.getUserId(), cartDTO.getProductId());
+        Long cartIdByUser = userCartRepo.findCartByUserId(cartDTO.getUserId());
+        List<Object[]> lstObject = cartRepo.checkDuplicate(cartIdByUser, cartDTO.getProductId());
         if(lstObject != null) {
             long cartNum = 0;
             for(Object[] objects : lstObject){
@@ -68,26 +69,18 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDTO getCartByUser(Long userId) throws Exception {
-
-        List<ProductDTO> productDTOList = productService.getAllProduct();
-        String img; Long proIdKey;
-        Map<Long, String> mapIdAndUrl = new HashMap<>();
         double subtotal = 0L;
         List<Double> listTotal = new ArrayList<>();
 
-        for(ProductDTO productDTO : productDTOList){
-            proIdKey = productDTO.getId();
-            img = productDTO.getUrlImage();
-            mapIdAndUrl.put(proIdKey, img);
-        }
         long count = 0;
         double total;
         List<ProductDTO> lstProductDTO = new ArrayList<>();
-        List<Object[]> lstObject = cartRepo.getCartByUser(userId);
+        Long cartId = userCartRepo.findCartByUserId(userId);
+        List<Object[]> lstObject = cartRepo.getCartByUser(cartId);
         for(Object[] objects: lstObject) {
             Long proIdCast = DataUtil.safeToLong(objects[0]);
             Long numPro = DataUtil.safeToLong(objects[1]);
-            Object[] object = productRepo.getProInCart(proIdCast, mapIdAndUrl.get(proIdCast));
+            Object[] object = productRepo.getProInCart(proIdCast);
             if(!DataUtil.isNullOrEmpty(object)) {
                 Long proId = DataUtil.safeToLong(object[0]);
                 String proName = DataUtil.safeToString(object[1]);
