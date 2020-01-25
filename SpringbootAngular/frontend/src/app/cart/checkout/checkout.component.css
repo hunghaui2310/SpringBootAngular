@@ -1,4 +1,4 @@
-.order-button-payment button {
+.order-button-payment div button {
   background: #434343 none repeat scroll 0 0;
   border: medium none;
   color: #fff;
@@ -6,14 +6,16 @@
   font-weight: 600;
   height: 50px;
   margin: 20px 0 0;
-  padding: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  text-align: center;
   text-transform: uppercase;
   -webkit-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
-  width: 100%;
   border: 1px solid transparent;
   cursor: pointer;
 }
-.order-button-payment button:hover {
+.order-button-payment div button:hover {
   background: #fed700 none repeat scroll 0 0;
 }

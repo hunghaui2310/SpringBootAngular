@@ -1,0 +1,30 @@
+.order-button-payment div button {
+  background: #434343 none repeat scroll 0 0;
+  border: medium none;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  height: 50px;
+  margin: 20px 0 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.order-button-payment div button:hover{
+  background: #fed700 none repeat scroll 0 0;
+}
+
+.single-contact-block p{
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 24px;
+  color: #898989;
+  padding-left: 30px;
+  margin-bottom: 15px;
+}

@@ -13,11 +13,11 @@ export class CartService {
 
   constructor(private http: HttpClient) { }
 
-  service: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  service$: Observable<any> = this.service.asObservable();
+  orderCode: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  orderCode$: Observable<any> = this.orderCode.asObservable();
 
-  setService(service: any) {
-    this.service.next(service);
+  setOrderCode(orderCode: any) {
+    this.orderCode.next(orderCode);
   }
 
   getNumCartAPI(userId: User) {

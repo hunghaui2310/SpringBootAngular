@@ -11,29 +11,10 @@
 <div class="checkout-area pt-60 pb-30">
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <div class="coupon-accordion">
-          <!--Accordion Start-->
-          <h3>Bạn có phiếu mua hàng? <span id="showcoupon">Click vào đây để nhập mã code</span></h3>
-          <div id="checkout_coupon" class="coupon-checkout-content">
-            <div class="coupon-info">
-              <form action="#">
-                <p class="checkout-coupon">
-                  <input placeholder="Coupon code" type="text">
-                  <input value="Apply Coupon" type="submit">
-                </p>
-              </form>
-            </div>
-          </div>
-          <!--Accordion End-->
-        </div>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-lg-6 col-12">
 <!--        <form action="#">-->
           <div class="checkbox-form">
-            <h3>Thanh toán</h3>
+            <h3>Thông tin khách hàng</h3>
             <div class="row">
               <div class="col-md-12">
                 <div class="country-select clearfix">
@@ -73,10 +54,10 @@
               </div>
               <div class="col-md-12">
                 <div class="checkout-form-list create-acc">
-                  <input id="cbox" type="checkbox">
+                  <input type="checkbox" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                   <label>Tôi cam kết các thông tin này là thật!</label>
                 </div>
-                <div id="cbox-info" class="checkout-form-list create-account">
+                <div class="collapse" id="collapseExample">
                   <p>Hãy chắc chắn rằng các thông tin này là tồn tại để chúng tôi có thể liên lạc với bạn</p>
                 </div>
               </div>
@@ -110,13 +91,13 @@
               </tr>
               </tbody>
               <tfoot>
-              <tr class="cart-subtotal">
+              <tr class="cart-subtotal" *ngIf="orderCode != null">
                 <th>Khuyến mại</th>
-                <td><span class="amount">£215.00</span></td>
+                <td><span class="amount">{{orderCode}} %</span></td>
               </tr>
               <tr class="order-total">
                 <th>Tổng</th>
-                <td><strong><span class="amount">£215.00</span></strong></td>
+                <td><strong><span class="amount">{{subtotal * 1000000 - (orderCode * subtotal * 10000) | number}}</span></strong></td>
               </tr>
               </tfoot>
             </table>
@@ -124,8 +105,12 @@
           <div class="payment-method">
             <div class="payment-accordion">
               <div class="order-button-payment row">
-                <button class="col-sm-6" type="submit" routerLink="/cart">Quay lại giỏ hàng</button>
-                <button class="col-sm-6" (click)="checkOut()">Thanh toán</button>
+                <div class="col-sm-6">
+                  <button routerLink="/cart">Quay lại giỏ hàng</button>
+                </div>
+                <div class="col-sm-6">
+                  <button (click)="checkOut()" routerLink="/order-info">Thanh toán</button>
+                </div>
               </div>
             </div>
           </div>

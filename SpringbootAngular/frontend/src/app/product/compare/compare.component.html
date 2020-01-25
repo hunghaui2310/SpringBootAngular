@@ -19,9 +19,9 @@
           <th class="compare-column-titles">Ảnh</th>
           <td class="compare-column-productinfo" *ngFor="let eachImg of dataCompare">
             <div class="compare-pdoduct-image">
-              <a>
+              <span>
                 <img src="assets/images/product/large-size/{{eachImg.categoryId}}/{{eachImg.urlImage}}" alt="Product Image">
-              </a>
+              </span>
             </div>
           </td>
         </tr>
@@ -37,7 +37,7 @@
         </tr>
         <tr>
           <th>Giá</th>
-          <td *ngFor="let eachPrice of dataCompare">{{eachPrice.realPrice}}</td>
+          <td *ngFor="let eachPrice of dataCompare">{{eachPrice.realPrice * 1000000 | number}}</td>
         </tr>
         <tr>
           <th>Lượt thích</th>

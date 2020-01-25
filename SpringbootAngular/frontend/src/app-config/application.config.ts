@@ -21,5 +21,5 @@ export const config = {
   show_compare_API: URL_BASE + '/compare/show',
   data_user_API: URL_BASE + '/account/get-data',
   data_order_API: URL_BASE + '/order/show',
-  update_order_API: URL_BASE + 'order/update'
+  update_order_API: URL_BASE + '/order/update'
 };

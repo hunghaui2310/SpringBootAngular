@@ -7,12 +7,10 @@ import com.spring.angular.helper.ApiResponse;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.SearchRequest;
 import com.spring.angular.service.ProductService;
-import com.spring.angular.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigInteger;
 import java.util.List;
 
 @RestController

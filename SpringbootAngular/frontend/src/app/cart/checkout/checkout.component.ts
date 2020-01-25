@@ -31,6 +31,7 @@ export class CheckoutComponent implements OnInit {
   address;
   notes;
   id;
+  orderCode;
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,
@@ -44,6 +45,7 @@ export class CheckoutComponent implements OnInit {
   ngOnInit() {
     this.dataCheckOut();
     this.getDataUser();
+    this.fetchOrderCode();
   }
 
   dataCheckOut() {
@@ -97,11 +99,19 @@ export class CheckoutComponent implements OnInit {
       dataUpdateOrder => {
         console.log('dataOrderdddddd', dataUpdateOrder);
         this.id = dataUpdateOrder['data'];
-        // this.productService.setId();
+        this.productService.setId(this.id);
         console.log('dataOrderdddddd', dataUpdateOrder);
         this.showSuccess('Xác nhận thông tin! Đang chuyển hướng');
       }, error => this.showError('Lỗi')
     );
     console.log('ket thuc');
+  }
+
+  fetchOrderCode() {
+    this.cartService.orderCode$.subscribe(
+    dataFetch => {
+     console.log('dataFetchOrderCode', dataFetch);
+     this.orderCode = dataFetch;
+    });
   }
 }

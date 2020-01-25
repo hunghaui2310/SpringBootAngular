@@ -106,6 +106,7 @@ export class ShowCartComponent implements OnInit {
       } else {
         this.discount = this.dataCode;
         console.log('dataCode', this.discount);
+        this.cartService.setOrderCode(this.discount);
       }
     }, error => this.notificationError()
     );
