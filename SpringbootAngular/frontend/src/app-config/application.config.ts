@@ -7,7 +7,7 @@ export const config = {
   product_API: URL_BASE + '/product/getProduct',
   search_product: URL_BASE + '/product/search',
   same_product_API: URL_BASE + '/product/sameProduct',
-  product_cate_API: URL_BASE + 'category/product-category',
+  product_cate_API: URL_BASE + '/category/product-category',
   product_detail: URL_BASE + '/product/detail',
   cart_discount_API: URL_BASE + '/cart/code-discount',
   add_cart: URL_BASE + '/cart/addCart',

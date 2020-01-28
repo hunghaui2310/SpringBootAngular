@@ -121,9 +121,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   }
 
   productDetail(id: number) {
-    const productId: Product = new Product(id);
     this.router.navigate(['/detail/' + id]);
-
   }
 
   showData(row: any) {
@@ -186,27 +184,6 @@ export class ItemsComponent implements OnInit, AfterViewInit {
         this.categories = data['data'];
       },
       error => (console.log('NO DATA!'))
-    );
-  }
-
-  proCatess(categoryId: number) {
-    this.router.navigate(['/product-category/' + categoryId]);
-  }
-
-  searchss() {
-    this.searchRequest = new SearchRequest(null, this.productName, this.categoryId, null);
-    console.log('search', this.searchRequest);
-    this.productService.search(this.searchRequest).subscribe(
-      dataSearch => {
-        console.log(dataSearch['data']);
-        this.productList = dataSearch['data'];
-      },
-      error => {
-        (console.log('LOI SEARCH!', error));
-      },
-      () => {
-        console.log('ok');
-      }
     );
   }
 

@@ -2,16 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {AppRoutingModule} from './app-routing.module';
-import {FormsModule} from '@angular/forms';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { AppRoutingModule} from './app-routing.module';
+import { FormsModule} from '@angular/forms';
+import { NgxPaginationModule} from 'ngx-pagination';
 import { LoginComponent } from './account/login/login.component';
 import { LogoutComponent } from './account/logout/logout.component';
 import { NotFoundComponent } from './account/not-found/not-found.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { RegisterComponent } from './account/register/register.component';
-import {HttpClientModule} from '@angular/common/http';
-import {MatDialogModule} from '@angular/material';
+import { HttpClientModule} from '@angular/common/http';
+import { MatDialogModule, MatFormFieldModule} from '@angular/material';
 import { HeaderComponent } from './home/header/header.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { ItemsComponent } from './product/items/items.component';
@@ -66,7 +66,8 @@ import { IndexComponent } from './admin/index/index.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot({timeOut: 2000, progressBar: false, positionClass: 'toast-top-center'}),
     MatDialogModule,
-    NgbModule
+    NgbModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent],

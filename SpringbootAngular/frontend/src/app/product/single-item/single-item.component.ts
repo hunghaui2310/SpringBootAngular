@@ -46,6 +46,7 @@ export class SingleItemComponent implements OnInit {
   conditionCart;
   cartService;
   notificationMessage;
+  writeReview;
 
   ngOnInit() {
     this.getProDetail();
@@ -88,7 +89,15 @@ export class SingleItemComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(WriteReviewComponent);
+    const dialogRef = this.dialog.open(WriteReviewComponent, {
+      width: '250px',
+       data: {name: this.productName, animal: this.writeReview}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.writeReview = result;
+    });
   }
 
   addProCart(productId: number) {

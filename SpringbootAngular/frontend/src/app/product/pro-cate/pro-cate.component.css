@@ -1,3 +1,28 @@
 .shop-top-bar {
   border: 1px solid #ededed;
 }
+.product-short .sort-items {
+  border-radius: 0;
+  color: #242424;
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  width: 320px;
+  z-index: 999;
+}
+.add-actions .add-actions-link li span i{
+  padding-top: 8px;
+}
+
+.add-actions .add-actions-link li span {
+  cursor: pointer;
+}
+
+.shop-add-action .add-actions-link li span{
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.shop-add-action .add-actions-link li span:hover{
+  color: #00a9da;
+}
