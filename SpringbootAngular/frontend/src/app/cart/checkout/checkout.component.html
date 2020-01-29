@@ -12,66 +12,66 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 col-12">
-<!--        <form action="#">-->
-          <div class="checkbox-form">
-            <h3>Thông tin khách hàng</h3>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="country-select clearfix">
-                  <label>Thành phố (City) <span class="required">*</span></label>
-                  <input [(ngModel)]="city" type="text" name="makm">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="checkout-form-list">
-                  <label>Tên (First Name) <span class="required">*</span></label>
-                  <input value="{{firstName}}" type="text" [(ngModel)]="firstName" name="first">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="checkout-form-list">
-                  <label>Họ (Last Name) <span class="required">*</span></label>
-                  <input value="{{lastName}}" type="text" [(ngModel)]="lastName" name="last">
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="checkout-form-list">
-                  <label>Địa chỉ (Address)<span class="required">*</span></label>
-                  <input type="text" [(ngModel)]="address" name="makgm">
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="checkout-form-list">
-                  <label>Email<span class="required">*</span></label>
-                  <input value="{{email}}" type="text" disabled>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="checkout-form-list">
-                  <label>Số điện thoại (Phone Number)<span class="required">*</span></label>
-                  <input type="text" [(ngModel)]="phoneNumber" name="makggm">
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="checkout-form-list create-acc">
-                  <input type="checkbox" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                  <label>Tôi cam kết các thông tin này là thật!</label>
-                </div>
-                <div class="collapse" id="collapseExample">
-                  <p>Hãy chắc chắn rằng các thông tin này là tồn tại để chúng tôi có thể liên lạc với bạn</p>
-                </div>
+        <!--        <form action="#">-->
+        <div class="checkbox-form">
+          <h3>Thông tin khách hàng</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="country-select clearfix">
+                <label>Thành phố (City) <span class="required">*</span></label>
+                <input [(ngModel)]="city" type="text" name="makm">
               </div>
             </div>
-            <div class="different-address">
-              <div class="order-notes">
-                <div class="checkout-form-list">
-                  <label>Chú thích</label>
-                  <textarea id="checkout-mess" cols="40" rows="20" placeholder="Ghi lại các ghi chú..." [(ngModel)]="notes"></textarea>
-                </div>
+            <div class="col-md-6">
+              <div class="checkout-form-list">
+                <label>Tên (First Name) <span class="required">*</span></label>
+                <input value="{{firstName}}" type="text" [(ngModel)]="firstName" name="first">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="checkout-form-list">
+                <label>Họ (Last Name) <span class="required">*</span></label>
+                <input value="{{lastName}}" type="text" [(ngModel)]="lastName" name="last">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="checkout-form-list">
+                <label>Địa chỉ (Address)<span class="required">*</span></label>
+                <input type="text" [(ngModel)]="address" name="makgm">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="checkout-form-list">
+                <label>Email<span class="required">*</span></label>
+                <input value="{{email}}" type="text" disabled>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="checkout-form-list">
+                <label>Số điện thoại (Phone Number)<span class="required">*</span></label>
+                <input type="text" [(ngModel)]="phoneNumber" name="makggm">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="checkout-form-list create-acc">
+                <input type="checkbox" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <label>Tôi cam kết các thông tin này là thật!</label>
+              </div>
+              <div class="collapse" id="collapseExample">
+                <p>Hãy chắc chắn rằng các thông tin này là tồn tại để chúng tôi có thể liên lạc với bạn</p>
               </div>
             </div>
           </div>
-<!--        </form>-->
+          <div class="different-address">
+            <div class="order-notes">
+              <div class="checkout-form-list">
+                <label>Chú thích</label>
+                <textarea id="checkout-mess" cols="40" rows="20" placeholder="Ghi lại các ghi chú..." [(ngModel)]="notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        </form>-->
       </div>
       <div class="col-lg-6 col-12">
         <div class="your-order">
@@ -119,3 +119,4 @@
     </div>
   </div>
 </div>
+

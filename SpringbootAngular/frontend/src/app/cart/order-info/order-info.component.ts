@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {OrderService} from '../../service/order.service';
+import { Component, OnInit } from '@angular/core';
+import {Product} from '../../../model/product';
+import {CartService} from '../../../service/cart.service';
+import {ProductService} from '../../../service/product.service';
+import {ToastrService} from 'ngx-toastr';
+import {OrderService} from '../../../service/order.service';
 import {Order} from '../../../model/order';
 import {User} from '../../../model/model.user';
-import {CartService} from '../../service/cart.service';
-import {Product} from '../../../model/product';
-import {ProductService} from '../../service/product.service';
-import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-order-info',
   templateUrl: './order-info.component.html',
-  styleUrls: ['./order-info.component.css']
+  styleUrls: ['./order-info.component.scss']
 })
 export class OrderInfoComponent implements OnInit {
 
@@ -44,22 +44,22 @@ export class OrderInfoComponent implements OnInit {
   }
 
   showDataOrder() {
-      this.condition = new Order(this.id, null, null, this.currentUser.id);
-      console.log('condition', this.condition);
-      this.orderService.showDataOrder(this.condition).subscribe(
-        data => {
-          this.dataOrder = data['data'];
-          console.log('dataOrder', this.dataOrder);
-          this.address = this.dataOrder['address'];
-          this.phoneNumber = this.dataOrder['phoneNumber'];
-          this.email = this.dataOrder['email'];
-          this.fullName = this.dataOrder['fullName'];
-          this.orderCode = this.dataOrder['orderCode'];
-          this.createDate = this.dataOrder['createDate'];
-          this.city = this.dataOrder['city'];
-          this.notes = this.dataOrder['notes'];
-        }
-      );
+    this.condition = new Order(this.id, null, null, this.currentUser.id);
+    console.log('condition', this.condition);
+    this.orderService.showDataOrder(this.condition).subscribe(
+      data => {
+        this.dataOrder = data['data'];
+        console.log('dataOrder', this.dataOrder);
+        this.address = this.dataOrder['address'];
+        this.phoneNumber = this.dataOrder['phoneNumber'];
+        this.email = this.dataOrder['email'];
+        this.fullName = this.dataOrder['fullName'];
+        this.orderCode = this.dataOrder['orderCode'];
+        this.createDate = this.dataOrder['createDate'];
+        this.city = this.dataOrder['city'];
+        this.notes = this.dataOrder['notes'];
+      }
+    );
   }
 
   dataProductOrder() {

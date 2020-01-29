@@ -1,21 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {ProductService} from '../../service/product.service';
 import {ActivatedRoute} from '@angular/router';
+import {ProductService} from '../../../service/product.service';
 
 @Component({
   selector: 'app-quick-view',
   templateUrl: './quick-view.component.html',
-  styleUrls: ['./quick-view.component.css']
+  styleUrls: ['./quick-view.component.scss']
 })
 export class QuickViewComponent implements OnInit {
-
-  constructor(private dialogRef: MatDialogRef<QuickViewComponent>,
-              @Inject(MAT_DIALOG_DATA) public data,
-              private productService: ProductService,
-              private route: ActivatedRoute) {
-    dialogRef.disableClose = true;
-  }
 
   productId;
   dataProduct;
@@ -28,13 +21,15 @@ export class QuickViewComponent implements OnInit {
   discount;
   categoryId;
 
-  ngOnInit() {
-    console.log('view');
-    this.getProDetail();
+  constructor(private dialogRef: MatDialogRef<QuickViewComponent>,
+              @Inject(MAT_DIALOG_DATA) public data,
+              private productService: ProductService,
+              private route: ActivatedRoute) {
+    dialogRef.disableClose = true;
   }
 
-  closeForm() {
-    this.dialogRef.close();
+  ngOnInit() {
+    this.getProDetail();
   }
 
   getProDetail() {
@@ -54,5 +49,9 @@ export class QuickViewComponent implements OnInit {
         this.categoryId = this.dataProduct['categoryId'];
         console.log('cateId', this.categoryId);
       });
+  }
+
+  closeForm(): void {
+    this.dialogRef.close();
   }
 }

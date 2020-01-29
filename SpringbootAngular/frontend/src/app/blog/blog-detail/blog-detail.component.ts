@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {OtherService} from '../../service/other.service';
-import {ActivatedRoute, Router} from '@angular/router';
 import {Blog} from '../../../model/blog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {OtherService} from '../../../service/other.service';
 
 @Component({
   selector: 'app-blog-detail',
   templateUrl: './blog-detail.component.html',
-  styleUrls: ['./blog-detail.component.css']
+  styleUrls: ['./blog-detail.component.scss']
 })
 export class BlogDetailComponent implements OnInit {
 

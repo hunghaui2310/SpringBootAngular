@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../model/model.user';
-import {AccountService} from '../../service/account.service';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {AccountService} from '../../../service/account.service';
 
 @Component({
   selector: 'app-register',

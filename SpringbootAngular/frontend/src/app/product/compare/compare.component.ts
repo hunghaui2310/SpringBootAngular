@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {OtherService} from '../../service/other.service';
-import {Cart} from '../../../model/cart';
-import {ToastrService} from 'ngx-toastr';
 import {Product} from '../../../model/product';
-import {CartService} from '../../service/cart.service';
+import {OtherService} from '../../../service/other.service';
+import {ToastrService} from 'ngx-toastr';
+import {CartService} from '../../../service/cart.service';
+import {Cart} from '../../../model/cart';
 
 @Component({
   selector: 'app-compare',
   templateUrl: './compare.component.html',
-  styleUrls: ['./compare.component.css']
+  styleUrls: ['./compare.component.scss']
 })
 export class CompareComponent implements OnInit {
 

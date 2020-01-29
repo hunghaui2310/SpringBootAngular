@@ -1,34 +1,34 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {Product} from '../../../model/Product';
-import {QuickViewComponent} from '../quick-view/quick-view.component';
-import {SearchRequest} from '../../../model/search.request';
-import {MatDialog} from '@angular/material';
+import {Product} from '../../../model/product';
 import {config} from '../../../app-config/application.config';
-import {ProductService} from '../../service/product.service';
-import {Router} from '@angular/router';
 import {sort, Sort} from '../../../model/sort';
+import {SearchRequest} from '../../../model/search.request';
+import {User} from '../../../model/model.user';
+import {ProductService} from '../../../service/product.service';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {MatDialog} from '@angular/material';
+import {ToastrService} from 'ngx-toastr';
+import {CartService} from '../../../service/cart.service';
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import {OtherService} from '../../../service/other.service';
+import {QuickViewComponent} from '../quick-view/quick-view.component';
 import {Observable} from 'rxjs';
 import {Category} from '../../../model/category';
-import {HttpClient} from '@angular/common/http';
-import {User} from '../../../model/model.user';
 import {Cart} from '../../../model/cart';
-import {CartService} from '../../service/cart.service';
-import {ToastrService} from 'ngx-toastr';
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
-import {OtherService} from '../../service/other.service';
 
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.css'],
-  providers: [NgbCarouselConfig]
+  styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent implements OnInit, AfterViewInit {
-   @Input() productList: Product[];
+
+  @Input() productList: Product[];
 
   currentP = 1;
   urlImage;
-  dataTables: Product[] = [];
+  dataTables: Product[];
   productId;
   productName;
   productPrice;
@@ -55,14 +55,14 @@ export class ItemsComponent implements OnInit, AfterViewInit {
               private toastr: ToastrService,
               private compareService: OtherService,
               configCarousel: NgbCarouselConfig) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    configCarousel.interval = 4000;
-    configCarousel.wrap = true;
-    configCarousel.keyboard = false;
-    configCarousel.pauseOnHover = true;
+    {
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      configCarousel.interval = 4000;
+      configCarousel.wrap = true;
+      configCarousel.keyboard = false;
+      configCarousel.pauseOnHover = true;
+    }
   }
-
- // productList: any = [];
 
   ngOnInit() {
     this.getProducts();
@@ -227,5 +227,4 @@ export class ItemsComponent implements OnInit, AfterViewInit {
       error => this.notificationError()
     );
   }
-
 }

@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import {OtherService} from '../../service/other.service';
+import {OtherService} from '../../../service/other.service';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-
-  constructor(private aboutService: OtherService) { }
 
   totalIsNew;
   totalProduct;
   totalNumBuy;
   totalNumLike;
   datas;
+
+  constructor(private aboutService: OtherService) { }
 
   ngOnInit() {
     this.getDataAbout();
@@ -33,4 +33,5 @@ export class AboutComponent implements OnInit {
       }
     );
   }
+
 }

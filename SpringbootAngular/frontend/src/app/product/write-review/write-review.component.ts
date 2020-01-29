@@ -4,12 +4,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 @Component({
   selector: 'app-write-review',
   templateUrl: './write-review.component.html',
-  styleUrls: ['./write-review.component.css']
+  styleUrls: ['./write-review.component.scss']
 })
 export class WriteReviewComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<WriteReviewComponent>,
-              @Inject(MAT_DIALOG_DATA) public data) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }

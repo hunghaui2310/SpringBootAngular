@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {CartService} from '../../service/cart.service';
-import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../../../model/product';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {CartService} from '../../../service/cart.service';
 import {User} from '../../../model/model.user';
 import {Cart} from '../../../model/cart';
-import {ToastrService} from 'ngx-toastr';
 import {Blog} from '../../../model/blog';
 
 @Component({
   selector: 'app-show-cart',
   templateUrl: './show-cart.component.html',
-  styleUrls: ['./show-cart.component.css'],
+  styleUrls: ['./show-cart.component.scss']
 })
 export class ShowCartComponent implements OnInit {
 
@@ -33,7 +33,6 @@ export class ShowCartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showProInCart();
   }
 
   showProInCart() {
@@ -94,21 +93,21 @@ export class ShowCartComponent implements OnInit {
     this.codeRequest = new Blog(null, null, code, null, null, null);
     console.log('this.codeRequest', this.codeRequest);
     this.cartService.codeDiscountAPI(this.codeRequest).subscribe(
-    dataCode => {
-      this.dataCode = dataCode['data'];
-      console.log('dataCode', this.dataCode);
-      if (this.dataCode === 'EMPTY') {
-        this.notificationWarning('Chưa nhập mã khuyến mại!');
-        this.dataCode = null;
-      } else if (this.dataCode === 'CODE_NOT_EXIST') {
-        this.notificationWarning('Mã khuyến mại không tồn tại');
-        this.dataCode = null;
-      } else {
-        this.discount = this.dataCode;
-        console.log('dataCode', this.discount);
-        this.cartService.setOrderCode(this.discount);
-      }
-    }, error => this.notificationError()
+      dataCode => {
+        this.dataCode = dataCode['data'];
+        console.log('dataCode', this.dataCode);
+        if (this.dataCode === 'EMPTY') {
+          this.notificationWarning('Chưa nhập mã khuyến mại!');
+          this.dataCode = null;
+        } else if (this.dataCode === 'CODE_NOT_EXIST') {
+          this.notificationWarning('Mã khuyến mại không tồn tại');
+          this.dataCode = null;
+        } else {
+          this.discount = this.dataCode;
+          console.log('dataCode', this.discount);
+          this.cartService.setOrderCode(this.discount);
+        }
+      }, error => this.notificationError()
     );
   }
 }

@@ -1,76 +1,84 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppRoutingModule} from './app-routing.module';
-import { FormsModule} from '@angular/forms';
-import { NgxPaginationModule} from 'ngx-pagination';
-import { LoginComponent } from './account/login/login.component';
-import { LogoutComponent } from './account/logout/logout.component';
-import { NotFoundComponent } from './account/not-found/not-found.component';
-import { ProfileComponent } from './account/profile/profile.component';
-import { RegisterComponent } from './account/register/register.component';
-import { HttpClientModule} from '@angular/common/http';
-import { MatDialogModule, MatFormFieldModule} from '@angular/material';
-import { HeaderComponent } from './home/header/header.component';
+import {
+  MatDialogModule,
+  MatSnackBarModule,
+  MatToolbarModule
+} from '@angular/material';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TestDialogComponent } from './test-dialog/test-dialog.component';
+import {ToastrModule} from 'ngx-toastr';
+import {HeaderComponent} from './home/header/header.component';
 import { FooterComponent } from './home/footer/footer.component';
+import { HttpClientModule} from '@angular/common/http';
 import { ItemsComponent } from './product/items/items.component';
+import { CompareComponent } from './product/compare/compare.component';
+import { ProCateComponent } from './product/pro-cate/pro-cate.component';
 import { QuickViewComponent } from './product/quick-view/quick-view.component';
 import { SingleItemComponent } from './product/single-item/single-item.component';
-import { ProCateComponent } from './product/pro-cate/pro-cate.component';
-import { ShowCartComponent } from './cart/show-cart/show-cart.component';
+import { WriteReviewComponent } from './product/write-review/write-review.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
+import { OrderInfoComponent } from './cart/order-info/order-info.component';
+import { ShowCartComponent } from './cart/show-cart/show-cart.component';
 import { BlogListComponent } from './blog/blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog/blog-detail/blog-detail.component';
 import { AboutComponent } from './static/about/about.component';
 import { ContactComponent } from './static/contact/contact.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { WriteReviewComponent } from './product/write-review/write-review.component';
-import {ToastrModule} from 'ngx-toastr';
-import { CompareComponent } from './product/compare/compare.component';
-import { OrderInfoComponent } from './cart/order-info/order-info.component';
-import { IndexComponent } from './admin/index/index.component';
+import {LoginComponent} from './account/login/login.component';
+import {LogoutComponent} from './account/logout/logout.component';
+import {NotFoundComponent} from './account/not-found/not-found.component';
+import {ProfileComponent} from './account/profile/profile.component';
+import {RegisterComponent} from './account/register/register.component';
+import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    LogoutComponent,
-    NotFoundComponent,
-    ProfileComponent,
-    RegisterComponent,
+    TestDialogComponent,
     HeaderComponent,
     FooterComponent,
     ItemsComponent,
+    CompareComponent,
+    ProCateComponent,
     QuickViewComponent,
     SingleItemComponent,
-    ProCateComponent,
-    ShowCartComponent,
+    WriteReviewComponent,
     CheckoutComponent,
+    OrderInfoComponent,
+    ShowCartComponent,
     BlogListComponent,
     BlogDetailComponent,
     AboutComponent,
     ContactComponent,
-    WriteReviewComponent,
-    CompareComponent,
-    OrderInfoComponent,
-    IndexComponent
+    LoginComponent,
+    LogoutComponent,
+    NotFoundComponent,
+    ProfileComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    NgxPaginationModule,
+    CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({timeOut: 2000, progressBar: false, positionClass: 'toast-top-center'}),
+    MatToolbarModule,
     MatDialogModule,
-    NgbModule,
-    MatFormFieldModule
+    MatSnackBarModule,
+    HttpClientModule,
+    NgbCarouselModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [QuickViewComponent, WriteReviewComponent]
+  entryComponents: [TestDialogComponent, WriteReviewComponent, QuickViewComponent]
 })
 export class AppModule { }

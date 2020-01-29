@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {CartService} from '../../service/cart.service';
-import {User} from '../../../model/model.user';
 import {Product} from '../../../model/product';
-import {ToastrService} from 'ngx-toastr';
+import {ProductService} from '../../../service/product.service';
+import {AccountService} from '../../../service/account.service';
 import {Router} from '@angular/router';
-import {AccountService} from '../../service/account.service';
+import {ToastrService} from 'ngx-toastr';
+import {CartService} from '../../../service/cart.service';
+import {OrderService} from '../../../service/order.service';
+import {User} from '../../../model/model.user';
 import {Order} from '../../../model/order';
-import {OrderService} from '../../service/order.service';
-import {ProductService} from '../../service/product.service';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
 
@@ -66,7 +66,7 @@ export class CheckoutComponent implements OnInit {
 
   showSuccess(message: string) {
     this.toastr.success(message, '', {
-    timeOut: 500, positionClass: 'toast-top-center'});
+      timeOut: 500, positionClass: 'toast-top-center'});
     this.router.navigate(['/order-info']);
   }
 
@@ -109,9 +109,10 @@ export class CheckoutComponent implements OnInit {
 
   fetchOrderCode() {
     this.cartService.orderCode$.subscribe(
-    dataFetch => {
-     console.log('dataFetchOrderCode', dataFetch);
-     this.orderCode = dataFetch;
-    });
+      dataFetch => {
+        console.log('dataFetchOrderCode', dataFetch);
+        this.orderCode = dataFetch;
+      });
   }
+
 }

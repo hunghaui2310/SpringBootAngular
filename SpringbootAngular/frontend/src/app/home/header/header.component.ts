@@ -1,23 +1,21 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Category} from '../../../model/Category';
-import {HttpClient} from '@angular/common/http';
-import {config} from '../../../app-config/application.config';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {Category} from '../../../model/category';
 import {SearchRequest} from '../../../model/search.request';
-import {ProductService} from '../../service/product.service';
-import {CartService} from '../../service/cart.service';
 import {Product} from '../../../model/product';
 import {User} from '../../../model/model.user';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {ProductService} from '../../../service/product.service';
+import {CartService} from '../../../service/cart.service';
+import {Observable} from 'rxjs';
+import {config} from '../../../app-config/application.config';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  // @Output searchProduct
 
   categories: Category[];
   categoryId;
@@ -27,7 +25,7 @@ export class HeaderComponent implements OnInit {
   cartNum;
   userId;
   dataCart;
-  productInCart: Product[] = [];
+  productInCart: Product[];
   subtotal;
   currentUser: User;
   // li1;
@@ -76,9 +74,9 @@ export class HeaderComponent implements OnInit {
         this.products = dataSearch['data'];
         this.productService.setService(this.products);
       },
-        error => {
+      error => {
         (console.log('LOI SEARCH!', error));
-        },
+      },
       () => {
         console.log('ok');
       }

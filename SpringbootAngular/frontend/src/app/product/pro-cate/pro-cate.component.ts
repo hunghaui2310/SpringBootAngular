@@ -1,33 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ProductService} from '../../service/product.service';
-import {sort, Sort} from '../../../model/sort';
-import {Product} from '../../../model/product';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SearchRequest} from '../../../model/search.request';
-import {Cart} from '../../../model/cart';
+import { Component, OnInit } from '@angular/core';
 import {User} from '../../../model/model.user';
-import {CartService} from '../../service/cart.service';
+import {Product} from '../../../model/product';
+import {SearchRequest} from '../../../model/search.request';
+import {Sort, sort} from '../../../model/sort';
+import {Cart} from '../../../model/cart';
+import {ProductService} from '../../../service/product.service';
+import {ActivatedRoute} from '@angular/router';
+import {CartService} from '../../../service/cart.service';
 import {ToastrService} from 'ngx-toastr';
-import {OtherService} from '../../service/other.service';
-import {config} from '../../../app-config/application.config';
+import {OtherService} from '../../../service/other.service';
 
 @Component({
   selector: 'app-pro-cate',
   templateUrl: './pro-cate.component.html',
-  styleUrls: ['./pro-cate.component.css']
+  styleUrls: ['./pro-cate.component.scss']
 })
 export class ProCateComponent implements OnInit {
 
   currentUser: User;
-
-  constructor(private productService: ProductService,
-              private route: ActivatedRoute,
-              private cartService: CartService,
-              private toastr: ToastrService,
-              private compareService: OtherService) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  }
-
   sortCondition;
   productDTOList: Product[];
   searchRequest: SearchRequest;
@@ -38,6 +28,13 @@ export class ProCateComponent implements OnInit {
   comPareRequest;
   pageSize = 12;
 
+  constructor(private productService: ProductService,
+              private route: ActivatedRoute,
+              private cartService: CartService,
+              private toastr: ToastrService,
+              private compareService: OtherService) {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  }
 
   ngOnInit() {
     this.getDataPro();
