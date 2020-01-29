@@ -11,12 +11,16 @@ import com.spring.angular.model.FileInfo;
 import com.spring.angular.repository.ProductRepo;
 import com.spring.angular.service.FileInfoService;
 import com.spring.angular.service.ProductService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -45,11 +49,19 @@ public class ProductServiceImpl implements ProductService {
             ProductDTO productDTO = new ProductDTO();
             lngId = DataUtil.safeToLong(objects[0]);
             proName = String.valueOf(objects[1]);
+            Long cateId = DataUtil.safeToLong(objects[10]);
             price = DataUtil.safeToInt(objects[2]);
             numLike = DataUtil.safeToLong(objects[3]);
             cateName = DataUtil.safeToString(objects[4]);
             int discount = DataUtil.safeToInt(objects[5]);
             img = String.valueOf(objects[6]);
+            if(!DataUtil.isNullOrEmpty(img)) {
+                Resource resource = new ClassPathResource(Contains.RESOURCE_IMAGE + cateId + "/" + img);
+                File file = resource.getFile();
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                String urlImageProduct = Base64.getEncoder().encodeToString(fileContent);
+                productDTO.setUrlImage(urlImageProduct);
+            }
             realPrice = DataUtil.safeToDouble(objects[7]);
             des = DataUtil.safeToString(objects[8]);
             dataIsNew = DataUtil.safeToInt(objects[9]);
@@ -62,7 +74,6 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.setDiscount(discount);
             }
             productDTO.setCategoryName(cateName);
-            productDTO.setUrlImage(img);
             if(DataUtil.isNullOrZero(productDTO.getDiscount())){
                 productDTO.setRealPrice(price);
             }else {
@@ -74,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
             }else {
                 productDTO.setNew(false);
             }
-            productDTO.setCategoryId(DataUtil.safeToLong(objects[10]));
+            productDTO.setCategoryId(cateId);
             productDTOList.add(productDTO);
         }
         return productDTOList;

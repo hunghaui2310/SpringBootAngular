@@ -18,6 +18,7 @@ public class Contains {
     public static final String EMPTY = "EMPTY";
     public static final String CODE_NOT_EXIST = "CODE_NOT_EXIST";
     public static final String HD = "HD";
+    public static final String RESOURCE_IMAGE = "images/product/";
 
 
     public interface BLOG_DETAIL{
