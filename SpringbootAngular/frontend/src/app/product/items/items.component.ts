@@ -125,6 +125,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   }
 
   showData(row: any) {
+    this.productId = row['id'];
     this.productName = row['productName'];
     this.urlImage = row['urlImage'];
     this.productPrice = row['price'];

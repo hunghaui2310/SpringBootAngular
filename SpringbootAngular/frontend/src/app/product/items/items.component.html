@@ -133,7 +133,7 @@
                             <ul class="add-actions-link">
                               <li class="add-cart active"><span
                                 (click)="addProToCart(eachProduct.id)">Thêm vào giỏ</span></li>
-                              <li><span title="Mua ngay" class="quick-view-btn" (click)="showData(eachProduct.id)"><i
+                              <li (click)="showData(eachProduct.id)"><span title="Mua ngay" class="quick-view-btn"><i
                                 class="fa fa-eye"></i></span></li>
                               <li><span title="Yêu thích" class="links-details" href="wishlist.html"><i
                                 class="fa fa-heart-o"></i></span></li>

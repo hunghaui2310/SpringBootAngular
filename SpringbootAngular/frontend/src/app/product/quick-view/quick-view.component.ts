@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {ProductService} from '../../../service/product.service';
+import {Product} from '../../../model/product';
 
 @Component({
   selector: 'app-quick-view',
@@ -22,18 +23,18 @@ export class QuickViewComponent implements OnInit {
   categoryId;
 
   constructor(private dialogRef: MatDialogRef<QuickViewComponent>,
-              @Inject(MAT_DIALOG_DATA) public data,
+              @Inject(MAT_DIALOG_DATA) public data: any,
               private productService: ProductService,
               private route: ActivatedRoute) {
     dialogRef.disableClose = true;
   }
 
   ngOnInit() {
-    this.getProDetail();
+    this.getProDetail(this.productId);
   }
 
-  getProDetail() {
-    this.productId = this.route.snapshot.params['id'];
+  getProDetail(proId: number) {
+    this.productId = new Product(proId);
     console.log(this.productId);
     this.productService.productDetailAPI(this.productId).subscribe(
       data => {
@@ -52,6 +53,6 @@ export class QuickViewComponent implements OnInit {
   }
 
   closeForm(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 }

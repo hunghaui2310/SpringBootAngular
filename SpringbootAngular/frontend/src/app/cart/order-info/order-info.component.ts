@@ -88,7 +88,7 @@ export class OrderInfoComponent implements OnInit {
 
   notificationSuccess(notification: string) {
     this.toastr.success(notification, '', {
-      timeOut: 1000, positionClass: 'toast-top-center'
+      timeOut: 2000, positionClass: 'toast-top-center'
     });
   }
 

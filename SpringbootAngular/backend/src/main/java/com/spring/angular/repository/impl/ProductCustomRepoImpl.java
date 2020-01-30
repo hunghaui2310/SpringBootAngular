@@ -69,23 +69,6 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
         }
     }
 
-    /**
-     * lay ra list anh cua san pham co loai file la 3
-     *
-     * @param productId
-     * @return chuoi anh
-     * @throws Exception
-     */
-    @Override
-    public List<String> lstImageProduct(Long productId) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("select f.url from file_info f where f.file_type_id = 3 " +
-                "and f.product_id = :productId");
-        Query query = entityManager.createNativeQuery(stringBuilder.toString());
-        query.setParameter("productId",productId);
-        return query.getResultList();
-    }
-
     @Override
     public Object[] getProInCart(Long productId) throws Exception {
         try {

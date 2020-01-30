@@ -16,10 +16,12 @@ public class FileInfoServiceImpl implements FileInfoService {
     EntityManager entityManager;
 
     @Override
-    public List<FileInfo> getListByProId(Long productId) throws Exception {
+    public List<Object[]> getListByProId(Long productId) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("select f from FileInfo f where f.productId = :productId and f.fileTypeId = 2");
-        Query query = entityManager.createQuery(stringBuilder.toString());
+        stringBuilder.append("select f.url, p.category_id from file_info f, product p" +
+                " where f.file_type_id = 2 and p.product_id = f.product_id" +
+                " and f.product_id = :productId");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
         query.setParameter("productId", productId);
         return query.getResultList();
     }

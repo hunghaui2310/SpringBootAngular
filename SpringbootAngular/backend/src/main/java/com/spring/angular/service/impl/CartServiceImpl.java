@@ -9,14 +9,14 @@ import com.spring.angular.repository.ProductRepo;
 import com.spring.angular.repository.UserCartRepo;
 import com.spring.angular.service.CartService;
 import com.spring.angular.service.ProductService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -99,8 +99,16 @@ public class CartServiceImpl implements CartService {
                 } else {
                     productDTO.setRealPrice(price);
                 }
-                productDTO.setCategoryId(DataUtil.safeToLong(object[6]));
-                productDTO.setUrlImage(urlImg);
+                Long cateId = DataUtil.safeToLong(object[6]);
+                productDTO.setCategoryId(cateId);
+
+                if(!DataUtil.isNullOrEmpty(urlImg)) {
+                    Resource resource = new ClassPathResource(Contains.IMAGES_PRODUCT_SMALL_SIZE + cateId + "/" + urlImg);
+                    File file = resource.getFile();
+                    byte[] fileContent = FileUtils.readFileToByteArray(file);
+                    String urlImageProduct = Base64.getEncoder().encodeToString(fileContent);
+                    productDTO.setUrlImage(urlImageProduct);
+                }
                 productDTO.setNumProInCart(numPro);
                 total = productDTO.getRealPrice() * numPro;
                 productDTO.setTotal(total);

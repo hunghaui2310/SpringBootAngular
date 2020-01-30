@@ -7,7 +7,6 @@ import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
 import com.spring.angular.helper.SearchRequest;
-import com.spring.angular.model.FileInfo;
 import com.spring.angular.repository.ProductRepo;
 import com.spring.angular.service.FileInfoService;
 import com.spring.angular.service.ProductService;
@@ -56,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
             int discount = DataUtil.safeToInt(objects[5]);
             img = String.valueOf(objects[6]);
             if(!DataUtil.isNullOrEmpty(img)) {
-                Resource resource = new ClassPathResource(Contains.RESOURCE_IMAGE + cateId + "/" + img);
+                Resource resource = new ClassPathResource(Contains.IMAGES_PRODUCT_LARGE_SIZE + cateId + "/" + img);
                 File file = resource.getFile();
                 byte[] fileContent = FileUtils.readFileToByteArray(file);
                 String urlImageProduct = Base64.getEncoder().encodeToString(fileContent);
@@ -140,11 +139,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDetailDTO getProductById(Long productId) throws Exception {
-        List<FileInfo> fileInfoList = fileInfoService.getListByProId(productId);
+        List<Object[]> fileInfoList = fileInfoService.getListByProId(productId);
         List<String> list = new ArrayList<>();
-        for(FileInfo fileInFo : fileInfoList){
-            String url = fileInFo.getUrl();
-            list.add(url);
+        for(Object[] fileInFo : fileInfoList){
+            String url = DataUtil.safeToString(fileInFo[0]);
+            Long cateId = DataUtil.safeToLong(fileInFo[1]);
+            if(!DataUtil.isNullOrEmpty(url)) {
+                Resource resource = new ClassPathResource(Contains.IMAGES_PRODUCT_LARGE_SIZE + cateId + "/" + url);
+                File file = resource.getFile();
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                String urlImageProduct = Base64.getEncoder().encodeToString(fileContent);
+                list.add(urlImageProduct);
+            }
         }
         Object[] objects = null;
         ProductDetailDTO productDetailDTO = new ProductDetailDTO();
@@ -175,12 +181,6 @@ public class ProductServiceImpl implements ProductService {
         } else
             productDetailDTO.setNoData(true);
         return productDetailDTO;
-    }
-
-    @Override
-    public List<String> getImageByProId(Long id) {
-        List<String> lstSting = productRepo.lstImageProduct(id);
-        return lstSting;
     }
 
     @Override
@@ -239,6 +239,13 @@ public class ProductServiceImpl implements ProductService {
             cateName = DataUtil.safeToString(objects[4]);
             int discount = DataUtil.safeToInt(objects[5]);
             img = String.valueOf(objects[6]);
+            if(!DataUtil.isNullOrEmpty(img)) {
+                Resource resource = new ClassPathResource(Contains.IMAGES_PRODUCT_LARGE_SIZE + categoryId + "/" + img);
+                File file = resource.getFile();
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                String urlImageProduct = Base64.getEncoder().encodeToString(fileContent);
+                productDTO.setUrlImage(urlImageProduct);
+            }
             realPrice = DataUtil.safeToDouble(objects[7]);
             des = DataUtil.safeToString(objects[8]);
             dataIsNew = DataUtil.safeToInt(objects[9]);
@@ -251,7 +258,6 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.setDiscount(discount);
             }
             productDTO.setCategoryName(cateName);
-            productDTO.setUrlImage(img);
             if (DataUtil.isNullOrZero(productDTO.getDiscount())) {
                 productDTO.setRealPrice(price);
             } else {

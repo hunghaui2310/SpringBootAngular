@@ -18,8 +18,6 @@ public interface ProductService {
 
     ProductDetailDTO getProductById(Long productId) throws Exception;
 
-    List<String> getImageByProId(Long id);
-
     AboutDTO getAboutDTO() throws Exception;
 
     CartDTO lstSamePro(Long categoryId) throws Exception;

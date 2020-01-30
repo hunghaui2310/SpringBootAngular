@@ -45,4 +45,8 @@ export class ProductService {
   sameProAPI(categoryId: number) {
     return this.http.get(config.same_product_API + '/' + categoryId);
   }
+
+  productQuickViewAPI(proId: Product) {
+    return this.http.post(config.product_quick_view_API, proId);
+  }
 }

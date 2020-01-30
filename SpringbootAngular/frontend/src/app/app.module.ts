@@ -36,6 +36,7 @@ import {ProfileComponent} from './account/profile/profile.component';
 import {RegisterComponent} from './account/register/register.component';
 import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { StepperInputComponent } from './cart/stepper-input/stepper-input.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     LogoutComponent,
     NotFoundComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    StepperInputComponent
   ],
   imports: [
     BrowserModule,

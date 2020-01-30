@@ -101,7 +101,7 @@ export class CheckoutComponent implements OnInit {
         this.id = dataUpdateOrder['data'];
         this.productService.setId(this.id);
         console.log('dataOrderdddddd', dataUpdateOrder);
-        this.showSuccess('Xác nhận thông tin! Đang chuyển hướng');
+        this.showSuccess('Xác nhận thông tin thành công!');
       }, error => this.showError('Lỗi')
     );
     console.log('ket thuc');

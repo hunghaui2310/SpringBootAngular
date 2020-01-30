@@ -20,7 +20,7 @@
           <td class="compare-column-productinfo" *ngFor="let eachImg of dataCompare">
             <div class="compare-pdoduct-image">
               <span>
-                <img src="assets/images/product/large-size/{{eachImg.categoryId}}/{{eachImg.urlImage}}" alt="Product Image">
+                <img [src]="'data:image/jpg;base64,' + eachImg.urlImage">
               </span>
             </div>
           </td>

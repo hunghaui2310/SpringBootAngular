@@ -33,6 +33,7 @@ export class SingleItemComponent implements OnInit {
   cartService;
   notificationMessage;
   writeReview;
+  slides: any = [[]];
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
@@ -50,6 +51,7 @@ export class SingleItemComponent implements OnInit {
     this.getProDetail();
     // tslint:disable-next-line:no-unused-expression
     this.categoryId;
+    this.sameProList = this.chunk(this.sameProList, 4);
   }
 
   getProDetail() {
@@ -118,5 +120,13 @@ export class SingleItemComponent implements OnInit {
 
   notificationError() {
     this.toastr.error('Lỗi', 'Thông báo');
+  }
+
+  chunk(arr: any, chunkSize: any) {
+    let R = [];
+    for (let i = 0, len = arr.length; i < len; i += chunkSize) {
+      R.push(arr.slice(i, i + chunkSize));
+    }
+    return R;
   }
 }

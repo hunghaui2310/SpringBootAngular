@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface FileInfoService {
 
-    List<FileInfo> getListByProId(Long productId) throws Exception;
+    List<Object[]> getListByProId(Long productId) throws Exception;
 }

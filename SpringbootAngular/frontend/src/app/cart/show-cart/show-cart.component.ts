@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Product} from '../../../model/product';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
@@ -33,6 +33,7 @@ export class ShowCartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showProInCart();
   }
 
   showProInCart() {
@@ -86,10 +87,6 @@ export class ShowCartComponent implements OnInit {
   }
 
   getCodeDiscount(code: string) {
-    this.toastr.success(':ddd', 'sss' , {
-      timeOut: 10000,
-      positionClass: 'toast-top-center'
-    });
     this.codeRequest = new Blog(null, null, code, null, null, null);
     console.log('this.codeRequest', this.codeRequest);
     this.cartService.codeDiscountAPI(this.codeRequest).subscribe(
@@ -110,4 +107,5 @@ export class ShowCartComponent implements OnInit {
       }, error => this.notificationError()
     );
   }
+
 }

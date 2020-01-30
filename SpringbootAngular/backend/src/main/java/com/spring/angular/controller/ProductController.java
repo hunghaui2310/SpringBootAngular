@@ -55,17 +55,6 @@ public class ProductController {
         return apiResponse;
     }
 
-    @GetMapping("/image/{id}")
-    public ApiResponse getImageByProId(@PathVariable(value = "id") Long id){
-        try{
-            List<String> getImg = productService.getImageByProId(id);
-            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", getImg);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, Contains.ERROR, null);
-        }
-    }
-
     /**
      * lay ra san pham cung the loai trong chi tiet san pham
      *
@@ -81,6 +70,21 @@ public class ProductController {
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
+    }
+
+    @PostMapping("/quick-view")
+    public ApiResponse postProductDetail(@RequestBody ProductDetailDTO productDetailDTO){
+        ApiResponse apiResponse = null;
+        try{
+            Long productId = productDetailDTO.getId();
+            ProductDetailDTO productDetailDTO1 = productService.getProductById(productId);
+            if(productDetailDTO != null)
+                return apiResponse.build(HttpServletResponse.SC_OK, true, "", productDetailDTO1);
+        }catch (Exception e){
+            e.printStackTrace();
+            return apiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, Contains.ERROR, null);
+        }
+        return apiResponse;
     }
 
 }
