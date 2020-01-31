@@ -28,6 +28,13 @@ public class WishListServiceImpl implements WishListService {
     @Autowired
     private ProductRepo productRepo;
 
+    /**
+     * Thuc hien them vao yeu thich va cap nhat lai so luot thich trong product
+     *
+     * @param wishListDTO
+     * @return thong bao
+     * @throws Exception
+     */
     @Override
     public String insertWishList(WishListDTO wishListDTO) throws Exception {
         String message;
@@ -37,6 +44,13 @@ public class WishListServiceImpl implements WishListService {
         if(check){
             message = Contains.DUPLICATE;
         }else {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(wishListDTO.getProductId());
+            Object[] product = productRepo.findProById(wishListDTO.getProductId());
+            Long numLikeOld = DataUtil.safeToLong(product[3]);
+            Long numLikeNew = numLikeOld + 1;
+            productDTO.setNumLike(numLikeNew);
+            productRepo.updateProduct(productDTO);
             wishListRepo.insertWishList(wishListDTO);
             message = Contains.SUCCESS;
         }
@@ -86,5 +100,15 @@ public class WishListServiceImpl implements WishListService {
         WishListDTO data = new WishListDTO();
         data.setProductDTOList(list);
         return data;
+    }
+
+    @Override
+    public String deleteProWishList(WishListDTO wishListDTO) throws Exception {
+        String message;
+        Long wishListId = wishListRepo.findWishListByUser(wishListDTO.getUserId());
+        wishListDTO.setWishListId(wishListId);
+        wishListRepo.deleteProWishList(wishListDTO);
+        message = Contains.SUCCESS;
+        return message;
     }
 }

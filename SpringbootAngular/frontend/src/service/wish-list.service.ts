@@ -17,4 +17,8 @@ export class WishListService {
   showAllWishListAPI(wishList: WishList) {
     return this.http.post(config.show_wish_list_API, wishList);
   }
+
+  deleteWishListAPI(wishList: WishList) {
+    return this.http.post(config.delete_wish_list_API, wishList);
+  }
 }

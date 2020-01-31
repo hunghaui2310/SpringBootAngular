@@ -115,7 +115,7 @@ export class SingleItemComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(WriteReviewComponent, {
-      width: '250px',
+      width: '450px',
       data: {name: this.productName, animal: this.writeReview}
     });
 

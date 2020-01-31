@@ -1,5 +1,6 @@
 package com.spring.angular.repository.impl;
 
+import com.spring.angular.dto.CompareDTO;
 import com.spring.angular.repository.CompareRepo;
 import org.springframework.stereotype.Repository;
 
@@ -44,5 +45,19 @@ public class CompareRepoImpl implements CompareRepo {
         query.setParameter("productId", productId);
         query.setParameter("userId", userId);
         query.executeUpdate();
+    }
+
+    @Override
+    public boolean checkDuplicateCompare(CompareDTO compareDTO) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("select * from compare_pro where user_id = :userId and product_id = :productId");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("userId", compareDTO.getUserId());
+        query.setParameter("productId", compareDTO.getProductId());
+        List<Object[]> list = query.getResultList();
+        if(list.size() > 0) {
+            return true;
+        }else
+        return false;
     }
 }

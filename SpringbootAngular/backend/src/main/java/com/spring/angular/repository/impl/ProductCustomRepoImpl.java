@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
@@ -146,6 +147,17 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Transactional
+    @Override
+    public void updateProduct(ProductDTO productDTO) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("UPDATE product SET num_like = :numLike WHERE product_id = :productId");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("numLike", productDTO.getNumLike());
+        query.setParameter("productId", productDTO.getId());
+        query.executeUpdate();
     }
 
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){

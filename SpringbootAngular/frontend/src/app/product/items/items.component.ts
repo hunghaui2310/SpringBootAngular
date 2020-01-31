@@ -227,8 +227,11 @@ export class ItemsComponent implements OnInit, AfterViewInit {
     this.compareService.addCompareAPI(this.comPareRequest).subscribe(
       dataCompare => {
         this.notificationMessage = dataCompare['data'];
-        console.log('qqqqqqqqMessage', this.notificationMessage);
-        this.notificationSuccess('Thêm so sánh thành công');
+        if (this.notificationMessage === 'SUCCESS') {
+          this.notificationSuccess('Thêm so sánh thành công');
+        } else {
+          this.notificationError('Sản phẩm này đã tồn tại trong so sánh');
+        }
       },
       error => this.notificationError('Đã xả ra lỗi')
     );

@@ -1,12 +1,13 @@
-<h1 mat-dialog-title>Hi {{data.proName}}</h1>
+<h1 mat-dialog-title>Để lại đánh giá của bạn về sản phẩm này</h1>
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.animal">
+  <p>Bạn cảm thấy sản phẩm này như thế nào?</p>
+  <mat-form-field class="dialog-write-review">
+<!--    <input matInput [(ngModel)]="data.content">-->
+    <textarea class="form-control" rows="3" [(ngModel)]="data.content"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Đóng</button>
+  <button mat-button [mat-dialog-close]="data.content" cdkFocusInitial>Gửi đánh giá</button>
 </div>
 

@@ -19,6 +19,7 @@ export class BlogListComponent implements OnInit {
               private blogService: OtherService) { }
 
   ngOnInit() {
+    this.getBlogList();
   }
 
   getBlogList() {

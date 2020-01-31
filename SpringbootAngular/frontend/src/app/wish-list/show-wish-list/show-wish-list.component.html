@@ -29,7 +29,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let eachProInWishList of listPro">
-                <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
+                <td class="li-product-remove" (click)="deleteWishList(eachProInWishList.id)"><a><i class="fa fa-times"></i></a></td>
                 <td class="li-product-thumbnail"><a><img [src]="'data:image/jpg;base64,' + eachProInWishList.urlImage"></a></td>
                 <td class="li-product-name"><a href="#">{{eachProInWishList.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{eachProInWishList.realPrice * 1000000 | number}}</span></td>

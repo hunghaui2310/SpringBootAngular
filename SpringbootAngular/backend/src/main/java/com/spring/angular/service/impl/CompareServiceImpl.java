@@ -31,16 +31,25 @@ public class CompareServiceImpl implements CompareService {
 
     @Override
     public String addCompare(CartDTO cartDTO) throws Exception {
+        String message;
         Long productId = cartDTO.getProductId();
         Long userId = cartDTO.getUserId();
+        CompareDTO compareDTO = new CompareDTO();
+        compareDTO.setUserId(cartDTO.getUserId());
+        compareDTO.setProductId(cartDTO.getProductId());
+        boolean checkDuplicateCompare = compareRepo.checkDuplicateCompare(compareDTO);
         List<BigInteger> listProId = compareRepo.getListProductToCompare(userId);
-        if(listProId.size() >= 2){
-            compareRepo.deleteAllData(userId);
-            compareRepo.saveCompare(productId, userId);
+        if(checkDuplicateCompare){
+            message = Contains.DUPLICATE;
         }else {
-            compareRepo.saveCompare(productId, userId);
+            if (listProId.size() >= 2) {
+                compareRepo.deleteAllData(userId);
+                compareRepo.saveCompare(productId, userId);
+            } else {
+                compareRepo.saveCompare(productId, userId);
+            }
+            message = Contains.SUCCESS;
         }
-        String message = Contains.SUCCESS;
         return message;
     }
 

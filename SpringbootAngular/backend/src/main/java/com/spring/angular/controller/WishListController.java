@@ -39,4 +39,14 @@ public class WishListController {
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
+
+    @PostMapping("/delete")
+    public ApiResponse deleteProWishList(@RequestBody WishListDTO wishListDTO) throws Exception {
+        try {
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", wishListService.deleteProWishList(wishListDTO));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
 }

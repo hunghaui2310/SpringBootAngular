@@ -1,5 +1,6 @@
 package com.spring.angular.repository;
 
+import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.helper.SearchRequest;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface ProductCustomRepo {
     Object[] findProById(Long productId) throws Exception;
 
     String getCodeDiscount(String codeDiscount) throws Exception;
+
+    void updateProduct(ProductDTO productDTO) throws Exception;
 }

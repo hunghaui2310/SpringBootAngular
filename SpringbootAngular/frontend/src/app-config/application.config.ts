@@ -24,5 +24,6 @@ export const config = {
   data_order_API: URL_BASE + '/order/show',
   update_order_API: URL_BASE + '/order/update',
   wishList_insert_API: URL_BASE + '/wish-list/add',
-  show_wish_list_API: URL_BASE + '/wish-list/show'
+  show_wish_list_API: URL_BASE + '/wish-list/show',
+  delete_wish_list_API: URL_BASE + '/wish-list/delete'
 };

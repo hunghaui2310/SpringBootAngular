@@ -19,6 +19,7 @@ export class ShowWishListComponent implements OnInit {
   listPro: Product[];
   conditionAddCart;
   notificationMessage;
+  deleteMessage;
 
   constructor(private wishListService: WishListService,
               private cartService: CartService,
@@ -69,5 +70,19 @@ export class ShowWishListComponent implements OnInit {
 
   notificationError(messageError: string) {
     this.toastr.error(messageError, 'Thông báo');
+  }
+
+  deleteWishList(productId: number) {
+    this.wishListDTO = new WishList(null, productId, this.currentUser.id);
+    console.log('dataDeleteWishList', this.wishListDTO);
+    this.wishListService.deleteWishListAPI(this.wishListDTO).subscribe(
+      messageDelete => {
+        this.deleteMessage = messageDelete['data'];
+        if (this.deleteMessage === 'SUCCESS') {
+          this.notificationSuccess('Xóa thành công');
+          this.showAllWishList();
+        }
+      }
+    );
   }
 }

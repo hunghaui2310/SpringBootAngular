@@ -13,4 +13,6 @@ public interface WishListRepoCustom {
     boolean checkDuplicateWishList(WishListDTO wishListDTO) throws Exception;
 
     List<Object[]> getWishListByUser(WishListDTO wishListDTO) throws Exception;
+
+    void deleteProWishList(WishListDTO wishListDTO) throws Exception;
 }

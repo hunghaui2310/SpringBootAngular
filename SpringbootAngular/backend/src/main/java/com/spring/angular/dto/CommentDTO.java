@@ -1,13 +1,11 @@
 package com.spring.angular.dto;
 
-import java.util.List;
-
-public class CompareDTO {
+public class CommentDTO {
 
     private Long id;
-    private List<ProductDTO> list;
     private Long userId;
     private Long productId;
+    private String content;
 
     public Long getId() {
         return id;
@@ -15,14 +13,6 @@ public class CompareDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<ProductDTO> getList() {
-        return list;
-    }
-
-    public void setList(List<ProductDTO> list) {
-        this.list = list;
     }
 
     public Long getUserId() {
@@ -39,5 +29,13 @@ public class CompareDTO {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

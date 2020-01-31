@@ -20,15 +20,15 @@
           <div class="col-lg-6 col-md-6" *ngFor="let eachBlog of blogList | paginate: {id: 'page', itemsPerPage: 4, currentPage: currentP, totalItems: blogList.length}">
             <div class="li-blog-single-item pb-25">
               <div class="li-blog-banner">
-                <a (click)="blogDetail(eachBlog.id)"><img class="img-full" src="assets/images/blog-banner/{{eachBlog.img}}" alt=""></a>
+                <a (click)="blogDetail(eachBlog.id)"><img class="img-full" [src]="'data:image/jpg;base64,' + eachBlog.img"></a>
               </div>
               <div class="li-blog-content">
                 <div class="li-blog-details">
                   <h3 class="li-blog-heading pt-25"><a (click)="blogDetail(eachBlog.id)">{{eachBlog.title}}</a></h3>
                   <div class="li-blog-meta">
-                    <a class="author" href="#"><i class="fa fa-user"></i>Admin</a>
-                    <a class="comment" href="#"><i class="fa fa-comment-o"></i> {{eachBlog.numSee}} lượt truy cập</a>
-                    <a class="post-time" href="#"><i class="fa fa-calendar"></i> {{eachBlog.createDate}}</a>
+                    <a class="author"><i class="fa fa-user"></i>Admin</a>
+                    <a class="comment"><i class="fa fa-comment-o"></i> {{eachBlog.numSee}} lượt truy cập</a>
+                    <a class="post-time"><i class="fa fa-calendar"></i> {{eachBlog.createDate}}</a>
                   </div>
                   <p>{{eachBlog.content}}</p>
                   <a class="read-more" (click)="blogDetail(eachBlog.id)">Xem thêm...</a>

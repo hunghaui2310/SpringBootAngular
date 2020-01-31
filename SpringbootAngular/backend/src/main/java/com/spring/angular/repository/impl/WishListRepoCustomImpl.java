@@ -59,4 +59,15 @@ public class WishListRepoCustomImpl implements WishListRepoCustom {
         query.setParameter("wishListId", wishListDTO.getWishListId());
         return query.getResultList();
     }
+
+    @Transactional
+    @Override
+    public void deleteProWishList(WishListDTO wishListDTO) throws Exception {
+        StringBuilder sql = new StringBuilder();
+        sql.append("delete from wishlist_product where wishlist_id = :wishListId and product_id = :productId");
+        Query query = entityManager.createNativeQuery(sql.toString());
+        query.setParameter("wishListId", wishListDTO.getWishListId());
+        query.setParameter("productId", wishListDTO.getProductId());
+        query.executeUpdate();
+    }
 }
