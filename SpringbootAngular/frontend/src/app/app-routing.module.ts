@@ -42,6 +42,7 @@ import {RegisterComponent} from './account/register/register.component';
 import {LogoutComponent} from './account/logout/logout.component';
 import {NotFoundComponent} from './account/not-found/not-found.component';
 import {ApiService} from '../service/api.service';
+import {ShowWishListComponent} from './wish-list/show-wish-list/show-wish-list.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -70,6 +71,8 @@ const routes: Routes = [
       path: 'compare', component: CompareComponent, data: { title: 'So sánh sản phẩm'}
     }, {
       path: 'order-info', component: OrderInfoComponent, data: { title: 'Thông tin đơn hàng'}
+    }, {
+      path: 'wish-list', component: ShowWishListComponent, data: { title: 'Yêu thích'}
     }
     ]
   },

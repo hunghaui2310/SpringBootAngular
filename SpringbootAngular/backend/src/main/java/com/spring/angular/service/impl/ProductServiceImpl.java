@@ -107,6 +107,14 @@ public class ProductServiceImpl implements ProductService {
             cateName = DataUtil.safeToString(objects[4]);
             int discount = DataUtil.safeToInt(objects[5]);
             img = String.valueOf(objects[6]);
+            Long cateId = DataUtil.safeToLong(objects[10]);
+            if(!DataUtil.isNullOrEmpty(img)) {
+                Resource resource = new ClassPathResource(Contains.IMAGES_PRODUCT_LARGE_SIZE + cateId + "/" + img);
+                File file = resource.getFile();
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                String urlImageProduct = Base64.getEncoder().encodeToString(fileContent);
+                productDTO.setUrlImage(urlImageProduct);
+            }
             realPrice = DataUtil.safeToDouble(objects[7]);
             des = DataUtil.safeToString(objects[8]);
             dataIsNew = DataUtil.safeToInt(objects[9]);
@@ -119,7 +127,6 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.setDiscount(discount);
             }
             productDTO.setCategoryName(cateName);
-            productDTO.setUrlImage(img);
             if(DataUtil.isNullOrZero(productDTO.getDiscount())){
                 productDTO.setRealPrice(price);
             }else {
@@ -131,7 +138,7 @@ public class ProductServiceImpl implements ProductService {
             }else {
                 productDTO.setNew(false);
             }
-            productDTO.setCategoryId(DataUtil.safeToLong(objects[10]));
+            productDTO.setCategoryId(cateId);
             productDTOList.add(productDTO);
         }
         return productDTOList;

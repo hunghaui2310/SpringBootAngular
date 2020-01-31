@@ -9,6 +9,8 @@ import {ProductService} from '../../../service/product.service';
 import {CartService} from '../../../service/cart.service';
 import {Observable} from 'rxjs';
 import {config} from '../../../app-config/application.config';
+import {WishList} from '../../../model/wish-list';
+import {WishListService} from '../../../service/wish-list.service';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +30,9 @@ export class HeaderComponent implements OnInit {
   productInCart: Product[];
   subtotal;
   currentUser: User;
+  wishListDTO;
+  wishList;
+  listPro: Product[];
   // li1;
   // li2;
   // router1;
@@ -36,7 +41,8 @@ export class HeaderComponent implements OnInit {
   constructor(private http: HttpClient,
               private router: Router,
               private productService: ProductService,
-              private cartService: CartService) {
+              private cartService: CartService,
+              private wishListService: WishListService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -45,6 +51,7 @@ export class HeaderComponent implements OnInit {
     this.categoryId = null;
     this.getNumCart();
     console.log('currentUser', this.currentUser.username);
+    this.showAllWishList();
   }
 
   getCategoryAPI(): Observable<Category[]> {
@@ -100,6 +107,19 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('currentUser');
     this.router.navigate(['/logout']);
     console.log('currentUser', localStorage.removeItem('currentUser'));
+  }
+
+  showAllWishList() {
+    this.wishListDTO = new WishList(null, null, this.currentUser.id);
+    console.log('conditionWishList', this.wishListDTO);
+    this.wishListService.showAllWishListAPI(this.wishListDTO).subscribe(
+      dataShow => {
+        this.wishList = dataShow['data'];
+        console.log('dataWishList', this.wishList);
+        this.listPro = this.wishList['productDTOList'];
+        console.log(this.wishList['productDTOList']);
+      }
+    );
   }
 
   // directional() {

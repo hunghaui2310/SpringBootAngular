@@ -37,6 +37,8 @@ import {RegisterComponent} from './account/register/register.component';
 import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { StepperInputComponent } from './cart/stepper-input/stepper-input.component';
+import {CarouselModule} from 'ngx-owl-carousel-o';
+import { ShowWishListComponent } from './wish-list/show-wish-list/show-wish-list.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { StepperInputComponent } from './cart/stepper-input/stepper-input.compon
     NotFoundComponent,
     ProfileComponent,
     RegisterComponent,
-    StepperInputComponent
+    StepperInputComponent,
+    ShowWishListComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +80,8 @@ import { StepperInputComponent } from './cart/stepper-input/stepper-input.compon
     MatSnackBarModule,
     HttpClientModule,
     NgbCarouselModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent],

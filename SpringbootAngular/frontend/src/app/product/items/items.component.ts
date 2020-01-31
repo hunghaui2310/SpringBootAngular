@@ -16,6 +16,8 @@ import {QuickViewComponent} from '../quick-view/quick-view.component';
 import {Observable} from 'rxjs';
 import {Category} from '../../../model/category';
 import {Cart} from '../../../model/cart';
+import {WishList} from '../../../model/wish-list';
+import {WishListService} from '../../../service/wish-list.service';
 
 @Component({
   selector: 'app-items',
@@ -46,6 +48,8 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   conditionAddCart;
   notificationMessage;
   comPareRequest;
+  wishListDTO;
+  wishListInsert;
 
   constructor(private productService: ProductService,
               private router: Router,
@@ -54,6 +58,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
               private cartService: CartService,
               private toastr: ToastrService,
               private compareService: OtherService,
+              private wishListService: WishListService,
               configCarousel: NgbCarouselConfig) {
     {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -197,12 +202,12 @@ export class ItemsComponent implements OnInit, AfterViewInit {
         this.notificationMessage = message['data'];
         console.log('this.notificationMessage', this.notificationMessage);
         if (this.notificationMessage === 'CREATE' || this.notificationMessage === 'UPDATE') {
-          this.notificationSuccess('Thêm thành công');
+          this.notificationSuccess('Thêm vào giỏ thành công');
         } else {
-          this.notificationError();
+          this.notificationError('Lỗi');
         }
       },
-      error => this.notificationError()
+      error => this.notificationError('Đã xảy ra lỗi')
     );
   }
 
@@ -212,8 +217,8 @@ export class ItemsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  notificationError() {
-    this.toastr.error('Lỗi', 'Thông báo');
+  notificationError(messageError: string) {
+    this.toastr.error(messageError, 'Thông báo');
   }
 
   addProToCompare(productId: number) {
@@ -225,7 +230,23 @@ export class ItemsComponent implements OnInit, AfterViewInit {
         console.log('qqqqqqqqMessage', this.notificationMessage);
         this.notificationSuccess('Thêm so sánh thành công');
       },
-      error => this.notificationError()
+      error => this.notificationError('Đã xả ra lỗi')
+    );
+  }
+
+  insertToWishList(productId: number) {
+    this.wishListDTO = new WishList(null, productId, this.currentUser.id);
+    console.log('wishListCondition', this.wishListDTO);
+    this.wishListService.insertWishListAPI(this.wishListDTO).subscribe(
+      dataWishList => {
+        this.wishListInsert = dataWishList['data'];
+        console.log('wishListNotification', this.wishListInsert);
+        if (this.wishListInsert === 'SUCCESS') {
+          this.notificationSuccess('Thêm vào yêu thích thành công');
+        } else {
+          this.notificationError('Sản phẩm đã tồn tại trong yêu thích');
+        }
+      }, error => this.notificationError('Đã xảy ra lỗi')
     );
   }
 }

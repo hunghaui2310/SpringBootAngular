@@ -49,8 +49,8 @@ public class CartRepoImpl implements CartRepo {
     @Override
     public List<Object[]> getCartByUser(Long cartId) throws Exception {
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("select cp.product_id, cp.num_pro from cart_product cp" +
-                " where cp.cart_id = :cartId");
+        sqlBuilder.append("select cp.product_id, cp.num_pro,cp.id from cart_product cp" +
+                " where cp.cart_id = :cartId order by id desc");
         Query query = entityManager.createNativeQuery(sqlBuilder.toString());
         query.setParameter("cartId",cartId);
         return query.getResultList();

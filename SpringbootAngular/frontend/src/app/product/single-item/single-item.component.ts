@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {ProductService} from '../../../service/product.service';
+import {CartService} from '../../../service/cart.service';
 
 @Component({
   selector: 'app-single-item',
@@ -30,15 +31,40 @@ export class SingleItemComponent implements OnInit {
   numSamePro;
   listImg;
   conditionCart;
-  cartService;
   notificationMessage;
   writeReview;
-  slides: any = [[]];
+
+  title = 'angularowlslider';
+  customOptions: any = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
+  }
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
               private dialog: MatDialog,
               private toastr: ToastrService,
+              private cartService: CartService,
               config: NgbCarouselConfig) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     config.interval = 3000;
@@ -51,7 +77,6 @@ export class SingleItemComponent implements OnInit {
     this.getProDetail();
     // tslint:disable-next-line:no-unused-expression
     this.categoryId;
-    this.sameProList = this.chunk(this.sameProList, 4);
   }
 
   getProDetail() {
@@ -108,7 +133,7 @@ export class SingleItemComponent implements OnInit {
       message => {
         this.notificationMessage = message['data'];
         console.log('this.notificationMessage', this.notificationMessage);
-        this.notificationSuccess(this.notificationMessage);
+        this.notificationSuccess('Thêm vào giỏ thành công');
       },
       error => this.notificationError()
     );
@@ -120,13 +145,5 @@ export class SingleItemComponent implements OnInit {
 
   notificationError() {
     this.toastr.error('Lỗi', 'Thông báo');
-  }
-
-  chunk(arr: any, chunkSize: any) {
-    let R = [];
-    for (let i = 0, len = arr.length; i < len; i += chunkSize) {
-      R.push(arr.slice(i, i + chunkSize));
-    }
-    return R;
   }
 }

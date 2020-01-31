@@ -46,7 +46,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     }
 
     /**
-     * du lieu cua tung san pham theo id, mac dinh anh la anh co file_type_id = 2
+     * lay du lieu cua tung san pham theo id truyen vao
      *
      * @param productId
      * @return Product

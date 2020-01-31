@@ -33,13 +33,13 @@
               </tr>
               </tbody>
               <tfoot>
-              <tr class="cart-subtotal" *ngIf="orderCode != null">
+              <tr class="cart-subtotal" *ngIf="codeDiscount != null">
                 <th>Khuyến mại</th>
-                <td><span class="amount">{{orderCode}} %</span></td>
+                <td><span class="amount">{{codeDiscount}} %</span></td>
               </tr>
               <tr class="order-total">
                 <th>Tổng</th>
-                <td><strong><span class="amount">{{subtotal * 1000000 - (orderCode * subtotal * 10000) | number}}</span></strong></td>
+                <td><strong><span class="amount">{{subtotal * 1000000 - (codeDiscount * subtotal * 10000) | number}}</span></strong></td>
               </tr>
               </tfoot>
             </table>

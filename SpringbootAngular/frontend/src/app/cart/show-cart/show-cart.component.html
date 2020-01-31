@@ -36,7 +36,7 @@
                   <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol="" ariaLabelLess="Less 1"
                                      ariaLabelMore="Plus 1"></app-stepper-input>
                 </td>
-                <td class="product-subtotal"><span class="amount">{{proInCart.total * 1000000 | number}}</span></td>
+                <td class="product-subtotal"><span class="amount">{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
                 <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">

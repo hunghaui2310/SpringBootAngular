@@ -135,7 +135,7 @@
                                 (click)="addProToCart(eachProduct.id)">Thêm vào giỏ</span></li>
                               <li (click)="showData(eachProduct.id)"><span title="Mua ngay" class="quick-view-btn"><i
                                 class="fa fa-eye"></i></span></li>
-                              <li><span title="Yêu thích" class="links-details" href="wishlist.html"><i
+                              <li (click)="insertToWishList(eachProduct.id)"><span title="Yêu thích" class="links-details" href="wishlist.html"><i
                                 class="fa fa-heart-o"></i></span></li>
                             </ul>
                           </div>
@@ -196,7 +196,7 @@
                         <div class="shop-add-action mb-xs-30">
                           <ul class="add-actions-link">
                             <li class="add-cart"><span (click)="addProToCart(eachProduct.id)">Thêm vào giỏ</span></li>
-                            <li class="wishlist"><span><i class="fa fa-heart-o"></i> Yêu thích</span></li>
+                            <li class="wishlist"><span (click)="insertToWishList(eachProduct.id)"><i class="fa fa-heart-o"></i> Yêu thích</span></li>
                             <li class="wishlist"><span (click)="addProToCompare(eachProduct.id)"><i class="fa fa-plus-circle"></i> Thêm so sánh</span></li>
                             <li class="quick-view"><span (click)="showData(eachProduct.id)"><i class="fa fa-eye"></i> Mua ngay</span></li>
                           </ul>

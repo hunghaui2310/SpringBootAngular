@@ -29,6 +29,7 @@ export class OrderInfoComponent implements OnInit {
   dataCart;
   productInCart: Product[];
   subtotal;
+  codeDiscount;
 
   constructor(private orderService: OrderService,
               private cartService: CartService,
@@ -37,15 +38,15 @@ export class OrderInfoComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.showDataOrder();
-    this.dataProductOrder();
     this.fetchId();
     this.fetchOrderCode();
+    this.showDataOrder();
+    this.dataProductOrder();
   }
 
   showDataOrder() {
     this.condition = new Order(this.id, null, null, this.currentUser.id);
-    console.log('condition', this.condition);
+    console.log('idOfOrder', this.id);
     this.orderService.showDataOrder(this.condition).subscribe(
       data => {
         this.dataOrder = data['data'];
@@ -65,7 +66,6 @@ export class OrderInfoComponent implements OnInit {
   dataProductOrder() {
     //   this.userId = this.route.snapshot.params['userId'];
     this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
-    console.log('userIdssss', this.currentUser.id);
     this.cartService.getNumCartAPI(this.currentUser).subscribe(
       dataInCart => {
         this.dataCart = dataInCart['data'];
@@ -96,7 +96,7 @@ export class OrderInfoComponent implements OnInit {
     this.cartService.orderCode$.subscribe(
       dataFetch => {
         console.log('dataFetchOrderCode', dataFetch);
-        this.orderCode = dataFetch;
+        this.codeDiscount = dataFetch;
       });
   }
 }
