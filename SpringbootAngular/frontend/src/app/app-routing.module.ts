@@ -43,8 +43,10 @@ import {LogoutComponent} from './account/logout/logout.component';
 import {NotFoundComponent} from './account/not-found/not-found.component';
 import {ApiService} from '../service/api.service';
 import {ShowWishListComponent} from './wish-list/show-wish-list/show-wish-list.component';
+import {HomeAdminComponent} from './admin/home-admin/home-admin.component';
 
 const routes: Routes = [
+  {path: 'admin', component: HomeAdminComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {
     path: '',

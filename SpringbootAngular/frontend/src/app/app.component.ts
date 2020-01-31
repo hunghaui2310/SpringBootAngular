@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar, VERSION} from '@angular/material';
 import {TestDialogComponent} from './test-dialog/test-dialog.component';
 import {ToastrService} from 'ngx-toastr';
@@ -8,10 +8,12 @@ import {ToastrService} from 'ngx-toastr';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Đồ gỗ Huy Hùng';
 
   version = VERSION;
+  currentUser;
+  role;
 
   constructor(private dialog: MatDialog,
               private snackBar: MatSnackBar,
@@ -46,5 +48,19 @@ export class AppComponent {
 
   testToast() {
     this.toastr.success('Hello world!', 'Toastr fun!');
+  }
+
+  ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log('currentUserAfterLogin', this.currentUser);
+    if (this.currentUser) {
+      if (this.currentUser['role'] == 'ADMIN') {
+        this.role = 'ADMIN';
+      } else {
+        this.role = 'USER';
+      }
+    } else {
+      this.role = 'USER';
+    }
   }
 }

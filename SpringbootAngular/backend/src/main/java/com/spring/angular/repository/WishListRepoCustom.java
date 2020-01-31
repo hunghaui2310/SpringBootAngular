@@ -15,4 +15,6 @@ public interface WishListRepoCustom {
     List<Object[]> getWishListByUser(WishListDTO wishListDTO) throws Exception;
 
     void deleteProWishList(WishListDTO wishListDTO) throws Exception;
+
+    void insertUserWishList(WishListDTO wishListDTO) throws Exception;
 }

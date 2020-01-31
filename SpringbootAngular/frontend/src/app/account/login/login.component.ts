@@ -25,11 +25,15 @@ export class LoginComponent implements OnInit {
     console.log('fffffr');
     this.authService.authenticate(this.user, (e) => {
       this.notificationSuccess('Đăng nhập thành công');
-      console.log('fffffr', e);
-      window.location.replace('/home');
       console.log('fffffre', e);
       let resp: any;
       resp = e.principal;
+      console.log('fasfasfasf', resp);
+      if (resp['role'] === 'USER') {
+        window.location.replace('/home');
+      } else {
+        window.location.replace('/admin');
+      }
       // this.user.fullName = 'ndh';
       if (resp) {
         // store user details  in local storage to keep user logged in between page refreshes

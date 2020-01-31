@@ -10,6 +10,6 @@
 <!--  </p>-->
 <!--  <span class="version-info">Current build: {{version.full}}</span>-->
 <!--</div>-->
-<app-header></app-header>
+<app-header *ngIf="role == 'USER'"></app-header>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
+<app-footer  *ngIf="role == 'USER'"></app-footer>

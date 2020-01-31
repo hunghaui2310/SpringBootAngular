@@ -39,6 +39,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { StepperInputComponent } from './cart/stepper-input/stepper-input.component';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import { ShowWishListComponent } from './wish-list/show-wish-list/show-wish-list.component';
+import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ShowWishListComponent } from './wish-list/show-wish-list/show-wish-list
     ProfileComponent,
     RegisterComponent,
     StepperInputComponent,
-    ShowWishListComponent
+    ShowWishListComponent,
+    HomeAdminComponent
   ],
   imports: [
     BrowserModule,

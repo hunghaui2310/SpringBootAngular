@@ -41,9 +41,10 @@ public class WishListRepoCustomImpl implements WishListRepoCustom {
     @Override
     public boolean checkDuplicateWishList(WishListDTO wishListDTO) throws Exception {
         StringBuilder sql = new StringBuilder();
-        sql.append("select * from wishlist_product where product_id = :productId");
+        sql.append("select * from wishlist_product where product_id = :productId and wishlist_id = :wishListId");
         Query query = entityManager.createNativeQuery(sql.toString());
         query.setParameter("productId", wishListDTO.getProductId());
+        query.setParameter("wishListId", wishListDTO.getWishListId());
         List<Object[]> list = query.getResultList();
         if(list.size() > 0) {
             return true;
@@ -68,6 +69,17 @@ public class WishListRepoCustomImpl implements WishListRepoCustom {
         Query query = entityManager.createNativeQuery(sql.toString());
         query.setParameter("wishListId", wishListDTO.getWishListId());
         query.setParameter("productId", wishListDTO.getProductId());
+        query.executeUpdate();
+    }
+
+    @Transactional
+    @Override
+    public void insertUserWishList(WishListDTO wishListDTO) throws Exception {
+        StringBuilder sql = new StringBuilder();
+        sql.append("insert into user_wishlist(user_id, wishlist_id) values (:userId, :wishListId)");
+        Query query = entityManager.createNativeQuery(sql.toString());
+        query.setParameter("userId", wishListDTO.getUserId());
+        query.setParameter("wishListId", wishListDTO.getWishListId());
         query.executeUpdate();
     }
 }
