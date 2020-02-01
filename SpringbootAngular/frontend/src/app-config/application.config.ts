@@ -30,5 +30,7 @@ export const config = {
 
   // admin -API
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',
-  get_all_category_admin_API: URL_BASE + '/admin-category/getCategory'
+  search_product_admin_API: URL_BASE + '/admin-product/search',
+  get_all_category_admin_API: URL_BASE + '/admin-category/getCategory',
+  get_all_blog_admin_API: URL_BASE + '/admin-blog/getBlog'
 };

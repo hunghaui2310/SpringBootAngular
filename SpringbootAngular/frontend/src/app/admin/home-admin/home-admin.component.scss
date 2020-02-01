@@ -1,5 +1,6 @@
 .searchbar{
   position: relative;
+  padding-left: 40px;
 }
 .search_input{
   background-color: #1cc88a;
@@ -7,6 +8,8 @@
   //caret-color:transparent;
   //transition: width 0.4s linear;
   height: 40px;
+  width: 80%;
+  margin-left: 60px;
 }
 
 //.searchbar:hover > .search_input{

@@ -40,6 +40,9 @@ import { StepperInputComponent } from './cart/stepper-input/stepper-input.compon
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import { ShowWishListComponent } from './wish-list/show-wish-list/show-wish-list.component';
 import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
+import { CreateProductComponent } from './admin/create-product/create-product.component';
+import { CreateBlogComponent } from './admin/create-blog/create-blog.component';
+import { CreateCategoryComponent } from './admin/create-category/create-category.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
     RegisterComponent,
     StepperInputComponent,
     ShowWishListComponent,
-    HomeAdminComponent
+    HomeAdminComponent,
+    CreateProductComponent,
+    CreateBlogComponent,
+    CreateCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -87,6 +93,8 @@ import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [TestDialogComponent, WriteReviewComponent, QuickViewComponent]
+  entryComponents: [TestDialogComponent, WriteReviewComponent, QuickViewComponent, CreateProductComponent,
+    CreateBlogComponent,
+    CreateCategoryComponent]
 })
 export class AppModule { }

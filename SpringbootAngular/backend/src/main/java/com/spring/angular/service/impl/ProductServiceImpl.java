@@ -21,6 +21,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -317,6 +318,27 @@ public class ProductServiceImpl implements ProductService {
             productDTO.setPrice(product.getPrice());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             productDTO.setCreateDate(simpleDateFormat.format(product.getCreateDate()));
+            productDTOList.add(productDTO);
+        }
+        return productDTOList;
+    }
+
+    @Override
+    public List<ProductDTO> searchProductAdmin(SearchRequest searchRequest) throws Exception {
+        List<Object[]> list = productRepo.searchProAdmin(searchRequest);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for(Object[] objects : list) {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(DataUtil.safeToLong(objects[0]));
+            productDTO.setProductName(DataUtil.safeToString(objects[7]));
+            productDTO.setPrice(DataUtil.safeToInt(objects[6]));
+            productDTO.setNumLike(DataUtil.safeToLong(objects[5]));
+            productDTO.setDiscount(DataUtil.safeToInt(objects[4]));
+            productDTO.setNumBuy(DataUtil.safeToInt(objects[9]));
+            productDTO.setCodeDiscount(DataUtil.safeToString(objects[10]));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date createDate = (Date) objects[2];
+            productDTO.setCreateDate(simpleDateFormat.format(createDate));
             productDTOList.add(productDTO);
         }
         return productDTOList;

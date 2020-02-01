@@ -26,4 +26,6 @@ public interface ProductService {
 
     List<ProductDTO> listProductAdmin() throws Exception;
 
+    List<ProductDTO> searchProductAdmin(SearchRequest searchRequest) throws Exception;
+
 }

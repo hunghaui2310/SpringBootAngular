@@ -5,6 +5,9 @@ import {User} from '../../../model/model.user';
 import {config} from '../../../app-config/application.config';
 import {CategoryAdminService} from '../../../service/admin/category-admin.service';
 import {Category} from '../../../model/category';
+import {SearchRequest} from '../../../model/search.request';
+import {BlogAdminService} from '../../../service/admin/blog-admin.service';
+import {Blog} from '../../../model/blog';
 
 @Component({
   selector: 'app-home-admin',
@@ -15,18 +18,23 @@ export class HomeAdminComponent implements OnInit {
 
   listProduct: Product[];
   listCategory: Category[];
+  listBlog: Blog[];
   currentUser: User;
   currentP = 1;
   pageSize = 10;
+  searchProduct;
+  productName;
 
   constructor(private productAdmin: ProductAdminService,
-              private categoryService: CategoryAdminService) {
+              private categoryService: CategoryAdminService,
+              private blogAdminService: BlogAdminService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit() {
     this.getAllProduct();
     this.getAllCategory();
+    this.getAllBlog();
   }
 
   getAllProduct() {
@@ -39,11 +47,6 @@ export class HomeAdminComponent implements OnInit {
   }
 
   pageChange(page: number) {
-    let total = this.currentP * this.pageSize;
-    if (this.currentP * this.pageSize > this.listProduct.length) {
-      total = this.listProduct.length;
-    }
-
     this.currentP = page;
     console.log('page', this.currentP);
   }
@@ -52,6 +55,25 @@ export class HomeAdminComponent implements OnInit {
     this.categoryService.getAllCateAdminAPI().subscribe(
       dataCate => {
         this.listCategory = dataCate['data'];
+      }
+    );
+  }
+
+  searchProductAdmin() {
+    this.searchProduct = new SearchRequest(null, this.productName);
+    console.log('searchProductAdmin', this.searchProduct);
+    this.productAdmin.searchAdminAPI(this.searchProduct).subscribe(
+      dataSearchPro => {
+        this.listProduct = dataSearchPro['data'];
+        console.log('dataAfterSearch', this.listProduct);
+      }
+    );
+  }
+
+  getAllBlog() {
+    this.blogAdminService.getAllBlogAdmin().subscribe(
+      dataBlog => {
+        this.listBlog = dataBlog['data'];
       }
     );
   }

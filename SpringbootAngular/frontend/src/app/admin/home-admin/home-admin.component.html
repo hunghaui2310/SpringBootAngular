@@ -283,8 +283,8 @@
                     </div>
                     <div class="col-6 row">
                       <div class="searchbar col-9">
-                        <input class="search_input" type="text" name="" placeholder="Tìm kiếm sản phẩm...">
-                        <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
+                        <input class="search_input" [(ngModel)]="productName" type="text" name="" placeholder="Tìm kiếm sản phẩm...">
+                        <span (click)="searchProductAdmin()" class="search_icon"><i class="fa fa-search"></i></span>
                       </div>
                       <div class="col-3">
                         <button type="button" class="btn btn-primary">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -318,8 +318,8 @@
                           <td>{{eachProduct.numLike}}</td>
                           <td>{{eachProduct.numBuy}}</td>
                           <td>
-                            <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Sửa"></i>
-                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px"></i>
+                            <span data-toggle="tooltip" data-placement="top" title="Sửa"><i class="fa fa-edit"></i></span>
+                            <span data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px"><i class="fa fa-trash"></i></span>
                           </td>
                         </tr>
                         </tbody>
@@ -330,9 +330,7 @@
                         <div class="col-lg-6 col-md-6">
                           <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
                             <span *ngIf="currentP*pageSize <  listProduct.length">{{currentP * pageSize}}</span>
-                            <span *ngIf="currentP*pageSize >= listProduct.length">{{listProduct.length}}</span> trên tổng số
-                            <span *ngIf="currentP*pageSize < listProduct.length">{{listProduct.length}}</span>
-                            <span *ngIf="currentP*pageSize >= listProduct.length">{{currentP * pageSize}}</span> sản phẩm</p>
+                            <span *ngIf="currentP*pageSize >= listProduct.length">{{listProduct.length}}</span> trên tổng số {{listProduct.length}} sản phẩm</p>
                         </div>
                         <div class="col-lg-6 col-md-6">
                           <ul class="pagination-box">
@@ -359,8 +357,6 @@
                     </div>
                     <div class="col-6 row">
                       <div class="searchbar col-9">
-                        <input class="search_input" type="text" name="" placeholder="Tìm kiếm thể loại...">
-                        <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
                       </div>
                       <div class="col-3">
                         <button type="button" class="btn btn-primary">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -384,23 +380,21 @@
                           <td>{{eachCate.nameCate}}</td>
                           <td>{{eachCate.createDate}}</td>
                           <td>
-                            <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Sửa"></i>
-                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 15px"></i>
+                            <span data-toggle="tooltip" data-placement="top" title="Sửa"><i class="fa fa-edit"></i></span>
+                            <span data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 15px"><i class="fa fa-trash"></i></span>
                           </td>
                         </tr>
                         </tbody>
                       </table>
                     </div>
                     <div class="paginatoin-area">
-                      <div *ngIf="listCategory">
-<!--                        <div class="col-lg-6 col-md-6">-->
-<!--                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} - -->
-<!--                            <span *ngIf="currentP*pageSize <  listCategory.length">{{currentP * pageSize}}</span>-->
-<!--                            <span *ngIf="currentP*pageSize >= listCategory.length">{{listCategory.length}}</span> trên tổng số-->
-<!--                            <span *ngIf="currentP*pageSize < listCategory.length">{{listCategory.length}}</span>-->
-<!--                            <span *ngIf="currentP*pageSize >= listCategory.length">{{currentP * pageSize}}</span> thể loại</p>-->
-<!--                        </div>-->
-                        <div>
+                      <div class="row" *ngIf="listCategory">
+                        <div class="col-lg-6 col-md-6">
+                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
+                            <span *ngIf="currentP*pageSize <  listCategory.length">{{currentP * pageSize}}</span>
+                            <span *ngIf="currentP*pageSize >= listCategory.length">{{listCategory.length}}</span> trên tổng số {{listCategory.length}} thể loại</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
                           <ul class="pagination-box">
                             <pagination-controls id="page1" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
                                                  autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
@@ -421,7 +415,7 @@
                   <div class="card-header py-3 row">
                     <div class="col-6">
                       <h6 class="m-0 font-weight-bold text-primary">Danh sách bài viết</h6>
-                      <span>Có {{listProduct.length}} bài viết</span>
+                      <span>Có {{listBlog.length}} bài viết</span>
                     </div>
                     <div class="col-6 row">
                       <div class="searchbar col-9">
@@ -439,26 +433,20 @@
                         <thead>
                         <tr>
                           <th>STT</th>
-                          <th>Tên sản phẩm</th>
-                          <th>Ngày sản xuất</th>
-                          <th>Giá</th>
-                          <th>Giảm giá</th>
-                          <th>Mã giảm giá</th>
-                          <th>Lượt thích</th>
-                          <th>Lượt mua</th>
+                          <th>Tiêu đề</th>
+                          <th>Ngày tạo</th>
+                          <th>Lượt xem</th>
+                          <th>Nội dung</th>
                           <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let eachProduct of listProduct | paginate: {id: 'page3', itemsPerPage: pageSize, currentPage: currentP, totalItems: listProduct.length}, index as i">
-                          <td>{{currentP * pageSize - (pageSize - 1) + i}}</td>
-                          <td>{{eachProduct.productName}}</td>
-                          <td>{{eachProduct.createDate}}</td>
-                          <td>{{eachProduct.price * 1000000 | number}}</td>
-                          <td>{{eachProduct.discount}}%</td>
-                          <td>{{eachProduct.codeDiscount}}</td>
-                          <td>{{eachProduct.numLike}}</td>
-                          <td>{{eachProduct.numBuy}}</td>
+                        <tr *ngFor="let eachBlog of listBlog | paginate: {id: 'page3', itemsPerPage: 3, currentPage: currentP, totalItems: listBlog.length}, index as i">
+                          <td>{{currentP * 3 - (3 - 1) + i}}</td>
+                          <td>{{eachBlog.title}}</td>
+                          <td>{{eachBlog.createDate}}</td>
+                          <td>{{eachBlog.numSee}}</td>
+                          <td>{{eachBlog.content}}..</td>
                           <td>
                             <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Sửa"></i>
                             <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px"></i>
@@ -468,13 +456,11 @@
                       </table>
                     </div>
                     <div class="paginatoin-area">
-                      <div class="row" *ngIf="listProduct">
+                      <div class="row" *ngIf="listBlog">
                         <div class="col-lg-6 col-md-6">
-                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
-                            <span *ngIf="currentP*pageSize <  listProduct.length">{{currentP * pageSize}}</span>
-                            <span *ngIf="currentP*pageSize >= listProduct.length">{{listProduct.length}}</span> trên tổng số
-                            <span *ngIf="currentP*pageSize < listProduct.length">{{listProduct.length}}</span>
-                            <span *ngIf="currentP*pageSize >= listProduct.length">{{currentP * pageSize}}</span> sản phẩm</p>
+                          <p>Từ {{currentP * 3 - (3 - 1)}} -
+                            <span *ngIf="currentP*3 <  listBlog.length">{{currentP * 3}}</span>
+                            <span *ngIf="currentP*3 >= listBlog.length">{{listBlog.length}}</span> trên tổng số {{listBlog.length}} bài viết</p>
                         </div>
                         <div class="col-lg-6 col-md-6">
                           <ul class="pagination-box">

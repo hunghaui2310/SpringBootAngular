@@ -26,4 +26,6 @@ public interface ProductCustomRepo {
     String getCodeDiscount(String codeDiscount) throws Exception;
 
     void updateProduct(ProductDTO productDTO) throws Exception;
+
+    List<Object[]> searchProAdmin(SearchRequest searchRequest) throws Exception;
 }

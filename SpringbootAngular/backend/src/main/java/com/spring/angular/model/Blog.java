@@ -8,7 +8,6 @@ public class Blog {
 
     private Long id;
     private String title;
-    private String content;
     private String createDate;
     private String img;
     private int numSee;
@@ -33,15 +32,6 @@ public class Blog {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    @Column(name = "content")
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     @Column(name = "create_date")

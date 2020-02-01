@@ -35,7 +35,17 @@ public class BlogServiceImpl implements BlogService {
             BlogDTO blogDTO = new BlogDTO();
             blogDTO.setId(DataUtil.safeToLong(object[0]));
             blogDTO.setTitle(DataUtil.safeToString(object[1]));
-            blogDTO.setContent(DataUtil.safeToString(object[2]));
+            String content = DataUtil.safeToString(object[2]);
+            JsonArray jsonArray;
+            JsonParser jsonParser = new JsonParser();
+            JsonObject jsonObject = (JsonObject) jsonParser.parse(content);
+            jsonArray = (JsonArray) jsonObject.get(Contains.BLOG_DETAIL.DETAIL);
+            if(jsonArray != null){
+                for(int i= 0;i < jsonArray.size(); i++){
+                    JsonObject json = (JsonObject) jsonArray.get(i);
+                    blogDTO.setContent(json.get(Contains.BLOG_DETAIL.HEADER).getAsString());
+                }
+            }
             blogDTO.setCreateDate(DataUtil.safeToString(object[3]));
             String imgBlog = DataUtil.safeToString(object[4]);
             if(!DataUtil.isNullOrEmpty(imgBlog)) {
@@ -58,7 +68,6 @@ public class BlogServiceImpl implements BlogService {
         BlogDetailDTO blogDetailDTO = new BlogDetailDTO();
         blogDetailDTO.setId(detailBlog.getId());
         blogDetailDTO.setTitle(detailBlog.getTitle());
-        blogDetailDTO.setContent(detailBlog.getContent());
         blogDetailDTO.setCreateDate(detailBlog.getCreateDate());
         blogDetailDTO.setImg(detailBlog.getImg());
         blogDetailDTO.setNumSee(detailBlog.getNumSee());
@@ -85,5 +94,31 @@ public class BlogServiceImpl implements BlogService {
         }
 
         return blogDetailDTO;
+    }
+
+    @Override
+    public List<BlogDetailDTO> findAllBlogAdmin() throws Exception {
+        List<Blog> list = blogRepo.findAllByOrderByIdDesc();
+        List<BlogDetailDTO> blogDetailDTOS = new ArrayList<>();
+        for(Blog blog : list) {
+            BlogDetailDTO blogDetailDTO = new BlogDetailDTO();
+            blogDetailDTO.setId(blog.getId());
+            blogDetailDTO.setTitle(blog.getTitle());
+            blogDetailDTO.setCreateDate(blog.getCreateDate());
+            String content = blog.getDetailContent();
+            JsonArray jsonArray;
+            JsonParser jsonParser = new JsonParser();
+            JsonObject jsonObject = (JsonObject) jsonParser.parse(content);
+            jsonArray = (JsonArray) jsonObject.get(Contains.BLOG_DETAIL.DETAIL);
+            if(jsonArray != null){
+                for(int i= 0;i < jsonArray.size(); i++){
+                    JsonObject json = (JsonObject) jsonArray.get(i);
+                    blogDetailDTO.setContent(json.get(Contains.BLOG_DETAIL.HEADER).getAsString());
+                }
+            }
+            blogDetailDTO.setNumSee(blog.getNumSee());
+            blogDetailDTOS.add(blogDetailDTO);
+        }
+        return blogDetailDTOS;
     }
 }

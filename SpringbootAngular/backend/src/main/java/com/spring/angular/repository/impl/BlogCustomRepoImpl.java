@@ -17,7 +17,7 @@ public class BlogCustomRepoImpl implements BlogCustomRepo {
     @Override
     public List<Object[]> lstBlog() throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("select b.id, b.title,b.content,b.createDate,b.img,b.numSee from Blog b order by id desc");
+        stringBuilder.append("select b.id, b.title,b.detailContent,b.createDate,b.img,b.numSee from Blog b order by id desc");
         Query query = entityManager.createQuery(stringBuilder.toString());
         return query.getResultList();
     }

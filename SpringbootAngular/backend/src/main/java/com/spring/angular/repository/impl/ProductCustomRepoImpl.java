@@ -160,6 +160,15 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
         query.executeUpdate();
     }
 
+    @Override
+    public List<Object[]> searchProAdmin(SearchRequest searchRequest) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT * from product WHERE product_name like :productName order by product_id desc");
+        Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("productName", "%" + searchRequest.getProductName() + "%");
+        return query.getResultList();
+    }
+
     private StringBuilder sqlSearch(SearchRequest searchRequest, HashMap hashMap){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(" WHERE 1 = 1");
