@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/account/**","/logout","/not-found").permitAll()
                 .antMatchers("/product/**","/cart/**","/order/**","/category/**","/blog/**","/about/**","/compare/**","/wish-list/**").permitAll()
-                .antMatchers("/admin-product/**").permitAll()
+                .antMatchers("/admin-product/**","/admin-category/**").permitAll()
         .anyRequest().fullyAuthenticated().and()
         .logout().permitAll()
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout","POST"))

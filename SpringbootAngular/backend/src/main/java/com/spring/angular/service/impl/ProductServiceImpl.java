@@ -18,6 +18,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -302,9 +303,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> listProductAdmin() throws Exception {
-        List<Product> list = productRepo.findAll();
-        return list;
+    public List<ProductDTO> listProductAdmin() throws Exception {
+        List<Product> list = productRepo.findAllByOrderByIdDesc();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for(Product product : list) {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(product.getId());
+            productDTO.setCodeDiscount(product.getCodeDiscount());
+            productDTO.setProductName(product.getProductName());
+            productDTO.setDiscount(product.getDiscount());
+            productDTO.setNumLike(product.getNumLike());
+            productDTO.setNumBuy(product.getNumBuy());
+            productDTO.setPrice(product.getPrice());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            productDTO.setCreateDate(simpleDateFormat.format(product.getCreateDate()));
+            productDTOList.add(productDTO);
+        }
+        return productDTOList;
     }
 
 

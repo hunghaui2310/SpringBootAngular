@@ -5,6 +5,7 @@ import com.spring.angular.helper.ApiResponse;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.SearchRequest;
 import com.spring.angular.model.Category;
+import com.spring.angular.service.CategoryService;
 import com.spring.angular.service.ProductService;
 import com.spring.angular.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryServiceImpl categoryService;
+    private CategoryService categoryService;
 
     @Autowired
     private ProductService productService;

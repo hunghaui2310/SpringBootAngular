@@ -228,7 +228,7 @@
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" data-target="#userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-controls="userDropdown">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser.username}}</span>
               <img class="img-profile rounded-circle" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png">
             </a>
             <!-- Dropdown - User Information -->
@@ -257,70 +257,243 @@
 
       </nav>
       <!-- End of Topbar -->
-
-      <!-- Begin Page Content -->
-      <div class="container-fluid">
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-          <div class="card-header py-3 row">
-            <h6 class="m-0 font-weight-bold text-primary col-6">Danh sách sản phẩm</h6>
-            <div class="col-6 row">
-              <div class="searchbar col-9">
-                <input class="search_input" type="text" name="" placeholder="Tìm kiếm sản phẩm...">
-                <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
+      <div class="product-area pt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="li-product-tab">
+                <ul class="nav li-product-menu">
+                  <li><a class="active" data-toggle="tab" href="#description"><span>Sản phẩm</span></a></li>
+                  <li><a data-toggle="tab" href="#product-details"><span>Thể loại</span></a></li>
+                  <li><a data-toggle="tab" href="#reviews"><span>Bài viết</span></a></li>
+                </ul>
               </div>
-              <div class="col-3">
-                <button type="button" class="btn btn-primary">Thêm mới</button>
-              </div>
+              <!-- Begin Li's Tab Menu Content Area -->
             </div>
           </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered table-product" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                <tr>
-                  <th>STT</th>
-                  <th>Tên sản phẩm</th>
-                  <th>Ngày sản xuất</th>
-                  <th>Giá</th>
-                  <th>Giảm giá</th>
-                  <th>Mã giảm giá</th>
-                  <th>Lượt thích</th>
-                  <th>Lượt mua</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                  <th>STT</th>
-                  <th>Tên sản phẩm</th>
-                  <th>Ngày sản xuất</th>
-                  <th>Giá</th>
-                  <th>Giảm giá</th>
-                  <th>Mã giảm giá</th>
-                  <th>Lượt thích</th>
-                  <th>Lượt mua</th>
-                  <th></th>
-                </tr>
-                </tfoot>
-                <tbody>
-                <tr *ngFor="let eachProduct of listProduct">
-                  <td>1</td>
-                  <td>{{eachProduct.productName}}</td>
-                  <td>{{eachProduct.createDate}}</td>
-                  <td>{{eachProduct.price}}</td>
-                  <td>{{eachProduct.discount}}</td>
-                  <td>{{eachProduct.codeDiscount}}</td>
-                  <td>{{eachProduct.numLike}}</td>
-                  <td>{{eachProduct.numBuy}}</td>
-                  <td></td>
-                </tr>
-                </tbody>
-              </table>
+          <div class="tab-content">
+            <div id="description" class="tab-pane active show" role="tabpanel">
+              <div class="container-fluid">
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3 row">
+                    <div class="col-6">
+                      <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
+                      <span>Có tất cả {{listProduct.length}} sản phẩm</span>
+                    </div>
+                    <div class="col-6 row">
+                      <div class="searchbar col-9">
+                        <input class="search_input" type="text" name="" placeholder="Tìm kiếm sản phẩm...">
+                        <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
+                      </div>
+                      <div class="col-3">
+                        <button type="button" class="btn btn-primary">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-product" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>Tên sản phẩm</th>
+                          <th>Ngày sản xuất</th>
+                          <th>Giá</th>
+                          <th>Giảm giá</th>
+                          <th>Mã giảm giá</th>
+                          <th>Lượt thích</th>
+                          <th>Lượt mua</th>
+                          <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let eachProduct of listProduct | paginate: {id: 'page', itemsPerPage: pageSize, currentPage: currentP, totalItems: listProduct.length}, index as i">
+                          <td>{{currentP * pageSize - (pageSize - 1) + i}}</td>
+                          <td>{{eachProduct.productName}}</td>
+                          <td>{{eachProduct.createDate}}</td>
+                          <td>{{eachProduct.price * 1000000 | number}}</td>
+                          <td>{{eachProduct.discount}}%</td>
+                          <td>{{eachProduct.codeDiscount}}<span *ngIf="!eachProduct.codeDiscount">(Trống)</span></td>
+                          <td>{{eachProduct.numLike}}</td>
+                          <td>{{eachProduct.numBuy}}</td>
+                          <td>
+                            <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Sửa"></i>
+                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px"></i>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="paginatoin-area">
+                      <div class="row" *ngIf="listProduct">
+                        <div class="col-lg-6 col-md-6">
+                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
+                            <span *ngIf="currentP*pageSize <  listProduct.length">{{currentP * pageSize}}</span>
+                            <span *ngIf="currentP*pageSize >= listProduct.length">{{listProduct.length}}</span> trên tổng số
+                            <span *ngIf="currentP*pageSize < listProduct.length">{{listProduct.length}}</span>
+                            <span *ngIf="currentP*pageSize >= listProduct.length">{{currentP * pageSize}}</span> sản phẩm</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                          <ul class="pagination-box">
+                            <pagination-controls id="page" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
+                                                 autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
+                                                 screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="product-details" class="tab-pane" role="tabpanel">
+              <div class="container-fluid">
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3 row">
+                    <div class="col-6">
+                      <h6 class="m-0 font-weight-bold text-primary">Danh sách thể loại</h6>
+                      <span>Có {{listCategory.length}} thể loại</span>
+                    </div>
+                    <div class="col-6 row">
+                      <div class="searchbar col-9">
+                        <input class="search_input" type="text" name="" placeholder="Tìm kiếm thể loại...">
+                        <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
+                      </div>
+                      <div class="col-3">
+                        <button type="button" class="btn btn-primary">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-product" id="dataTable2" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>Tên thể loại</th>
+                          <th>Ngày tạo</th>
+                          <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let eachCate of listCategory | paginate: {id: 'page1', itemsPerPage: pageSize, currentPage: currentP, totalItems: listCategory.length}, index as i">
+                          <td>{{currentP * pageSize - (pageSize - 1) + i}}</td>
+                          <td>{{eachCate.nameCate}}</td>
+                          <td>{{eachCate.createDate}}</td>
+                          <td>
+                            <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Sửa"></i>
+                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 15px"></i>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="paginatoin-area">
+                      <div *ngIf="listCategory">
+<!--                        <div class="col-lg-6 col-md-6">-->
+<!--                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} - -->
+<!--                            <span *ngIf="currentP*pageSize <  listCategory.length">{{currentP * pageSize}}</span>-->
+<!--                            <span *ngIf="currentP*pageSize >= listCategory.length">{{listCategory.length}}</span> trên tổng số-->
+<!--                            <span *ngIf="currentP*pageSize < listCategory.length">{{listCategory.length}}</span>-->
+<!--                            <span *ngIf="currentP*pageSize >= listCategory.length">{{currentP * pageSize}}</span> thể loại</p>-->
+<!--                        </div>-->
+                        <div>
+                          <ul class="pagination-box">
+                            <pagination-controls id="page1" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
+                                                 autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
+                                                 screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="reviews" class="tab-pane" role="tabpanel">
+              <div class="container-fluid">
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3 row">
+                    <div class="col-6">
+                      <h6 class="m-0 font-weight-bold text-primary">Danh sách bài viết</h6>
+                      <span>Có {{listProduct.length}} bài viết</span>
+                    </div>
+                    <div class="col-6 row">
+                      <div class="searchbar col-9">
+                        <input class="search_input" type="text" name="" placeholder="Tìm kiếm bài viết...">
+                        <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
+                      </div>
+                      <div class="col-3">
+                        <button type="button" class="btn btn-primary">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-product" id="dataTable3" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>Tên sản phẩm</th>
+                          <th>Ngày sản xuất</th>
+                          <th>Giá</th>
+                          <th>Giảm giá</th>
+                          <th>Mã giảm giá</th>
+                          <th>Lượt thích</th>
+                          <th>Lượt mua</th>
+                          <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let eachProduct of listProduct | paginate: {id: 'page3', itemsPerPage: pageSize, currentPage: currentP, totalItems: listProduct.length}, index as i">
+                          <td>{{currentP * pageSize - (pageSize - 1) + i}}</td>
+                          <td>{{eachProduct.productName}}</td>
+                          <td>{{eachProduct.createDate}}</td>
+                          <td>{{eachProduct.price * 1000000 | number}}</td>
+                          <td>{{eachProduct.discount}}%</td>
+                          <td>{{eachProduct.codeDiscount}}</td>
+                          <td>{{eachProduct.numLike}}</td>
+                          <td>{{eachProduct.numBuy}}</td>
+                          <td>
+                            <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Sửa"></i>
+                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px"></i>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="paginatoin-area">
+                      <div class="row" *ngIf="listProduct">
+                        <div class="col-lg-6 col-md-6">
+                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
+                            <span *ngIf="currentP*pageSize <  listProduct.length">{{currentP * pageSize}}</span>
+                            <span *ngIf="currentP*pageSize >= listProduct.length">{{listProduct.length}}</span> trên tổng số
+                            <span *ngIf="currentP*pageSize < listProduct.length">{{listProduct.length}}</span>
+                            <span *ngIf="currentP*pageSize >= listProduct.length">{{currentP * pageSize}}</span> sản phẩm</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                          <ul class="pagination-box">
+                            <pagination-controls id="page3" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
+                                                 autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
+                                                 screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
+      <!-- Begin Page Content -->
       <!-- /.container-fluid -->
 
     </div>
@@ -330,7 +503,7 @@
     <footer class="sticky-footer bg-white">
       <div class="container my-auto">
         <div class="copyright text-center my-auto">
-          <span>Copyright &copy; Your Website 2019</span>
+          <span>Design by HungNN || Do An 2020</span>
         </div>
       </div>
     </footer>

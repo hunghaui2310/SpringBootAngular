@@ -1,9 +1,8 @@
 package com.spring.angular.controller.admin;
 
-import com.spring.angular.dto.ProductDTO;
+import com.spring.angular.dto.CategoryDTO;
 import com.spring.angular.helper.ApiResponse;
-import com.spring.angular.model.Product;
-import com.spring.angular.service.ProductService;
+import com.spring.angular.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("admin-product")
-public class AdminProductController {
+@RequestMapping("admin-category")
+public class AdminCategoryController {
 
     @Autowired
-    private ProductService productService;
+    private CategoryService categoryService;
 
-    @GetMapping("/getProduct")
-    public ApiResponse getAllProduct() throws Exception {
+    @GetMapping("/getCategory")
+    public ApiResponse getAllCateAdmin() throws Exception {
         try {
-            List<ProductDTO> list = productService.listProductAdmin();
+            List<CategoryDTO> list = categoryService.getAllCateOrderById();
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", list);
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }

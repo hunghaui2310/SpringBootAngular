@@ -29,5 +29,6 @@ export const config = {
 
 
   // admin -API
-  get_all_product_admin_API: URL_BASE + '/admin-product/getProduct'
+  get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',
+  get_all_category_admin_API: URL_BASE + '/admin-category/getCategory'
 };

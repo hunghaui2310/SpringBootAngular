@@ -21,7 +21,8 @@ public class ProductDTO {
     private Long numProInCart;
     private double total;
     private String codeDiscount;
-    private Date createDate;
+    private String createDate;
+    private int numBuy;
 
     public Long getId() {
         return id;
@@ -143,11 +144,19 @@ public class ProductDTO {
         this.codeDiscount = codeDiscount;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public int getNumBuy() {
+        return numBuy;
+    }
+
+    public void setNumBuy(int numBuy) {
+        this.numBuy = numBuy;
     }
 }

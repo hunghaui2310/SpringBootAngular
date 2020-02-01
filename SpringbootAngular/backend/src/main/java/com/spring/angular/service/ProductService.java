@@ -24,6 +24,6 @@ public interface ProductService {
 
     String getDiscountCode(String codeDiscount) throws Exception;
 
-    List<Product> listProductAdmin() throws Exception;
+    List<ProductDTO> listProductAdmin() throws Exception;
 
 }
