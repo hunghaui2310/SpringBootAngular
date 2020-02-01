@@ -54,7 +54,7 @@ export class AppComponent implements OnInit{
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     console.log('currentUserAfterLogin', this.currentUser);
     if (this.currentUser) {
-      if (this.currentUser['role'] == 'ADMIN') {
+      if (this.currentUser['role'] === 'ADMIN') {
         this.role = 'ADMIN';
       } else {
         this.role = 'USER';
