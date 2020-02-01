@@ -1,6 +1,7 @@
 package com.spring.angular.dto;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class ProductDTO {
@@ -19,6 +20,8 @@ public class ProductDTO {
     private Long categoryId;
     private Long numProInCart;
     private double total;
+    private String codeDiscount;
+    private Date createDate;
 
     public Long getId() {
         return id;
@@ -130,5 +133,21 @@ public class ProductDTO {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getCodeDiscount() {
+        return codeDiscount;
+    }
+
+    public void setCodeDiscount(String codeDiscount) {
+        this.codeDiscount = codeDiscount;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

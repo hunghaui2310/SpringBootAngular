@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ProductAdminService} from '../../../service/admin/product-admin.service';
+import {Product} from '../../../model/product';
 
 @Component({
   selector: 'app-home-admin',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeAdminComponent implements OnInit {
 
-  constructor() { }
+  listProduct: Product[];
+
+  constructor(private productAdmin: ProductAdminService) { }
 
   ngOnInit() {
+    this.getAllProduct();
   }
 
+  getAllProduct() {
+    this.productAdmin.getAllProAdminAPI().subscribe(
+      dataListPro => {
+        this.listProduct = dataListPro['data'];
+        console.log('dataProductInAdmin', this.listProduct);
+      }
+    );
+  }
 }

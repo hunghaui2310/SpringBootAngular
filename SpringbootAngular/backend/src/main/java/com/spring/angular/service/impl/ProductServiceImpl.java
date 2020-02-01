@@ -7,6 +7,7 @@ import com.spring.angular.dto.ProductDetailDTO;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
 import com.spring.angular.helper.SearchRequest;
+import com.spring.angular.model.Product;
 import com.spring.angular.repository.ProductRepo;
 import com.spring.angular.service.FileInfoService;
 import com.spring.angular.service.ProductService;
@@ -298,6 +299,12 @@ public class ProductServiceImpl implements ProductService {
             message = Contains.EMPTY;
         }
         return message;
+    }
+
+    @Override
+    public List<Product> listProductAdmin() throws Exception {
+        List<Product> list = productRepo.findAll();
+        return list;
     }
 
 
