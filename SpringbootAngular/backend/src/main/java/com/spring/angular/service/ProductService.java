@@ -28,4 +28,5 @@ public interface ProductService {
 
     List<ProductDTO> searchProductAdmin(SearchRequest searchRequest) throws Exception;
 
+    String deleteProduct(Long productId) throws Exception;
 }

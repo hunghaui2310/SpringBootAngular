@@ -23,6 +23,7 @@ export const config = {
   data_user_API: URL_BASE + '/account/get-data',
   data_order_API: URL_BASE + '/order/show',
   update_order_API: URL_BASE + '/order/update',
+  confirm_order_API: URL_BASE + '/order/confirm',
   wishList_insert_API: URL_BASE + '/wish-list/add',
   show_wish_list_API: URL_BASE + '/wish-list/show',
   delete_wish_list_API: URL_BASE + '/wish-list/delete',
@@ -31,6 +32,8 @@ export const config = {
   // admin -API
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',
   search_product_admin_API: URL_BASE + '/admin-product/search',
+  delete_product_admin_API: URL_BASE + '/admin-product/delete',
   get_all_category_admin_API: URL_BASE + '/admin-category/getCategory',
-  get_all_blog_admin_API: URL_BASE + '/admin-blog/getBlog'
+  get_all_blog_admin_API: URL_BASE + '/admin-blog/getBlog',
+  get_some_notification_admin_API: URL_BASE + '/admin-notification/getNotification'
 };

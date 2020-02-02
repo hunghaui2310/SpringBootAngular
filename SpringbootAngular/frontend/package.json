@@ -25,6 +25,7 @@
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
+    "ngx-bootstrap": "^5.3.2",
     "ngx-owl-carousel-o": "^2.0.3",
     "ngx-pagination": "^5.0.0",
     "ngx-toastr": "^11.3.2",

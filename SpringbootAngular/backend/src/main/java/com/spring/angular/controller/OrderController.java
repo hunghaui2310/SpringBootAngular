@@ -44,4 +44,15 @@ public class OrderController {
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
+
+    @PostMapping("/confirm")
+    public ApiResponse confirmOrderByUser(@RequestBody OrderDTO orderDTO) throws Exception {
+        try {
+            OrderDTO orderDTO1 = orderService.accessOrderByUser(orderDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", orderDTO1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
 }

@@ -344,5 +344,12 @@ public class ProductServiceImpl implements ProductService {
         return productDTOList;
     }
 
+    @Override
+    public String deleteProduct(Long productId) throws Exception {
+        productRepo.deleteById(productId);
+        String message = Contains.SUCCESS;
+        return message;
+    }
+
 
 }

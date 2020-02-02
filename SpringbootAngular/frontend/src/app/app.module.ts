@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-  MatDialogModule,
+  MatDialogModule, MatDialogRef,
   MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
@@ -43,6 +43,8 @@ import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
 import { CreateBlogComponent } from './admin/create-blog/create-blog.component';
 import { CreateCategoryComponent } from './admin/create-category/create-category.component';
+import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
+import {AccordionModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,8 @@ import { CreateCategoryComponent } from './admin/create-category/create-category
     HomeAdminComponent,
     CreateProductComponent,
     CreateBlogComponent,
-    CreateCategoryComponent
+    CreateCategoryComponent,
+    HeaderAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +92,10 @@ import { CreateCategoryComponent } from './admin/create-category/create-category
     HttpClientModule,
     NgbCarouselModule,
     NgxPaginationModule,
-    CarouselModule
+    CarouselModule,
+    AccordionModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

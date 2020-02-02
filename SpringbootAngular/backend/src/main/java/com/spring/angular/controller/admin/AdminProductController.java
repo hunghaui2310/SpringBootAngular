@@ -39,4 +39,15 @@ public class AdminProductController {
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
+
+    @GetMapping("/delete/{id}")
+    public ApiResponse deleteProduct(@PathVariable("id") Long productId) throws Exception{
+        try {
+            String message = productService.deleteProduct(productId);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
 }

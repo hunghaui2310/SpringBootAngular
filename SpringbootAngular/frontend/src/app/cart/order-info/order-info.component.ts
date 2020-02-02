@@ -30,6 +30,7 @@ export class OrderInfoComponent implements OnInit {
   productInCart: Product[];
   subtotal;
   codeDiscount;
+  message;
 
   constructor(private orderService: OrderService,
               private cartService: CartService,
@@ -92,11 +93,33 @@ export class OrderInfoComponent implements OnInit {
     });
   }
 
+  notificationError(notification: string) {
+    this.toastr.error(notification, 'Lỗi', {
+      timeOut: 2000, positionClass: 'toast-top-center'
+    });
+  }
+
   fetchOrderCode() {
     this.cartService.orderCode$.subscribe(
       dataFetch => {
         console.log('dataFetchOrderCode', dataFetch);
         this.codeDiscount = dataFetch;
       });
+  }
+
+  confirmOrderByUser() {
+    this.condition = new Order(this.id);
+    console.log('idOfOrderConfirm', this.condition);
+    this.orderService.confirmOrderAPI(this.condition).subscribe(
+      dataConfirm => {
+        this.message = dataConfirm['data']['message'];
+        this.orderService.setOrderId(this.id);
+        if (this.message === 'SUCCESS') {
+          this.notificationSuccess('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất');
+        } else {
+          this.notificationError('Đã xảy ra lỗi');
+        }
+      }
+    );
   }
 }

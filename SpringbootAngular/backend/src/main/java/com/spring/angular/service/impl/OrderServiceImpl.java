@@ -13,10 +13,8 @@ import com.spring.angular.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,5 +93,25 @@ public class OrderServiceImpl implements OrderService {
         BigInteger bigInteger = orderRepo.createOrder(orderDTO1);
         Long id = bigInteger.longValue();
         return id;
+    }
+
+    @Override
+    public OrderDTO accessOrderByUser(OrderDTO orderDTO) throws Exception {
+        Object[] order = orderRepo.getOrder(orderDTO.getId());
+        Long userId = DataUtil.safeToLong(order[1]);
+        User user = userRepo.getOne(userId);
+        OrderDTO orderDTO1 = new OrderDTO();
+        orderDTO1.setId(orderDTO.getId());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        orderDTO1.setCreateDate(simpleDateFormat.format((Date) order[3]));
+        orderDTO1.setPhoneNumber(user.getPhoneNumber());
+        orderDTO1.setEmail(user.getUsername());
+        orderDTO1.setFullName(user.getFullName());
+        orderDTO1.setAddress(user.getAddress());
+        orderDTO1.setCity(DataUtil.safeToString(order[5]));
+        orderDTO1.setOrderCode(DataUtil.safeToString(order[2]));
+        orderDTO1.setUserId(userId);
+        orderDTO1.setMessage(Contains.SUCCESS);
+        return orderDTO1;
     }
 }

@@ -7,6 +7,7 @@ public class OrderDTO extends UserDTO{
     private String notes;
     private String city;
     private String createDate;
+    private String message;
 
     public Long getId() {
         return id;
@@ -46,5 +47,13 @@ public class OrderDTO extends UserDTO{
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

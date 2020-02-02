@@ -15,4 +15,8 @@ export class CategoryAdminService {
     // @ts-ignore
     return this.http.get(config.get_all_category_admin_API);
   }
+
+  getCategoryAPI(): Observable<Category[]> {
+    return this.http.get<Category[]>(config.category_API);
+  }
 }
