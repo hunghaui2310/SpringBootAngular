@@ -16,6 +16,7 @@ import {BsModalRef} from 'ngx-bootstrap/modal';
 import {BsModalService} from 'ngx-bootstrap';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {DeleteProduct} from '../../../model/delete.product';
 
 @Component({
   selector: 'app-home-admin',
@@ -39,10 +40,13 @@ export class HomeAdminComponent implements OnInit {
   createDateNotification;
   cityNotification;
   dataNotification;
-  del: number;
   mobjModalRef: BsModalRef;
-  productId;
+  productId: number;
+  categoryId: number;
+  blogId: number;
   message;
+  proId: DeleteProduct;
+  categoryName;
 
   constructor(private productAdmin: ProductAdminService,
               private categoryService: CategoryAdminService,
@@ -146,9 +150,9 @@ export class HomeAdminComponent implements OnInit {
   }
 
   deleteProductAdmin() {
-    const proId = this.route.snapshot.params['id'];
-    console.log('productIdToDelete', proId);
-    this.productAdmin.deleteProductAPI(proId).subscribe(
+    this.proId = new DeleteProduct(this.productId);
+    console.log('productIdToDelete', this.proId);
+    this.productAdmin.deleteProductAPI(this.proId).subscribe(
       dataDelete => {
         this.message = dataDelete['data'];
         console.log('resultDeleteProduct', this.message);
@@ -157,13 +161,15 @@ export class HomeAdminComponent implements OnInit {
         } else {
           this.notificationError('Xóa thất bại');
         }
+        this.mobjModalRef.hide();
+        this.getAllProduct();
       }, error => this.notificationError('Đã xảy ra lỗi')
     );
   }
 
   deleteProductConfirm(data: any, pobjTemplate: TemplateRef<any>) {
     const proId = data['id'];
-    this.del = proId;
+    this.productId = proId;
     this.mobjModalRef = this.modalService.show(pobjTemplate, {
         ignoreBackdropClick: true
       }
@@ -172,7 +178,7 @@ export class HomeAdminComponent implements OnInit {
 
   deleteCategoryConfirm(data: any, pobjTemplate: TemplateRef<any>) {
     const cateId = data['id'];
-    this.del = cateId;
+    this.categoryId = cateId;
     this.mobjModalRef = this.modalService.show(pobjTemplate, {
         ignoreBackdropClick: true
       }
@@ -180,8 +186,8 @@ export class HomeAdminComponent implements OnInit {
   }
 
   deleteBlogConfirm(data: any, pobjTemplate: TemplateRef<any>) {
-    const blogId = data['id'];
-    this.del = blogId;
+    const blgId = data['id'];
+    this.blogId = blgId;
     this.mobjModalRef = this.modalService.show(pobjTemplate, {
         ignoreBackdropClick: true
       }

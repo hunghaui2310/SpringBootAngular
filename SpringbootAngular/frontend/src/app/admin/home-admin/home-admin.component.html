@@ -180,7 +180,12 @@
                       <div class="searchbar col-9">
                       </div>
                       <div class="col-3">
-                        <button type="button" class="btn btn-primary">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#createCategory" aria-expanded="false" aria-controls="createCategory">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
+                      </div>
+                      <div class="collapse" id="createCategory">
+                        <div class="create-cate-input">
+                          <input type="text" [(ngModel)]="categoryName" placeholder="Tên thể loại..."/>
+                        </div>
                       </div>
                     </div>
                   </div>

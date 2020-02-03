@@ -40,10 +40,11 @@ public class AdminProductController {
         }
     }
 
-    @GetMapping("/delete/{id}")
-    public ApiResponse deleteProduct(@PathVariable("id") Long productId) throws Exception{
+    @PostMapping("/delete")
+    public ApiResponse deleteProduct(@RequestBody ProductDTO productDTO) throws Exception{
         try {
-            String message = productService.deleteProduct(productId);
+            Long id = productDTO.getId();
+            String message = productService.deleteProduct(id);
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
         } catch (Exception e) {
             e.printStackTrace();

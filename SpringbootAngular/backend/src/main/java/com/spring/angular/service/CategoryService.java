@@ -10,4 +10,6 @@ public interface CategoryService {
     List<Category> getListCate() throws Exception;
 
     List<CategoryDTO> getAllCateOrderById() throws Exception;
+
+    String createCategory(CategoryDTO categoryDTO) throws Exception;
 }

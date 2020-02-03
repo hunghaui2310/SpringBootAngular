@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Product} from '../../model/product';
 import {config} from '../../app-config/application.config';
 import {SearchRequest} from '../../model/search.request';
+import {DeleteProduct} from '../../model/delete.product';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,9 @@ export class ProductAdminService {
     return this.http.post(config.search_product_admin_API, search);
   }
 
-  deleteProductAPI(productId: number) {
+  deleteProductAPI(productId: DeleteProduct): Observable<any> {
     console.log('da goi API xoa');
     console.log(config.delete_product_admin_API);
-    return this.http.get(config.delete_product_admin_API + '/' + productId);
+    return this.http.post<any>(config.delete_product_admin_API, productId);
   }
 }

@@ -1,6 +1,7 @@
 package com.spring.angular.service.impl;
 
 import com.spring.angular.dto.CategoryDTO;
+import com.spring.angular.helper.Contains;
 import com.spring.angular.model.Category;
 import com.spring.angular.repository.CategoryRepo;
 import com.spring.angular.service.CategoryService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +36,17 @@ public class CategoryServiceImpl implements CategoryService {
             categoryDTOList.add(categoryDTO);
         }
         return categoryDTOList;
+    }
+
+    @Override
+    public String createCategory(CategoryDTO categoryDTO) throws Exception {
+        String message;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = simpleDateFormat.format(new Date());
+        categoryDTO.setCreateDate(date);
+        categoryRepo.createCategory(date, categoryDTO.getNameCate());
+        message = Contains.SUCCESS;
+        return message;
     }
 
 
