@@ -49,4 +49,8 @@ export class ProductService {
   productQuickViewAPI(proId: Product) {
     return this.http.post(config.product_quick_view_API, proId);
   }
+
+  showComment(productId: Product) {
+    return this.http.post(config.show_comment_product_API, productId);
+  }
 }

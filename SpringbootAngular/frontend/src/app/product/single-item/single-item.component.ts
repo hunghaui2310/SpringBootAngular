@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {ProductService} from '../../../service/product.service';
 import {CartService} from '../../../service/cart.service';
+import {ModelComment} from '../../../model/model.comment';
 
 @Component({
   selector: 'app-single-item',
@@ -33,6 +34,8 @@ export class SingleItemComponent implements OnInit {
   conditionCart;
   notificationMessage;
   writeReview;
+  condition;
+  commentList: ModelComment[];
 
   title = 'angularowlslider';
   customOptions: any = {
@@ -77,6 +80,7 @@ export class SingleItemComponent implements OnInit {
     this.getProDetail();
     // tslint:disable-next-line:no-unused-expression
     this.categoryId;
+    this.showComment();
   }
 
   getProDetail() {
@@ -145,5 +149,16 @@ export class SingleItemComponent implements OnInit {
 
   notificationError() {
     this.toastr.error('Lỗi', 'Thông báo');
+  }
+
+  showComment() {
+    this.condition = new Product(this.productId);
+    console.log('productId', this.condition);
+    this.productService.showComment(this.condition).subscribe(
+      dataComment => {
+        this.commentList = dataComment['data'];
+        console.log('listComment', this.commentList);
+      }
+    );
   }
 }

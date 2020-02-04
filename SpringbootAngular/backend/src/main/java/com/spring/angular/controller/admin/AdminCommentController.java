@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin-notification")
-public class CommentController {
+public class AdminCommentController {
 
     @Autowired
     private CommentService commentService;

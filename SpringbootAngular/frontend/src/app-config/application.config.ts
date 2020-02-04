@@ -27,7 +27,7 @@ export const config = {
   wishList_insert_API: URL_BASE + '/wish-list/add',
   show_wish_list_API: URL_BASE + '/wish-list/show',
   delete_wish_list_API: URL_BASE + '/wish-list/delete',
-
+  show_comment_product_API: URL_BASE + '/comment/getByProduct',
 
   // admin -API
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',

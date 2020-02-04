@@ -1,8 +1,12 @@
 package com.spring.angular.service.impl;
 
 import com.spring.angular.dto.CommentDTO;
+import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.helper.DataUtil;
+import com.spring.angular.model.Comment;
+import com.spring.angular.model.User;
 import com.spring.angular.repository.CommentRepo;
+import com.spring.angular.repository.UserRepo;
 import com.spring.angular.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentRepo commentRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public List<CommentDTO> getNotificationAdmin() throws Exception {
@@ -43,5 +50,24 @@ public class CommentServiceImpl implements CommentService {
             commentList.add(comment);
         }
         return commentList;
+    }
+
+    @Override
+    public List<CommentDTO> getListComment(ProductDTO productDTO) throws Exception {
+        List<Comment> commentList = commentRepo.findAllByProductId(productDTO.getId());
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for(Comment comment : commentList) {
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setId(comment.getId());
+            commentDTO.setBlogId(comment.getBlogId());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            commentDTO.setCreateDate(simpleDateFormat.format(comment.getCreateDate()));
+            User user = userRepo.getOne(comment.getUserId());
+            commentDTO.setUserName(user.getFullName());
+            commentDTO.setUserId(user.getId());
+            commentDTO.setContent(comment.getContent());
+            commentDTOList.add(commentDTO);
+        }
+        return commentDTOList;
     }
 }

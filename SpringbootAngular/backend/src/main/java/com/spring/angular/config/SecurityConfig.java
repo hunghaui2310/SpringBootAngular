@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .authorizeRequests()
                 .antMatchers("/account/**","/logout","/not-found").permitAll()
-                .antMatchers("/product/**","/cart/**","/order/**","/category/**","/blog/**","/about/**","/compare/**","/wish-list/**").permitAll()
+                .antMatchers("/product/**","/cart/**","/order/**","/category/**","/blog/**","/about/**","/compare/**","/wish-list/**","/comment/**").permitAll()
                 .antMatchers("/admin-product/**","/admin-category/**","/admin-blog/**","/admin-notification/**").permitAll()
         .anyRequest().fullyAuthenticated().and()
         .logout().permitAll()
