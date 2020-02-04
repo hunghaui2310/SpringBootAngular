@@ -8,7 +8,7 @@ export class Product {
   realPrice: number;
   categoryName: string;
   description: string;
-  isNew: boolean;
+  productNew: boolean;
   categoryId: number;
   numProInCart: number;
   total: number;
@@ -17,7 +17,7 @@ export class Product {
   numBuy: number;
 
   // tslint:disable-next-line:max-line-length
-  constructor(id?: number, productName?: string, price?: number, numLike?: number, discount?: number, urlImage?: string, realPrice?: number, categoryName?: string, description?: string, isNew?: boolean, categoryId?: number, numProInCart?: number, total?: number, createDate?: string, codeDiscount?: string, numBuy?: number) {
+  constructor(id?: number, productName?: string, price?: number, numLike?: number, discount?: number, urlImage?: string, realPrice?: number, categoryName?: string, description?: string, productNew?: boolean, categoryId?: number, numProInCart?: number, total?: number, createDate?: string, codeDiscount?: string, numBuy?: number) {
     this.id = id;
     this.productName = productName;
     this.price = price;
@@ -27,7 +27,7 @@ export class Product {
     this.realPrice = realPrice;
     this.categoryName = categoryName;
     this.description = description;
-    this.isNew = isNew;
+    this.productNew = productNew;
     this.categoryId = categoryId;
     this.numProInCart = numProInCart;
     this.total = total;

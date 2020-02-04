@@ -28,7 +28,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let proInCart of productInCart">
-                <td class="li-product-remove" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal"><span ><i class="fa fa-times"></i></span></td>
+                <td class="li-product-remove" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Xóa" (click)="deleteCartConfirm(proInCart, deleteCart)"><span ><i class="fa fa-times"></i></span></td>
                 <td class="li-product-thumbnail"><a href="#"><img [src]="'data:image/jpg;base64,' + proInCart.urlImage"></a></td>
                 <td class="li-product-name"><a href="#">{{proInCart.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>
@@ -37,25 +37,6 @@
                                      ariaLabelMore="Plus 1"></app-stepper-input>
                 </td>
                 <td class="product-subtotal"><span class="amount">{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
-                <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        Bạn có chắc chắn muốn xóa sản phẩm này
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary" (click)="removeProInCart(proInCart.id)">Xóa</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </tr>
               </tbody>
             </table>
@@ -92,5 +73,29 @@
   </div>
 </div>
 <!--Shopping Cart Area End-->
+<ng-template #deleteCart>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="del">Bạn chắc chắn muốn xóa sản phẩm này</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeForm()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary click-btn-upload" (click)=closeForm() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" type="button" style="width: 88.64px;" (click)="removeProInCart()"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>
 
 

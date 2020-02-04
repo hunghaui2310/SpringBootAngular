@@ -19,4 +19,8 @@ export class CategoryAdminService {
   getCategoryAPI(): Observable<Category[]> {
     return this.http.get<Category[]>(config.category_API);
   }
+
+  createCategoryAdminAPI(category: Category) {
+    return this.http.post(config.create_category_admin_API, category);
+  }
 }

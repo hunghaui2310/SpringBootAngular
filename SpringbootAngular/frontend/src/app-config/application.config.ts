@@ -33,7 +33,10 @@ export const config = {
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',
   search_product_admin_API: URL_BASE + '/admin-product/search',
   delete_product_admin_API: URL_BASE + '/admin-product/delete',
+  create_product_admin_API: URL_BASE + '/admin-product/create',
+  update_product_admin_API: URL_BASE + '/admin-product/update',
   get_all_category_admin_API: URL_BASE + '/admin-category/getCategory',
+  create_category_admin_API: URL_BASE + '/admin-category/create',
   get_all_blog_admin_API: URL_BASE + '/admin-blog/getBlog',
   get_some_notification_admin_API: URL_BASE + '/admin-notification/getNotification'
 };

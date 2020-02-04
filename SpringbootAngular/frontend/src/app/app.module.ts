@@ -40,11 +40,14 @@ import { StepperInputComponent } from './cart/stepper-input/stepper-input.compon
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import { ShowWishListComponent } from './wish-list/show-wish-list/show-wish-list.component';
 import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
-import { CreateProductComponent } from './admin/create-product/create-product.component';
-import { CreateBlogComponent } from './admin/create-blog/create-blog.component';
-import { CreateCategoryComponent } from './admin/create-category/create-category.component';
+import { CreateProductComponent } from './admin/product/create-product/create-product.component';
+import { CreateBlogComponent } from './admin/blog/create-blog/create-blog.component';
 import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
 import {AccordionModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
+import { AdminProductComponent } from './admin/product/admin-product/admin-product.component';
+import { AdminBlogComponent } from './admin/blog/admin-blog/admin-blog.component';
+import { AdminCategoryComponent } from './admin/category/admin-category/admin-category.component';
+import {OwlModule} from 'ngx-owl-carousel';
 
 @NgModule({
   declarations: [
@@ -75,8 +78,10 @@ import {AccordionModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
     HomeAdminComponent,
     CreateProductComponent,
     CreateBlogComponent,
-    CreateCategoryComponent,
-    HeaderAdminComponent
+    HeaderAdminComponent,
+    AdminProductComponent,
+    AdminBlogComponent,
+    AdminCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +98,7 @@ import {AccordionModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
     NgbCarouselModule,
     NgxPaginationModule,
     CarouselModule,
+    OwlModule,
     AccordionModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
@@ -100,7 +106,6 @@ import {AccordionModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [TestDialogComponent, WriteReviewComponent, QuickViewComponent, CreateProductComponent,
-    CreateBlogComponent,
-    CreateCategoryComponent]
+    CreateBlogComponent]
 })
 export class AppModule { }

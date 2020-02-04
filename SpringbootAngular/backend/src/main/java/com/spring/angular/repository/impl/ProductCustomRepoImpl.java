@@ -153,9 +153,19 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     @Override
     public void updateProduct(ProductDTO productDTO) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("UPDATE product SET num_like = :numLike WHERE product_id = :productId");
+        stringBuilder.append("update product set category_id = :categoryId,create_date=:createDate,des=:description," +
+                " discount=:discount,num_like=:numLike,price=:price,product_name=:productName,num_buy=:numBuy,code_discount=:codeDiscount" +
+                " where product_id = :productId");
         Query query = entityManager.createNativeQuery(stringBuilder.toString());
+        query.setParameter("categoryId",productDTO.getCategoryId());
+        query.setParameter("createDate", productDTO.getCreateDate());
+        query.setParameter("description", productDTO.getDescription());
+        query.setParameter("discount", productDTO.getDiscount());
         query.setParameter("numLike", productDTO.getNumLike());
+        query.setParameter("price", productDTO.getPrice());
+        query.setParameter("productName", productDTO.getProductName());
+        query.setParameter("numBuy", productDTO.getNumBuy());
+        query.setParameter("codeDiscount", productDTO.getCodeDiscount());
         query.setParameter("productId", productDTO.getId());
         query.executeUpdate();
     }
@@ -191,7 +201,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
             String condition = searchRequest.getCondition();
             switch (condition) {
                 case Contains.CREATE_DATE: // ngay ra mat
-                    stringBuilder.append(" order by p.create_date desc");
+                    stringBuilder.append(" and p.is_new = 1 order by p.create_date desc");
                     break;
                 case Contains.NUM_LIKE: // luot thich giam dan
                     stringBuilder.append(" order by p.num_like desc");

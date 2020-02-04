@@ -101,7 +101,7 @@
                           <a (click)="productDetail(eachProduct.id)">
                             <img [src]="'data:image/jpg;base64,' + eachProduct.urlImage">
                           </a>
-                          <span class="sticker" *ngIf="eachProduct.isNew != false">NEW</span>
+                          <span class="sticker" *ngIf="eachProduct.productNew">NEW</span>
                         </div>
                         <div class="product_desc">
                           <div class="product_desc_info">
@@ -156,7 +156,7 @@
                           <a (click)="productDetail(eachProduct.id)">
                             <img [src]="'data:image/jpg;base64,' + eachProduct.urlImage">
                           </a>
-                          <span class="sticker" *ngIf="eachProduct.isNew != false">NEW</span>
+                          <span class="sticker" *ngIf="eachProduct.productNew">NEW</span>
                         </div>
                       </div>
                       <div class="col-lg-5 col-md-7">

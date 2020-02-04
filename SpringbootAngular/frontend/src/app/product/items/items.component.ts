@@ -144,6 +144,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
       maxHeight: '100vh',
       width: '75vw',
       data: {
+        id: this.productId,
         proName: this.productName,
         url: this.urlImage,
         proPrice: this.productPrice,

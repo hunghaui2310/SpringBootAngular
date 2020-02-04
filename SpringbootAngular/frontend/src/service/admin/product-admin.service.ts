@@ -5,6 +5,7 @@ import {Product} from '../../model/product';
 import {config} from '../../app-config/application.config';
 import {SearchRequest} from '../../model/search.request';
 import {DeleteProduct} from '../../model/delete.product';
+import {endWith} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,14 @@ export class ProductAdminService {
   }
 
   deleteProductAPI(productId: DeleteProduct): Observable<any> {
-    console.log('da goi API xoa');
-    console.log(config.delete_product_admin_API);
     return this.http.post<any>(config.delete_product_admin_API, productId);
+  }
+
+  saveProduct(product: Product[]) {
+    if (product[0].id === -1) {
+      return this.http.post<any>(config.create_product_admin_API, product[0]);
+    } else {
+      return this.http.post<any>(config.update_product_admin_API, product);
+    }
   }
 }

@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {WishListService} from '../../../service/wish-list.service';
 import {WishList} from '../../../model/wish-list';
 import {Product} from '../../../model/product';
 import {Cart} from '../../../model/cart';
 import {CartService} from '../../../service/cart.service';
 import {ToastrService} from 'ngx-toastr';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-show-wish-list',
   templateUrl: './show-wish-list.component.html',
-  styleUrls: ['./show-wish-list.component.scss']
+  styleUrls: ['./show-wish-list.component.scss'],
+  providers: [BsModalService]
 })
 export class ShowWishListComponent implements OnInit {
 
@@ -20,10 +22,13 @@ export class ShowWishListComponent implements OnInit {
   conditionAddCart;
   notificationMessage;
   deleteMessage;
+  mobjModalRef: BsModalRef;
+  productId;
 
   constructor(private wishListService: WishListService,
               private cartService: CartService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private modalService: BsModalService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -72,8 +77,8 @@ export class ShowWishListComponent implements OnInit {
     this.toastr.error(messageError, 'Thông báo');
   }
 
-  deleteWishList(productId: number) {
-    this.wishListDTO = new WishList(null, productId, this.currentUser.id);
+  deleteWishListById() {
+    this.wishListDTO = new WishList(null, this.productId, this.currentUser.id);
     console.log('dataDeleteWishList', this.wishListDTO);
     this.wishListService.deleteWishListAPI(this.wishListDTO).subscribe(
       messageDelete => {
@@ -81,8 +86,24 @@ export class ShowWishListComponent implements OnInit {
         if (this.deleteMessage === 'SUCCESS') {
           this.notificationSuccess('Xóa thành công');
           this.showAllWishList();
+        } else {
+          this.notificationError('Xóa thất bại');
         }
+        this.mobjModalRef.hide();
+      }, error => this.notificationError('Đã xảy ra lỗi')
+    );
+  }
+
+  deleteWishListConfirm(data: any, pobjTemplate: TemplateRef<any>) {
+    const proId = data['id'];
+    this.productId = proId;
+    this.mobjModalRef = this.modalService.show(pobjTemplate, {
+        ignoreBackdropClick: true
       }
     );
+  }
+
+  closeForm(): void {
+    this.mobjModalRef.hide();
   }
 }

@@ -29,7 +29,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let eachProInWishList of listPro">
-                <td class="li-product-remove" (click)="deleteWishList(eachProInWishList.id)"><a><i class="fa fa-times"></i></a></td>
+                <td class="li-product-remove" (click)="deleteWishListConfirm(eachProInWishList, deleteWishList)"><a><i class="fa fa-times"></i></a></td>
                 <td class="li-product-thumbnail"><a><img [src]="'data:image/jpg;base64,' + eachProInWishList.urlImage"></a></td>
                 <td class="li-product-name"><a href="#">{{eachProInWishList.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{eachProInWishList.realPrice * 1000000 | number}}</span></td>
@@ -44,3 +44,28 @@
   </div>
 </div>
 <!--Wishlist Area End-->
+
+<ng-template #deleteWishList>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="del">Bạn chắc chắn muốn xóa sản phẩm này</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeForm()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary click-btn-upload" (click)=closeForm() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" type="button" style="width: 88.64px;" (click)="deleteWishListById()"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>

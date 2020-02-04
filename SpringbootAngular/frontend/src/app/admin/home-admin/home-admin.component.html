@@ -34,34 +34,36 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+         aria-controls="collapseTwo">
         <i class="fa fa-fw fa-table"></i>
         <a routerLink="/admin" style="color: white">Danh mục quản lý</a>
       </a>
-<!--      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">-->
-<!--        <div class="bg-white py-2 collapse-inner rounded">-->
-<!--          <h6 class="collapse-header">Custom Components:</h6>-->
-<!--          <a class="collapse-item" href="buttons.html">Buttons</a>-->
-<!--          <a class="collapse-item" href="cards.html">Cards</a>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">-->
+      <!--        <div class="bg-white py-2 collapse-inner rounded">-->
+      <!--          <h6 class="collapse-header">Custom Components:</h6>-->
+      <!--          <a class="collapse-item" href="buttons.html">Buttons</a>-->
+      <!--          <a class="collapse-item" href="cards.html">Cards</a>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
-<!--    <li class="nav-item">-->
-<!--      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">-->
-<!--        <i class="fa fa-fw fa-wrench"></i>-->
-<!--        <a routerLink="/admin-category" style="color: white">Quản lý thể loại</a>-->
-<!--      </a>-->
-<!--    </li>-->
-<!--    <li class="nav-item">-->
-<!--      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">-->
-<!--        <i class="fa fa-fw fa-wrench"></i>-->
-<!--        <a routerLink="/admin-category" style="color: white">Quản lý bài viết</a>-->
-<!--      </a>-->
-<!--    </li>-->
+    <!--    <li class="nav-item">-->
+    <!--      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">-->
+    <!--        <i class="fa fa-fw fa-wrench"></i>-->
+    <!--        <a routerLink="/admin-category" style="color: white">Quản lý thể loại</a>-->
+    <!--      </a>-->
+    <!--    </li>-->
+    <!--    <li class="nav-item">-->
+    <!--      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">-->
+    <!--        <i class="fa fa-fw fa-wrench"></i>-->
+    <!--        <a routerLink="/admin-category" style="color: white">Quản lý bài viết</a>-->
+    <!--      </a>-->
+    <!--    </li>-->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+         aria-expanded="true" aria-controls="collapseUtilities">
         <i class="fa fa-fw fa-cog"></i>
         <a routerLink="/admin-category" style="color: white">Danh mục doanh thu</a>
       </a>
@@ -83,224 +85,19 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="li-product-tab">
-                <ul class="nav li-product-menu">
-                  <li><a class="active" data-toggle="tab" href="#description"><span>Sản phẩm</span></a></li>
-                  <li><a data-toggle="tab" href="#product-details"><span>Thể loại</span></a></li>
-                  <li><a data-toggle="tab" href="#reviews"><span>Bài viết</span></a></li>
-                </ul>
+                <mat-tab-group class="nav li-product-menu">
+                  <mat-tab label="Sản phẩm">
+                    <app-admin-product class="tab-content"></app-admin-product>
+                  </mat-tab>
+                  <mat-tab label="Thể loại">
+                    <app-admin-category class="tab-content"></app-admin-category>
+                  </mat-tab>
+                  <mat-tab label="Bài viết">
+                    <app-admin-blog class="tab-content"></app-admin-blog>
+                  </mat-tab>
+                </mat-tab-group>
               </div>
               <!-- Begin Li's Tab Menu Content Area -->
-            </div>
-          </div>
-          <div class="tab-content">
-            <div id="description" class="tab-pane active show" role="tabpanel">
-              <div class="container-fluid">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3 row">
-                    <div class="col-6">
-                      <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
-                      <span>(Có tất cả {{listProduct.length}} sản phẩm)</span>
-                    </div>
-                    <div class="col-6 row">
-                      <div class="searchbar col-9">
-                        <input class="search_input" [(ngModel)]="productName" type="text" name="" placeholder="Tìm kiếm sản phẩm...">
-                        <span (click)="searchProductAdmin()" class="search_icon"><i class="fa fa-search"></i></span>
-                      </div>
-                      <div class="col-3">
-                        <button type="button" class="btn btn-primary" (click)="createProduct()">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-bordered table-product" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                          <th>STT</th>
-                          <th>Tên sản phẩm</th>
-                          <th>Ngày sản xuất</th>
-                          <th>Giá</th>
-                          <th>Giảm giá</th>
-                          <th>Mã giảm giá</th>
-                          <th>Lượt thích</th>
-                          <th>Lượt mua</th>
-                          <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let eachProduct of listProduct | paginate: {id: 'page', itemsPerPage: pageSize, currentPage: currentP, totalItems: listProduct.length}, index as i">
-                          <td>{{currentP * pageSize - (pageSize - 1) + i}}</td>
-                          <td>{{eachProduct.productName}}</td>
-                          <td>{{eachProduct.createDate}}</td>
-                          <td>{{eachProduct.price * 1000000 | number}}</td>
-                          <td>{{eachProduct.discount}}%</td>
-                          <td>{{eachProduct.codeDiscount}}<span *ngIf="!eachProduct.codeDiscount">(Trống)</span></td>
-                          <td>{{eachProduct.numLike}}</td>
-                          <td>{{eachProduct.numBuy}}</td>
-                          <td class="td-home-admin">
-                            <span data-toggle="tooltip" data-placement="top" title="Sửa"><i class="fa fa-edit"></i></span>
-                            <span data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px" (click)="deleteProductConfirm(eachProduct, deleteProduct)"><i class="fa fa-trash"></i></span>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="paginatoin-area">
-                      <div class="row" *ngIf="listProduct">
-                        <div class="col-lg-6 col-md-6">
-                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
-                            <span *ngIf="currentP*pageSize <  listProduct.length">{{currentP * pageSize}}</span>
-                            <span *ngIf="currentP*pageSize >= listProduct.length">{{listProduct.length}}</span> trên tổng số {{listProduct.length}} sản phẩm</p>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                          <ul class="pagination-box">
-                            <pagination-controls id="page" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
-                                                 autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
-                                                 screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
-                            </pagination-controls>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="product-details" class="tab-pane" role="tabpanel">
-              <div class="container-fluid">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3 row">
-                    <div class="col-6">
-                      <h6 class="m-0 font-weight-bold text-primary">Danh sách thể loại</h6>
-                      <span>(Có {{listCategory.length}} thể loại)</span>
-                    </div>
-                    <div class="col-6 row">
-                      <div class="searchbar col-9">
-                      </div>
-                      <div class="col-3">
-                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#createCategory" aria-expanded="false" aria-controls="createCategory">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
-                      </div>
-                      <div class="collapse" id="createCategory">
-                        <div class="create-cate-input">
-                          <input type="text" [(ngModel)]="categoryName" placeholder="Tên thể loại..."/>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-bordered table-product" id="dataTable2" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                          <th>STT</th>
-                          <th>Tên thể loại</th>
-                          <th>Ngày tạo</th>
-                          <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let eachCate of listCategory | paginate: {id: 'page1', itemsPerPage: pageSize, currentPage: currentP, totalItems: listCategory.length}, index as i">
-                          <td>{{currentP * pageSize - (pageSize - 1) + i}}</td>
-                          <td>{{eachCate.nameCate}}</td>
-                          <td>{{eachCate.createDate}}</td>
-                          <td class="td-home-admin">
-                            <span data-toggle="tooltip" data-placement="top" title="Sửa"><i class="fa fa-edit"></i></span>
-                            <span data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px" (click)="deleteCategoryConfirm(eachCate,deleteCategory)"><i class="fa fa-trash"></i></span>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="paginatoin-area">
-                      <div class="row" *ngIf="listCategory">
-                        <div class="col-lg-6 col-md-6">
-                          <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
-                            <span *ngIf="currentP*pageSize <  listCategory.length">{{currentP * pageSize}}</span>
-                            <span *ngIf="currentP*pageSize >= listCategory.length">{{listCategory.length}}</span> trên tổng số {{listCategory.length}} thể loại</p>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                          <ul class="pagination-box">
-                            <pagination-controls id="page1" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
-                                                 autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
-                                                 screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
-                            </pagination-controls>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="reviews" class="tab-pane" role="tabpanel">
-              <div class="container-fluid">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3 row">
-                    <div class="col-6">
-                      <h6 class="m-0 font-weight-bold text-primary">Danh sách bài viết</h6>
-                      <span>(Có {{listBlog.length}} bài viết)</span>
-                    </div>
-                    <div class="col-6 row">
-                      <div class="searchbar col-9">
-                        <input class="search_input" type="text" name="" placeholder="Tìm kiếm bài viết...">
-                        <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
-                      </div>
-                      <div class="col-3">
-                        <button type="button" class="btn btn-primary">Thêm mới <i class="fa fa-plus" aria-hidden="true"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-bordered table-product" id="dataTable3" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                          <th>STT</th>
-                          <th>Tiêu đề</th>
-                          <th>Ngày tạo</th>
-                          <th>Lượt xem</th>
-                          <th>Nội dung</th>
-                          <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let eachBlog of listBlog | paginate: {id: 'page3', itemsPerPage: 3, currentPage: currentP, totalItems: listBlog.length}, index as i">
-                          <td>{{currentP * 3 - (3 - 1) + i}}</td>
-                          <td>{{eachBlog.title}}</td>
-                          <td>{{eachBlog.createDate}}</td>
-                          <td>{{eachBlog.numSee}}</td>
-                          <td>{{eachBlog.content}}..</td>
-                          <td class="td-home-admin">
-                            <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Sửa"></i>
-                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Xóa" style="padding-left: 5px" (click)="deleteBlogConfirm(eachBlog,deleteBlog)"></i>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="paginatoin-area">
-                      <div class="row" *ngIf="listBlog">
-                        <div class="col-lg-6 col-md-6">
-                          <p>Từ {{currentP * 3 - (3 - 1)}} -
-                            <span *ngIf="currentP*3 <  listBlog.length">{{currentP * 3}}</span>
-                            <span *ngIf="currentP*3 >= listBlog.length">{{listBlog.length}}</span> trên tổng số {{listBlog.length}} bài viết</p>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                          <ul class="pagination-box">
-                            <pagination-controls id="page3" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
-                                                 autoHide="false" responsive="false" previousLabel="Trước" nextLabel="Tiếp"
-                                                 screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
-                            </pagination-controls>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -326,79 +123,4 @@
 
 </div>
 <!-- End of Page Wrapper -->
-
-<ng-template #deleteProduct>
-  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
-    <div class="col-md-10 modal-body">
-      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
-                  alt="del">Bạn chắc chắn muốn xóa sản phẩm này</span>
-    </div>
-
-    <div class="col-md-2 modal-body">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="closeForm()" size="6MB">
-        <span aria-hidden="true" style="border: none">&times;</span>
-      </button>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary click-btn-upload" (click)=closeForm() style="width: 88.64px;"><i
-      class="fa fa-times"></i>
-      Không
-    </button>
-    <button class="btn btn-primary click-btn-upload" type="button" (click)="deleteProductAdmin()" style="width: 88.64px;"><i
-      class="fa fa-check"></i>
-      Có
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #deleteCategory>
-  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
-    <div class="col-md-10 modal-body">
-      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
-                  alt="del">Bạn chắc chắn muốn xóa thể loại này</span>
-    </div>
-
-    <div class="col-md-2 modal-body">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="closeForm()" size="6MB">
-        <span aria-hidden="true" style="border: none">&times;</span>
-      </button>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary click-btn-upload" (click)=closeForm() style="width: 88.64px;"><i
-      class="fa fa-times"></i>
-      Không
-    </button>
-    <button class="btn btn-primary click-btn-upload" type="button" style="width: 88.64px;"><i
-      class="fa fa-check"></i>
-      Có
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #deleteBlog>
-  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
-    <div class="col-md-10 modal-body">
-      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
-                  alt="del">Bạn chắc chắn muốn xóa bài viết này</span>
-    </div>
-
-    <div class="col-md-2 modal-body">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="closeForm()" size="6MB">
-        <span aria-hidden="true" style="border: none">&times;</span>
-      </button>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary click-btn-upload" (click)=closeForm() style="width: 88.64px;"><i
-      class="fa fa-times"></i>
-      Không
-    </button>
-    <button class="btn btn-primary click-btn-upload" type="button" style="width: 88.64px;"><i
-      class="fa fa-check"></i>
-      Có
-    </button>
-  </div>
-</ng-template>
 

@@ -11,12 +11,13 @@ import {Blog} from '../../../model/blog';
 import {OrderService} from '../../../service/order.service';
 import {Order} from '../../../model/order';
 import {MatDialog} from '@angular/material';
-import {CreateProductComponent} from '../create-product/create-product.component';
+import {CreateProductComponent} from '../product/create-product/create-product.component';
 import {BsModalRef} from 'ngx-bootstrap/modal';
 import {BsModalService} from 'ngx-bootstrap';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {DeleteProduct} from '../../../model/delete.product';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-home-admin',
@@ -26,13 +27,11 @@ import {DeleteProduct} from '../../../model/delete.product';
 })
 export class HomeAdminComponent implements OnInit {
 
-  listProduct: Product[];
   listCategory: Category[];
   listBlog: Blog[];
   currentUser: User;
   currentP = 1;
   pageSize = 10;
-  searchProduct;
   productName;
   conditionOrder;
   orderId;
@@ -45,8 +44,9 @@ export class HomeAdminComponent implements OnInit {
   categoryId: number;
   blogId: number;
   message;
-  proId: DeleteProduct;
-  categoryName;
+  categoryName: string;
+  cateNew;
+  formCreateCate: FormGroup;
 
   constructor(private productAdmin: ProductAdminService,
               private categoryService: CategoryAdminService,
@@ -61,8 +61,6 @@ export class HomeAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllProduct();
-    this.getAllCategory();
     this.getAllBlog();
     this.fetchOrderId();
     this.showNotificationOrder();
@@ -70,39 +68,6 @@ export class HomeAdminComponent implements OnInit {
 
   closeForm(): void {
     this.mobjModalRef.hide();
-  }
-
-  getAllProduct() {
-    this.productAdmin.getAllProAdminAPI().subscribe(
-      dataListPro => {
-        this.listProduct = dataListPro['data'];
-        console.log('dataProductInAdmin', this.listProduct);
-      }
-    );
-  }
-
-  pageChange(page: number) {
-    this.currentP = page;
-    console.log('page', this.currentP);
-  }
-
-  getAllCategory() {
-    this.categoryService.getAllCateAdminAPI().subscribe(
-      dataCate => {
-        this.listCategory = dataCate['data'];
-      }
-    );
-  }
-
-  searchProductAdmin() {
-    this.searchProduct = new SearchRequest(null, this.productName);
-    console.log('searchProductAdmin', this.searchProduct);
-    this.productAdmin.searchAdminAPI(this.searchProduct).subscribe(
-      dataSearchPro => {
-        this.listProduct = dataSearchPro['data'];
-        console.log('dataAfterSearch', this.listProduct);
-      }
-    );
   }
 
   getAllBlog() {
@@ -149,24 +114,6 @@ export class HomeAdminComponent implements OnInit {
     });
   }
 
-  deleteProductAdmin() {
-    this.proId = new DeleteProduct(this.productId);
-    console.log('productIdToDelete', this.proId);
-    this.productAdmin.deleteProductAPI(this.proId).subscribe(
-      dataDelete => {
-        this.message = dataDelete['data'];
-        console.log('resultDeleteProduct', this.message);
-        if (this.message === 'SUCCESS') {
-          this.notificationSuccess('Xóa thành công');
-        } else {
-          this.notificationError('Xóa thất bại');
-        }
-        this.mobjModalRef.hide();
-        this.getAllProduct();
-      }, error => this.notificationError('Đã xảy ra lỗi')
-    );
-  }
-
   deleteProductConfirm(data: any, pobjTemplate: TemplateRef<any>) {
     const proId = data['id'];
     this.productId = proId;
@@ -179,6 +126,13 @@ export class HomeAdminComponent implements OnInit {
   deleteCategoryConfirm(data: any, pobjTemplate: TemplateRef<any>) {
     const cateId = data['id'];
     this.categoryId = cateId;
+    this.mobjModalRef = this.modalService.show(pobjTemplate, {
+        ignoreBackdropClick: true
+      }
+    );
+  }
+
+  createCategoryConfirm(pobjTemplate: TemplateRef<any>) {
     this.mobjModalRef = this.modalService.show(pobjTemplate, {
         ignoreBackdropClick: true
       }
@@ -200,5 +154,23 @@ export class HomeAdminComponent implements OnInit {
 
   notificationError(notification: string) {
     this.toastr.error(notification, 'Thông báo');
+  }
+
+  addCategory() {
+    this.cateNew = new Category(null, this.categoryName);
+    Object.assign(this.cateNew, this.formCreateCate.value);
+    console.log('nameCateToCreate', this.cateNew);
+    this.categoryService.createCategoryAdminAPI(this.cateNew).subscribe(
+      dataCreateCate => {
+        this.dataNotification = dataCreateCate['data'];
+        console.log('notificationCreateCate', this.dataNotification);
+        if (this.dataNotification === 'SUCCESS') {
+          this.notificationSuccess('Thêm mới thể loại thành công');
+        } else {
+          this.notificationError('Thêm mới thất bại');
+        }
+        this.mobjModalRef.hide();
+      }, error => this.notificationError('Đã xảy ra lôi!')
+    );
   }
 }

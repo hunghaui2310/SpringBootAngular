@@ -16,7 +16,7 @@ public class ProductDTO {
     private boolean noData;
     private String categoryName;
     private double realPrice;
-    private boolean isNew;
+    private boolean productNew;
     private Long categoryId;
     private Long numProInCart;
     private double total;
@@ -104,12 +104,12 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public boolean isNew() {
-        return isNew;
+    public boolean isProductNew() {
+        return productNew;
     }
 
-    public void setNew(boolean aNew) {
-        isNew = aNew;
+    public void setProductNew(boolean productNew) {
+        this.productNew = productNew;
     }
 
     public Long getCategoryId() {

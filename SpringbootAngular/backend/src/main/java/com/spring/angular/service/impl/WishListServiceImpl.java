@@ -4,6 +4,7 @@ import com.spring.angular.dto.ProductDTO;
 import com.spring.angular.dto.WishListDTO;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
+import com.spring.angular.model.Product;
 import com.spring.angular.repository.ProductRepo;
 import com.spring.angular.repository.WishListRepoCustom;
 import com.spring.angular.service.WishListService;
@@ -14,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -49,6 +51,17 @@ public class WishListServiceImpl implements WishListService {
             Long numLikeOld = DataUtil.safeToLong(product[3]);
             Long numLikeNew = numLikeOld + 1;
             productDTO.setNumLike(numLikeNew);
+            Product product1 = productRepo.getOne(wishListDTO.getProductId());
+            productDTO.setDiscount(product1.getDiscount());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = simpleDateFormat.format(product1.getCreateDate());
+            productDTO.setCreateDate(date);
+            productDTO.setCategoryId(product1.getCategoryId());
+            productDTO.setDescription(product1.getDescription());
+            productDTO.setPrice(product1.getPrice());
+            productDTO.setProductName(product1.getProductName());
+            productDTO.setNumBuy(product1.getNumBuy());
+            productDTO.setCodeDiscount(product1.getCodeDiscount());
             productRepo.updateProduct(productDTO);
             wishListRepo.insertWishList(wishListDTO);
             message = Contains.SUCCESS;
@@ -104,10 +117,14 @@ public class WishListServiceImpl implements WishListService {
     @Override
     public String deleteProWishList(WishListDTO wishListDTO) throws Exception {
         String message;
-        Long wishListId = wishListRepo.findWishListByUser(wishListDTO.getUserId());
-        wishListDTO.setWishListId(wishListId);
-        wishListRepo.deleteProWishList(wishListDTO);
-        message = Contains.SUCCESS;
+        if(!DataUtil.isNullOrZero(wishListDTO.getProductId()) && !DataUtil.isNullOrZero(wishListDTO.getUserId())) {
+            Long wishListId = wishListRepo.findWishListByUser(wishListDTO.getUserId());
+            wishListDTO.setWishListId(wishListId);
+            wishListRepo.deleteProWishList(wishListDTO);
+            message = Contains.SUCCESS;
+        } else {
+            message = Contains.ERROR;
+        }
         return message;
     }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {Product} from '../../../model/product';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
@@ -6,11 +6,13 @@ import {CartService} from '../../../service/cart.service';
 import {User} from '../../../model/model.user';
 import {Cart} from '../../../model/cart';
 import {Blog} from '../../../model/blog';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-show-cart',
   templateUrl: './show-cart.component.html',
-  styleUrls: ['./show-cart.component.scss']
+  styleUrls: ['./show-cart.component.scss'],
+  providers: [BsModalService]
 })
 export class ShowCartComponent implements OnInit {
 
@@ -25,15 +27,21 @@ export class ShowCartComponent implements OnInit {
   codeRequest;
   dataCode: any;
   discount;
+  mobjModalRef: BsModalRef;
+  productId;
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,
-              private router: Router) {
+              private modalService: BsModalService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit() {
     this.showProInCart();
+  }
+
+  closeForm(): void {
+    this.mobjModalRef.hide();
   }
 
   showProInCart() {
@@ -51,18 +59,23 @@ export class ShowCartComponent implements OnInit {
     );
   }
 
-  removeProInCart(proId: number) {
-    this.cartRequest = new Cart(this.currentUser.id, proId);
-    console.log('removeUserId', this.currentUser.id);
-    console.log('proId', proId);
+  removeProInCart() {
+    this.cartRequest = new Cart(this.currentUser.id, this.productId);
+    console.log('removeProInCart', this.cartRequest);
     this.cartService.removeProCartAPI(this.cartRequest).subscribe(
       removes => {
         this.notification = removes['data'];
-        this.notificationSuccess('Xóa thành công');
+        if (this.notification === 'SUCCESS') {
+          this.notificationSuccess('Xóa thành công');
+          this.showProInCart();
+        } else {
+          this.notificationError('Xóa thất bại');
+        }
+        this.mobjModalRef.hide();
         this.showProInCart();
         console.log('notification', this.notification);
       },
-      error => this.notificationError()
+      error => this.notificationError('Đã xảy ra lỗi')
     );
   }
 
@@ -78,12 +91,21 @@ export class ShowCartComponent implements OnInit {
     });
   }
 
-  notificationError() {
-    this.toastr.error('Lỗi', 'Thông báo');
+  notificationError(notification: string) {
+    this.toastr.error(notification, 'Thông báo');
   }
 
   updateNumCart(productId: number) {
 
+  }
+
+  deleteCartConfirm(data: any, pobjTemplate: TemplateRef<any>) {
+    const proId = data['id'];
+    this.productId = proId;
+    this.mobjModalRef = this.modalService.show(pobjTemplate, {
+        ignoreBackdropClick: true
+      }
+    );
   }
 
   getCodeDiscount(code: string) {
@@ -104,7 +126,7 @@ export class ShowCartComponent implements OnInit {
           console.log('dataCode', this.discount);
           this.cartService.setOrderCode(this.discount);
         }
-      }, error => this.notificationError()
+      }, error => this.notificationError('Đã xảy ra lỗi')
     );
   }
 

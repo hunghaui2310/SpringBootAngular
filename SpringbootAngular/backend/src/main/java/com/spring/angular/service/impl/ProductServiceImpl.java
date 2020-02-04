@@ -17,6 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import javax.management.Query;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,9 +84,9 @@ public class ProductServiceImpl implements ProductService {
             }
             productDTO.setDescription(des);
             if(dataIsNew == 1){
-                productDTO.setNew(true);
+                productDTO.setProductNew(true);
             }else {
-                productDTO.setNew(false);
+                productDTO.setProductNew(false);
             }
             productDTO.setCategoryId(cateId);
             productDTOList.add(productDTO);
@@ -137,9 +138,9 @@ public class ProductServiceImpl implements ProductService {
             }
             productDTO.setDescription(des);
             if(dataIsNew == 1){
-                productDTO.setNew(true);
+                productDTO.setProductNew(true);
             }else {
-                productDTO.setNew(false);
+                productDTO.setProductNew(false);
             }
             productDTO.setCategoryId(cateId);
             productDTOList.add(productDTO);
@@ -275,9 +276,9 @@ public class ProductServiceImpl implements ProductService {
             }
             productDTO.setDescription(des);
             if (dataIsNew == 1) {
-                productDTO.setNew(true);
+                productDTO.setProductNew(true);
             } else {
-                productDTO.setNew(false);
+                productDTO.setProductNew(false);
             }
             productDTO.setCategoryId(DataUtil.safeToLong(objects[10]));
             productDTOList.add(productDTO);
@@ -349,6 +350,11 @@ public class ProductServiceImpl implements ProductService {
         productRepo.deleteById(productId);
         String message = Contains.SUCCESS;
         return message;
+    }
+
+    @Override
+    public String updateProduct(ProductDTO productDTO) throws Exception {
+        return null;
     }
 
 
