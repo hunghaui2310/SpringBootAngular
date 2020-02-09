@@ -4,13 +4,13 @@
     <div class="col-md-6">
       <label>Tên sản phẩm</label>
       <mat-form-field>
-        <input type="text" class="form-control" placeholder="Nhập tên sản phẩm..." [(ngModel)]="mobjNewProduct.productName">
+        <input type="text" class="form-control" placeholder="Nhập tên sản phẩm..." formControlName="productName">
       </mat-form-field>
     </div>
     <div class="form-group col-md-6">
       <label>Giá (triệu VNĐ)</label>
       <mat-form-field>
-        <input type="number" step="0.1" class="form-control" placeholder="Nhập giá..." [(ngModel)]="mobjNewProduct.price">
+        <input type="number" step="0.1" class="form-control" placeholder="Nhập giá..." formControlName="productPrice">
       </mat-form-field>
     </div>
   </div>
@@ -18,12 +18,12 @@
     <div class="form-group col-md-4">
       <label>Mã khuyến mại</label>
       <mat-form-field>
-        <input type="text" class="form-control" placeholder="Nhập mã khuyến mại..." [(ngModel)]="mobjNewProduct.codeDiscount">
+        <input type="text" class="form-control" placeholder="Nhập mã khuyến mại..." formControlName="proCodeDiscount">
       </mat-form-field>
     </div>
     <div class="form-group col-md-4">
       <label>Thể loại</label>
-      <select class="form-control" [(ngModel)]="mobjNewProduct.categoryId">
+      <select class="form-control" formControlName="category">
         <option [value]="null" disabled>Thể loại</option>
         <option *ngFor="let eachCate of categories" value="{{eachCate.id}}">{{eachCate.nameCate}}</option>
       </select>
@@ -31,7 +31,7 @@
     <div class="form-group col-md-4">
       <label>Khuyến mại(%)</label>
       <mat-form-field>
-        <input type="number" class="form-control" placeholder="Nhập số phần trăm khuyến mại..." [(ngModel)]="mobjNewProduct.discount">
+        <input type="number" class="form-control" placeholder="Nhập số phần trăm khuyến mại..." formControlName="discount">
       </mat-form-field>
     </div>
   </div>
@@ -47,7 +47,7 @@
   </div>
   <div class="form-group">
     <label>Mô tả sản phẩm</label>
-    <textarea class="form-control" rows="4" placeholder="Thêm mô tả sản phẩm..." [(ngModel)]="description"></textarea>
+    <textarea class="form-control" rows="4" placeholder="Thêm mô tả sản phẩm..." formControlName="description"></textarea>
   </div>
   <div class="button-create-product">
     <button type="submit" class="btn btn-primary" style="width: 80px">Lưu</button>

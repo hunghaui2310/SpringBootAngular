@@ -79,7 +79,7 @@
                 <p>Sắp xếp:</p>
                 <select class="sort-items" [(ngModel)]="sortCondition" (change)="search()">
                   <option [value]="null" disabled>Sắp xếp theo</option>
-                  <option value="trending" *ngFor="let sorted of sortList"
+                  <option *ngFor="let sorted of sortList"
                           value="{{sorted.value}}">{{sorted.condition}}</option>
                 </select>
               </div>

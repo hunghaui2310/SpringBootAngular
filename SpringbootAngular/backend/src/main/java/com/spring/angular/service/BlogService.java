@@ -13,4 +13,6 @@ public interface BlogService {
     BlogDetailDTO lstContentDetail(Long blogId) throws Exception;
 
     List<BlogDetailDTO> findAllBlogAdmin() throws Exception;
+
+    String insertBlog(BlogDetailDTO blogDetailDTO) throws Exception;
 }

@@ -8,6 +8,7 @@ import {config} from '../../../../app-config/application.config';
 import {ProductAdminService} from '../../../../service/admin/product-admin.service';
 import {ToastrService} from 'ngx-toastr';
 import {BsModalRef} from 'ngx-bootstrap';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-create-product',
@@ -16,7 +17,7 @@ import {BsModalRef} from 'ngx-bootstrap';
 })
 export class CreateProductComponent implements OnInit {
 
-  form;
+  form: FormGroup;
   categories: Category[];
   mobjNewProduct: Product = new Product();
   productName;
@@ -35,13 +36,14 @@ export class CreateProductComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<CreateProductComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
+              private fb: FormBuilder,
               private categoryService: CategoryAdminService,
               private toastr: ToastrService,
               private productAdminService: ProductAdminService) { }
 
   ngOnInit() {
     this.getComboboxCate();
-    this.categoryId = null;
+    this.createForm();
   }
 
   closeForm(): void {
@@ -173,5 +175,16 @@ export class CreateProductComponent implements OnInit {
 
   notificationError(notification: string) {
     this.toastr.error(notification, 'Thông báo');
+  }
+
+  createForm() {
+    this.form = this.fb.group( {
+      productName: [''],
+      productPrice: [''],
+      proCodeDiscount: [''],
+      category: [''],
+      discount: [''],
+      description: ['']
+    });
   }
 }

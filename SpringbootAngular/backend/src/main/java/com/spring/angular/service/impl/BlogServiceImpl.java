@@ -17,8 +17,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -120,5 +122,27 @@ public class BlogServiceImpl implements BlogService {
             blogDetailDTOS.add(blogDetailDTO);
         }
         return blogDetailDTOS;
+    }
+
+    @Override
+    public String insertBlog(BlogDetailDTO blogDetailDTO) throws Exception {
+        Blog blog = new Blog();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        blog.setCreateDate(simpleDateFormat.format(new Date()));
+        blog.setImg(blogDetailDTO.getImg());
+        blogDetailDTO.setImgBanner(blogDetailDTO.getImgBanner());
+        String header = blogDetailDTO.getHeader();
+        String content = blogDetailDTO.getContent();
+        String footer = blogDetailDTO.getFooter();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(Contains.BLOG_DETAIL.HEADER, header);
+        jsonObject.addProperty(Contains.BLOG_DETAIL.CONTENT, content);
+        jsonObject.addProperty(Contains.BLOG_DETAIL.FOOTER, footer);
+        String detailContent = jsonObject.getAsString();
+        blog.setDetailContent(detailContent);
+        String message;
+        blogRepo.save(blog);
+        message = Contains.SUCCESS;
+        return message;
     }
 }
