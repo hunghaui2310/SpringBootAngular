@@ -28,15 +28,32 @@
               </thead>
               <tbody>
               <tr *ngFor="let proInCart of productInCart">
-                <td class="li-product-remove" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Xóa" (click)="deleteCartConfirm(proInCart, deleteCart)"><span ><i class="fa fa-times"></i></span></td>
-                <td class="li-product-thumbnail"><a href="#"><img [src]="'data:image/jpg;base64,' + proInCart.urlImage"></a></td>
+                <td class="li-product-remove" style="cursor: pointer" data-toggle="tooltip" data-placement="top"
+                    title="Xóa" (click)="deleteCartConfirm(proInCart, deleteCart)"><span><i
+                  class="fa fa-times"></i></span></td>
+                <td class="li-product-thumbnail"><a href="#"><img [src]="'data:image/jpg;base64,' + proInCart.urlImage"></a>
+                </td>
                 <td class="li-product-name"><a href="#">{{proInCart.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>
                 <td class="quantity">
-                  <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol="" ariaLabelLess="Less 1"
-                                     ariaLabelMore="Plus 1"></app-stepper-input>
+                  <!--                  <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol="" ariaLabelLess="Less 1"-->
+                  <!--                                     ariaLabelMore="Plus 1"></app-stepper-input>-->
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-success btn-number" data-type="plus" (click)="changeNum(false)">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                    </span>
+                    <input type="text"  class="form-control input-number" value="{{proInCart.numProInCart}}" min="1" max="100">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-danger btn-number" data-type="minus" (click)="changeNum(true)">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </span>
+                  </div>
                 </td>
-                <td class="product-subtotal"><span class="amount">{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
+                <td class="product-subtotal"><span
+                  class="amount">{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
               </tr>
               </tbody>
             </table>
@@ -45,8 +62,11 @@
             <div class="col-12">
               <div class="coupon-all">
                 <div class="coupon">
-                  <input class="input-text" name="coupon_code" [(ngModel)]="codeDiscount" placeholder="Nhập mã khuyến mại" type="text">
-                  <button class="button" name="apply_coupon" (click)="getCodeDiscount(codeDiscount)" type="submit">Áp dụng</button>
+                  <input class="input-text" name="coupon_code" [(ngModel)]="codeDiscount"
+                         placeholder="Nhập mã khuyến mại" type="text">
+                  <button class="button" name="apply_coupon" (click)="getCodeDiscount(codeDiscount)" type="submit">Áp
+                    dụng
+                  </button>
                 </div>
                 <div class="coupon2">
                   <input class="button" name="update_cart" value="Cập nhật giỏ hàng" type="submit">
@@ -91,8 +111,9 @@
       class="fa fa-times"></i>
       Không
     </button>
-    <button class="btn btn-primary click-btn-upload" type="button" style="width: 88.64px;" (click)="removeProInCart()"><i
-      class="fa fa-check"></i>
+    <button class="btn btn-primary click-btn-upload" type="button" style="width: 88.64px;" (click)="removeProInCart()">
+      <i
+        class="fa fa-check"></i>
       Có
     </button>
   </div>

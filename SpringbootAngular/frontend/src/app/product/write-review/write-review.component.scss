@@ -1,3 +1,18 @@
 .dialog-write-review {
-  width: 400px;
+  width: 700px;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+.header-review {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+.content-dialog p {
+  margin-bottom: 0 !important;
+  margin-top: 40px;
+}
+.btn-custom button {
+  width: 150px;
 }

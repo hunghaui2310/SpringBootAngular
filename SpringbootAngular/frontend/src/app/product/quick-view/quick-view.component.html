@@ -1,5 +1,5 @@
 <!-- Begin Quick View | Modal Area -->
-<mat-dialog-content>
+<form [formGroup]="formQuickView">
   <div class="modal-body">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true" (click)="closeForm()">&times;</span>
@@ -9,35 +9,67 @@
         <!-- Product Details Left -->
         <div class="product-details-left">
           <div class="product-details-images slider-navigation-1">
-            <div class="lg-image" *ngFor="let img of dataProduct['urlImage']">
-              <img src="assets/images/product/large-size/{{categoryId}}/{{img}}" alt="product image">
+            <ngb-carousel>
+              <ng-template ngbSlide *ngFor="let img of dataProduct['urlImage']">
+                <img [src]="'data:image/jpg;base64,' + img">
+              </ng-template>
+            </ngb-carousel>
+          </div>
+          <div>
+            <div class="single-add-to-cart">
+              <div class="cart-quantity">
+                <div class="quantity">
+                  <label>Số lượng</label>
+                  <div class="cart-plus-minus">
+                    <input class="cart-plus-minus-box" type="text" value="{{cartNum}}">
+                    <button class="dec qtybutton" (click)="cartNumber(true)"><i class="fa fa-angle-down"></i></button>
+                    <button class="inc qtybutton" (click)="cartNumber(false)"><i class="fa fa-angle-up"></i></button>
+                  </div>
+                </div>
+                <button class="add-to-cart" type="submit" routerLink="/checkout">Mua ngay</button>
+              </div>
+            </div>
+            <div class="product-additional-info pt-25">
+              <a class="wishlist-btn pt-40" href="wishlist.html"><i class="fa fa-heart-o"></i> Yêu thích</a>
+              <div class="product-social-sharing pt-15 pb-0">
+                <ul>
+                  <p><i class="fa fa-share"> Chia sẻ</i></p>
+                  <li class="facebook"><a href="https://www.facebook.com"><i class="fa fa-facebook"></i>Facebook</a>
+                  </li>
+                  <li class="twitter"><a href="https://twitter.com"><i class="fa fa-twitter"></i>Twitter</a></li>
+                  <li class="google-plus"><a href="https://www.google.com"><i class="fa fa-google-plus"></i>Google +</a>
+                  </li>
+                  <li class="instagram"><a href="https://www.instagram.com"><i class="fa fa-instagram"></i>Instagram</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div class="product-details-thumbs slider-thumbs-1">
-            <div class="sm-image" *ngFor="let img of dataProduct['urlImage']"><img src="assets/images/product/small-size/{{img}}" alt="product image thumb"></div>
-          </div>
+<!--          <div class="product-details-thumbs slider-thumbs-1">-->
+<!--            <div class="sm-image" *ngFor="let img of dataProduct['urlImage']"><img-->
+<!--              src="assets/images/product/small-size/{{img}}" alt="product image thumb"></div>-->
+<!--          </div>-->
         </div>
         <!--// Product Details Left -->
       </div>
 
       <div class="col-lg-7 col-md-6 col-sm-6">
-        <div class="product-details-view-content pt-60">
+        <div class="product-details-view-content">
           <div class="product-info">
             <h2>{{productName}}</h2>
             <span class="product-details-ref">{{cateName}}</span>
-            <div class="rating-box pt-20">
-              <ul class="rating rating-with-review-item">
+            <div class="rating-box">
+              <ul class="rating rating-with-review-item" style="width: 340px;">
                 <li><i class="fa fa-star-o"></i></li>
                 <li><i class="fa fa-star-o"></i></li>
                 <li><i class="fa fa-star-o"></i></li>
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
-                <li class="review-item"><a href="#">Đọc đánh giá</a></li>
-                <li class="review-item"><a href="#">Viết đánh giá</a></li>
               </ul>
             </div>
-            <div class="price-box pt-20">
-              <span class="new-price new-price-2 col-4">{{realPrice * 1000000 | number}}VNĐ</span>
+            <div class="price-box pt-5">
+              Giá
+              <span class="new-price new-price-2 col-4 pl-0"> {{realPrice * 1000000 | number}}VNĐ</span>
               <del class="new-price new-price-2 col-4" *ngIf="discount != '0'">{{price * 1000000 | number}}VNĐ</del>
             </div>
             <div class="product-desc">
@@ -45,28 +77,31 @@
                 <span>{{description}}</span>
               </p>
             </div>
-            <div class="single-add-to-cart">
-              <form action="#" class="cart-quantity">
-                <div class="quantity">
-                  <label>Số lượng</label>
-                  <div class="cart-plus-minus">
-                    <input class="cart-plus-minus-box" value="1" type="text">
-                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+            <div class="li-comment-section">
+              <br>
+              <h5>{{listComment.length}} phản hồi</h5>
+              <ul>
+                <li *ngFor="let eachComment of listComment | paginate: {id: 'page', itemsPerPage: pageSize, currentPage: currentP, totalItems: listComment.length}">
+                  <div class="author-avatar pt-15">
+                    <img src="assets/images/user/user.png">
                   </div>
-                </div>
-                <button class="add-to-cart" type="submit">Thêm vào giỏ</button>
-              </form>
+                  <div class="comment-body pl-15">
+                    <h5 class="comment-author pt-15 pb-0">{{eachComment.userName}} ({{eachComment.createDate}})</h5>
+                    <p class="pt-0">{{eachComment.content}}</p>
+                  </div>
+                </li>
+              </ul>
             </div>
-            <div class="product-additional-info pt-25">
-              <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Yêu thích</a>
-              <div class="product-social-sharing pt-25">
-                <ul>
-                  <li class="facebook"><a href="https://www.facebook.com"><i class="fa fa-facebook"></i>Facebook</a></li>
-                  <li class="twitter"><a href="https://twitter.com"><i class="fa fa-twitter"></i>Twitter</a></li>
-                  <li class="google-plus"><a href="https://www.google.com"><i class="fa fa-google-plus"></i>Google +</a></li>
-                  <li class="instagram"><a href="https://www.instagram.com"><i class="fa fa-instagram"></i>Instagram</a></li>
-                </ul>
+            <div class="paginatoin-area">
+              <div *ngIf="listComment && listComment.length > 0" class="text-center">
+                <div class="col-lg-6 col-md-6">
+                  <ul class="pagination-box">
+                    <pagination-controls id="page" (pageChange)="pageChange($event)" maxSize="5" directionLinks="true"
+                                         autoHide="false" responsive="false" previousLabel="" nextLabel=""
+                                         screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                    </pagination-controls>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -74,6 +109,6 @@
       </div>
     </div>
   </div>
-</mat-dialog-content>
+</form>
 <!-- Quick View | Modal Area End Here -->
 

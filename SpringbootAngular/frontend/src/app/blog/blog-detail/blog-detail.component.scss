@@ -1,0 +1,18 @@
+.li-comment-section ul li .comment-body .reply-btn {
+  color: #fed700;
+  font-size: 12px;
+  display: inline-block;
+  padding: 3px 15px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  border: 1px solid #fed700;
+}
+.li-comment-section ul li .comment-body .reply-btn:hover {
+  color: #ffffff;
+  background-color: #fed700;
+}
+.coment-btn button {
+  width: 150px;
+}

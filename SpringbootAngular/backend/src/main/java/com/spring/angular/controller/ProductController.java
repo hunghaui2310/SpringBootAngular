@@ -55,6 +55,17 @@ public class ProductController {
         return apiResponse;
     }
 
+    @PostMapping("/detailById")
+    public ApiResponse getProById(@RequestBody ProductDTO productDTO) throws Exception {
+        try {
+            ProductDetailDTO productDetailDTO = productService.getProductById(productDTO.getId());
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", productDetailDTO);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
+
     /**
      * lay ra san pham cung the loai trong chi tiet san pham
      *

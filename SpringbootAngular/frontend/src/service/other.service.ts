@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {config} from '../app-config/application.config';
 import {Cart} from '../model/cart';
+import {Observable} from 'rxjs';
+import {Category} from '../model/category';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +30,9 @@ export class OtherService {
 
   showCompareAPI(cart: Cart) {
     return this.http.post(config.show_compare_API, cart);
+  }
+
+  getAllCategory(): Observable<Category[]> {
+    return this.http.get<Category[]>(config.category_API);
   }
 }

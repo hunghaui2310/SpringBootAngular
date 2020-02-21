@@ -116,6 +116,7 @@ export class OrderInfoComponent implements OnInit {
         this.orderService.setOrderId(this.id);
         if (this.message === 'SUCCESS') {
           this.notificationSuccess('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất');
+          window.location.replace('/home');
         } else {
           this.notificationError('Đã xảy ra lỗi');
         }

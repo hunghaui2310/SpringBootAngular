@@ -2,6 +2,7 @@ package com.spring.angular.service.impl;
 
 import com.spring.angular.dto.CommentDTO;
 import com.spring.angular.dto.ProductDTO;
+import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.DataUtil;
 import com.spring.angular.model.Comment;
 import com.spring.angular.model.User;
@@ -12,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -69,5 +68,66 @@ public class CommentServiceImpl implements CommentService {
             commentDTOList.add(commentDTO);
         }
         return commentDTOList;
+    }
+
+    @Override
+    public String saveCommentProduct(Comment comment) throws Exception {
+        String message;
+        comment.setStatus(1);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String setDate = simpleDateFormat.format(new Date());
+        Date date = simpleDateFormat.parse(setDate);
+        comment.setCreateDate(date);
+        commentRepo.save(comment);
+        message = Contains.SUCCESS;
+        return message;
+    }
+
+    @Override
+    public String updateComment(Comment comment) throws Exception {
+        String message;
+        commentRepo.updateComment(comment.getContent(), comment.getId());
+        message = Contains.SUCCESS;
+        return message;
+    }
+
+    @Override
+    public Comment getById(Comment comment) throws Exception {
+        Comment comment1 = commentRepo.getOne(comment.getId());
+        return comment1;
+    }
+
+    @Override
+    public List<CommentDTO> getByBlog(Comment comment) throws Exception {
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        List<Comment> list = commentRepo.findAllByBlogId(comment.getBlogId());
+        List<User> userList = userRepo.findAll();
+        Map<Long, String> mapUser = new HashMap<>();
+        for(User user : userList) {
+            mapUser.put(user.getId(), user.getFullName());
+        }
+        for(Comment comment1 : list) {
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setId(comment1.getId());
+            commentDTO.setUserId(comment1.getUserId());
+            commentDTO.setContent(comment1.getContent());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String date = simpleDateFormat.format(comment1.getCreateDate());
+            commentDTO.setCreateDate(date);
+            commentDTO.setProductId(comment1.getProductId());
+            commentDTO.setBlogId(comment1.getBlogId());
+            commentDTO.setStatus(comment1.getStatus());
+            commentDTO.setUserName(mapUser.get(comment1.getUserId()));
+            commentDTOList.add(commentDTO);
+        }
+        return commentDTOList;
+    }
+
+    @Override
+    public String deleteComment(Comment comment) throws Exception {
+        String message;
+        commentRepo.deleteById(comment.getId());
+        message = Contains.SUCCESS;
+        return message;
     }
 }

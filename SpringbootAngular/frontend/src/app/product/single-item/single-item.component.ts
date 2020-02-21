@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {Product} from '../../../model/product';
 import {WriteReviewComponent} from '../write-review/write-review.component';
 import {Cart} from '../../../model/cart';
@@ -9,6 +9,11 @@ import {ActivatedRoute} from '@angular/router';
 import {ProductService} from '../../../service/product.service';
 import {CartService} from '../../../service/cart.service';
 import {ModelComment} from '../../../model/model.comment';
+import {CommentModel} from '../../../model/comment.model';
+import {CommentService} from '../../../service/comment.service';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {WishList} from '../../../model/wish-list';
+import {WishListService} from '../../../service/wish-list.service';
 
 @Component({
   selector: 'app-single-item',
@@ -36,6 +41,14 @@ export class SingleItemComponent implements OnInit {
   writeReview;
   condition;
   commentList: ModelComment[];
+  contentReview;
+  private mobjModalRef: BsModalRef;
+  commentContent;
+  commentId;
+  idCommentDelete;
+  wishListDTO;
+  wishListInsert;
+  cartNum = 1;
 
   title = 'angularowlslider';
   customOptions: any = {
@@ -68,6 +81,10 @@ export class SingleItemComponent implements OnInit {
               private dialog: MatDialog,
               private toastr: ToastrService,
               private cartService: CartService,
+              private commentService: CommentService,
+              private wishListService: WishListService,
+              private modalService: BsModalService,
+              private dialogRef: MatDialog,
               config: NgbCarouselConfig) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     config.interval = 3000;
@@ -119,8 +136,11 @@ export class SingleItemComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(WriteReviewComponent, {
-      width: '450px',
-      data: {name: this.productName, animal: this.writeReview}
+      width: '750px',
+      data: {
+        data: this.writeReview,
+        productId: this.productId
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -139,7 +159,7 @@ export class SingleItemComponent implements OnInit {
         console.log('this.notificationMessage', this.notificationMessage);
         this.notificationSuccess('Thêm vào giỏ thành công');
       },
-      error => this.notificationError()
+      error => this.notificationError('Lỗi')
     );
   }
 
@@ -147,8 +167,8 @@ export class SingleItemComponent implements OnInit {
     this.toastr.success(notification, 'Thông báo');
   }
 
-  notificationError() {
-    this.toastr.error('Lỗi', 'Thông báo');
+  notificationError(message: string) {
+    this.toastr.error(message, 'Thông báo');
   }
 
   showComment() {
@@ -160,5 +180,110 @@ export class SingleItemComponent implements OnInit {
         console.log('listComment', this.commentList);
       }
     );
+  }
+
+  saveComment() {
+    const modelComment = new CommentModel(null, this.currentUser.id, this.productId, null, this.contentReview);
+    console.log('dataComment', modelComment);
+    this.commentService.saveCommentProAPI(modelComment).subscribe(
+      data => {
+        if (data['data'] === 'SUCCESS') {
+          this.notificationSuccess('Gửi thành công');
+        } else {
+          this.notificationError('Lỗi');
+        }
+        this.onBack();
+      }
+    );
+  }
+
+  clickSave(pobjTemplate: TemplateRef<any>) {
+    this.mobjModalRef = this.modalService.show(pobjTemplate, {
+        ignoreBackdropClick: true
+      }
+    );
+  }
+
+  clickDelete(pobjTemplate: TemplateRef<any>, id: number) {
+    this.idCommentDelete = id;
+    this.mobjModalRef = this.modalService.show(pobjTemplate, {
+        ignoreBackdropClick: true
+      }
+    );
+  }
+
+  onBack() {
+    this.mobjModalRef.hide();
+  }
+
+  getCommentById(id: number) {
+    const commentModel = new CommentModel(id);
+    console.log('commentById', commentModel);
+    this.commentService.getCommentByIdAPI(commentModel).subscribe(
+      data => {
+        this.commentContent = data['data']['content'];
+        this.commentId = data['data']['id'];
+        console.log('dataContent', this.commentContent);
+      }
+    );
+  }
+
+  editComment() {
+    const modelEdit = new CommentModel(this.commentId, this.currentUser.id, this.productId, null, this.contentReview);
+    console.log('commentEditModel', modelEdit);
+    this.commentService.editCommentAPI(modelEdit).subscribe(
+      data => {
+        if (data['data'] === 'SUCCESS') {
+          this.notificationSuccess('Sửa thành công');
+        } else {
+          this.notificationError('Lỗi');
+        }
+        this.showComment();
+        this.onBack();
+      }
+    );
+  }
+
+  deleteComment() {
+    const modelDelete = new CommentModel(this.idCommentDelete);
+    console.log('deleteComment', modelDelete);
+    this.commentService.deleteComment(modelDelete).subscribe(
+      data => {
+        if (data['data'] === 'SUCCESS') {
+          this.notificationSuccess('Xóa thành công');
+        } else {
+          this.notificationError('Lỗi');
+        }
+        this.onBack();
+        this.showComment();
+      }
+    );
+  }
+
+  insertToWishList(productId: number) {
+    this.wishListDTO = new WishList(null, productId, this.currentUser.id);
+    console.log('wishListCondition', this.wishListDTO);
+    this.wishListService.insertWishListAPI(this.wishListDTO).subscribe(
+      dataWishList => {
+        this.wishListInsert = dataWishList['data'];
+        console.log('wishListNotification', this.wishListInsert);
+        if (this.wishListInsert === 'SUCCESS') {
+          this.notificationSuccess('Thêm vào yêu thích thành công');
+        } else {
+          this.notificationError('Sản phẩm đã tồn tại trong yêu thích');
+        }
+      }, error => this.notificationError('Đã xảy ra lỗi')
+    );
+  }
+
+  changeNumCart(change: boolean) {
+    if (change) {
+        this.cartNum = this.cartNum + 1;
+    } else {
+      this.cartNum = this.cartNum - 1;
+    }
+    if (this.cartNum <= 1) {
+      this.cartNum = 1;
+    }
   }
 }

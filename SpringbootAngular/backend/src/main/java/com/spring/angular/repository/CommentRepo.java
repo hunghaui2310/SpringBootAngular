@@ -10,4 +10,6 @@ import java.util.List;
 public interface CommentRepo extends JpaRepository<Comment, Long>, CommentRepoCustom {
 
     List<Comment> findAllByProductId(Long productId) throws Exception;
+
+    List<Comment> findAllByBlogId(Long blogId) throws Exception;
 }

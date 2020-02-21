@@ -39,14 +39,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { StepperInputComponent } from './cart/stepper-input/stepper-input.component';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import { ShowWishListComponent } from './wish-list/show-wish-list/show-wish-list.component';
-import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
-import { CreateProductComponent } from './admin/product/create-product/create-product.component';
-import { CreateBlogComponent } from './admin/blog/create-blog/create-blog.component';
-import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
 import {AccordionModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
-import { AdminProductComponent } from './admin/product/admin-product/admin-product.component';
-import { AdminBlogComponent } from './admin/blog/admin-blog/admin-blog.component';
-import { AdminCategoryComponent } from './admin/category/admin-category/admin-category.component';
 import {OwlModule} from 'ngx-owl-carousel';
 
 @NgModule({
@@ -74,14 +67,7 @@ import {OwlModule} from 'ngx-owl-carousel';
     ProfileComponent,
     RegisterComponent,
     StepperInputComponent,
-    ShowWishListComponent,
-    HomeAdminComponent,
-    CreateProductComponent,
-    CreateBlogComponent,
-    HeaderAdminComponent,
-    AdminProductComponent,
-    AdminBlogComponent,
-    AdminCategoryComponent
+    ShowWishListComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +91,6 @@ import {OwlModule} from 'ngx-owl-carousel';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [TestDialogComponent, WriteReviewComponent, QuickViewComponent, CreateProductComponent,
-    CreateBlogComponent]
+  entryComponents: [TestDialogComponent, WriteReviewComponent, QuickViewComponent]
 })
 export class AppModule { }

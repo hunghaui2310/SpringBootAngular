@@ -53,4 +53,8 @@ export class ProductService {
   showComment(productId: Product) {
     return this.http.post(config.show_comment_product_API, productId);
   }
+
+  getProById(product: Product) {
+    return this.http.post(config.getProById_API, product);
+  }
 }

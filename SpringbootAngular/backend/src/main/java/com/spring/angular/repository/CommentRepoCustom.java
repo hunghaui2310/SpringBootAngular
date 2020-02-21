@@ -7,4 +7,6 @@ import java.util.List;
 public interface CommentRepoCustom {
 
     List<Object[]> getCommentAdmin() throws Exception;
+
+    void updateComment(String content, Long id) throws Exception;
 }

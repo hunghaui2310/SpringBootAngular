@@ -17,33 +17,11 @@
       <div class="col-lg-3 order-lg-2 order-2">
         <div class="li-blog-sidebar-wrapper">
           <div class="li-blog-sidebar">
-            <div class="li-sidebar-search-form">
-              <form action="#">
-                <input type="text" class="li-search-field" placeholder="search here">
-                <button type="submit" class="li-search-btn"><i class="fa fa-search"></i></button>
-              </form>
-            </div>
           </div>
           <div class="li-blog-sidebar pt-25">
-            <h4 class="li-blog-sidebar-title">Thể loại</h4>
+            <h4 class="li-blog-sidebar-title">Thể loại </h4>
             <ul class="li-blog-archive">
-              <li><a href="#">Laptops (10)</a></li>
-              <li><a href="#">TV & Audio (08)</a></li>
-              <li><a href="#">reach (07)</a></li>
-              <li><a href="#">Smartphone (14)</a></li>
-              <li><a href="#">Cameras (10)</a></li>
-              <li><a href="#">Headphone (06)</a></li>
-            </ul>
-          </div>
-          <div class="li-blog-sidebar">
-            <h4 class="li-blog-sidebar-title">Blog Archives</h4>
-            <ul class="li-blog-archive">
-              <li><a href="#">January (10)</a></li>
-              <li><a href="#">February (08)</a></li>
-              <li><a href="#">March (07)</a></li>
-              <li><a href="#">April (14)</a></li>
-              <li><a href="#">May (10)</a></li>
-              <li><a href="#">June (06)</a></li>
+              <li *ngFor="let cate of categories"><a>{{cate.nameCate}}</a></li>
             </ul>
           </div>
           <div class="li-blog-sidebar">
@@ -117,81 +95,56 @@
             </div>
             <!-- Begin Li's Blog Comment Section -->
             <div class="li-comment-section">
-              <h3>03 comment</h3>
+              <h3>{{listComment.length}} bình luận</h3>
               <ul>
-                <li>
+                <li *ngFor="let eachComment of listComment">
                   <div class="author-avatar pt-15">
-                    <img src="assets/images/product-details/user.png" alt="User">
+                    <img src="assets/images/user/user.png" alt="User">
                   </div>
                   <div class="comment-body pl-15">
-                    <span class="reply-btn pt-15 pt-xs-5"><a href="#">reply</a></span>
-                    <h5 class="comment-author pt-15">admin</h5>
+                    <span class="reply-btn pt-xs-5 ml-2" (click)="clickDelete(delete, eachComment.id)" *ngIf="this.currentUser.id === eachComment.userId">Xóa</span>
+                    <span class="reply-btn pt-xs-5" (click)="getByBlogId(eachComment.id)" *ngIf="this.currentUser.id === eachComment.userId">Sửa</span>
+                    <h5 class="comment-author pt-15">{{eachComment.userName}}</h5>
                     <div class="comment-post-date">
-                      20 nov, 2018 at 9:30pm
+                      {{eachComment.createDate}}
                     </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim maiores adipisci optio ex, laboriosam facilis non pariatur itaque illo sunt?</p>
+                    <p>{{eachComment.content}}</p>
                   </div>
                 </li>
-                <li class="comment-children">
-                  <div class="author-avatar pt-15">
-                    <img src="assets/images/product-details/admin.png" alt="Admin">
-                  </div>
-                  <div class="comment-body pl-15">
-                    <span class="reply-btn pt-15 pt-xs-5"><a href="#">reply</a></span>
-                    <h5 class="comment-author pt-15">admin</h5>
-                    <div class="comment-post-date">
-                      20 nov, 2018 at 9:30pm
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim maiores adipisci optio ex, laboriosam facilis non pariatur itaque illo sunt?</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="author-avatar pt-15">
-                    <img src="assets/images/product-details/admin.png" alt="Admin">
-                  </div>
-                  <div class="comment-body pl-15">
-                    <span class="reply-btn pt-15 pt-xs-5"><a href="#">reply</a></span>
-                    <h5 class="comment-author pt-15">admin</h5>
-                    <div class="comment-post-date">
-                      20 nov, 2018 at 9:30pm
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim maiores adipisci optio ex, laboriosam facilis non pariatur itaque illo sunt?</p>
-                  </div>
-                </li>
+<!--                <li class="comment-children">-->
+<!--                  <div class="author-avatar pt-15">-->
+<!--                    <img src="assets/images/product-details/admin.png" alt="Admin">-->
+<!--                  </div>-->
+<!--                  <div class="comment-body pl-15">-->
+<!--                    <span class="reply-btn pt-15 pt-xs-5"><a href="#">reply</a></span>-->
+<!--                    <h5 class="comment-author pt-15">admin</h5>-->
+<!--                    <div class="comment-post-date">-->
+<!--                      20 nov, 2018 at 9:30pm-->
+<!--                    </div>-->
+<!--                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim maiores adipisci optio ex, laboriosam facilis non pariatur itaque illo sunt?</p>-->
+<!--                  </div>-->
+<!--                </li>-->
               </ul>
             </div>
             <!-- Li's Blog Comment Section End Here -->
             <!-- Begin Blog comment Box Area -->
             <div class="li-blog-comment-wrapper">
-              <h3>leave a reply</h3>
-              <p>Your email address will not be published. Required fields are marked *</p>
-              <form action="#">
+              <div>
                 <div class="comment-post-box">
                   <div class="row">
                     <div class="col-lg-12">
-                      <label>comment</label>
-                      <textarea name="commnet" placeholder="Write a comment"></textarea>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mt-5 mb-sm-20 mb-xs-20">
-                      <label>Name</label>
-                      <input type="text" class="coment-field" placeholder="Name">
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mt-5 mb-sm-20 mb-xs-20">
-                      <label>Email</label>
-                      <input type="text" class="coment-field" placeholder="Email">
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mt-5 mb-sm-20">
-                      <label>Website</label>
-                      <input type="text" class="coment-field" placeholder="Website">
+                      <label>Bình luận</label>
+                      <textarea name="commnet" placeholder="Để lại bình luận..." value="{{commentContent}}" [(ngModel)]="commentContent"></textarea>
                     </div>
                     <div class="col-lg-12">
                       <div class="coment-btn pt-30 pb-xs-30 pb-sm-30 f-left">
-                        <input class="li-btn-2" type="submit" name="submit" value="post comment">
+                        <button class="li-btn-2" class="btn btn-primary" (click)="clickSave(insert)" *ngIf="!btnSend">Thêm bình luận</button>
+                        <button class="li-btn-2" class="ml-5 btn btn-primary" *ngIf="btnSend" (click)="clickSave(insert)" [disabled]="this.commentContent.trim() === ''">Cập nhật</button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
             <!-- Blog comment Box Area End Here -->
           </div>
@@ -201,4 +154,60 @@
     </div>
   </div>
 </div>
+
+<ng-template #insert>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="">Bạn có chắc chắn muốn gửi không?</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onBack()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary click-btn-upload" (click)=onBack() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" (click)="saveComment(0)" style="width: 88.64px;" *ngIf="!btnSend"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+    <button class="btn btn-primary click-btn-upload" (click)="saveComment(1)" style="width: 88.64px;" *ngIf="btnSend"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #delete>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="">Bạn có chắc chắn muốn xóa bình luận này không?</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onBack()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary click-btn-upload" (click)=onBack() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" (click)="deleteComment()" style="width: 88.64px;"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>
 

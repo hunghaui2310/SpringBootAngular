@@ -28,16 +28,16 @@
             <div class="quantity">
               <label>Số lượng</label>
               <div class="cart-plus-minus">
-                <input class="cart-plus-minus-box" value="1" type="text">
-                <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                <input class="cart-plus-minus-box" value="{{cartNum}}" type="text">
+                <div class="dec qtybutton"><i class="fa fa-angle-down" (click)="changeNumCart(false)"></i></div>
+                <div class="inc qtybutton"><i class="fa fa-angle-up" (click)="changeNumCart(true)"></i></div>
               </div>
             </div>
             <button class="add-to-cart" type="submit" (click)="addProCart(productId)">Thêm vào giỏ</button>
           </form>
         </div>
         <div class="product-additional-info pt-25">
-          <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Yêu thích</a>
+          <a class="wishlist-btn" (click)="insertToWishList(productId)"><i class="fa fa-heart-o"></i>Yêu thích</a>
           <div class="product-social-sharing pt-25">
             <ul>
               <p><i class="fa fa-share"> Chia sẻ</i></p>
@@ -65,8 +65,7 @@
                 <li><i class="fa fa-star-o"></i></li>
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
-                <li class="review-item"><a href="#">Xem phản hồi</a></li>
-                <li class="review-item"><a (click)="openDialog()">Viết phản hồi</a></li>
+                <li class="review-item"><a data-toggle="tab" href="#product-details">Xem phản hồi</a></li>
               </ul>
             </div>
             <div class="price-box pt-20 row">
@@ -138,22 +137,27 @@
       <div id="product-details" class="tab-pane" role="tabpanel">
         <div class="li-comment-section">
           <br>
-          <h5>03 Bình luận</h5>
+          <h5>{{commentList.length}} phản hồi</h5>
           <ul>
             <li *ngFor="let eachComment of commentList">
               <div class="author-avatar pt-15">
-                <img src="images/product-details/user.png" alt="User">
+                <img src="assets/images/user/user.png">
               </div>
               <div class="comment-body pl-15">
-                <span class="reply-btn pt-15 pt-xs-5"><a href="#">Trả lời</a></span>
-                <h5 class="comment-author pt-15">{{eachComment.userName}}</h5>
-                <div class="comment-post-date">
-                  {{eachComment.createDate}}
+                <h5 class="comment-author pt-15 pb-0">{{eachComment.userName}} ({{eachComment.createDate}})</h5>
+                <p class="pt-0">{{eachComment.content}}</p>
+                <div>
+                  <button class="reply-btn" *ngIf="this.currentUser.id === eachComment.userId" (click)="clickDelete(deleteCommentConfirm, eachComment.id)">Xóa</button>
+                  <button class="reply-btn" *ngIf="this.currentUser.id === eachComment.userId" data-toggle="collapse" data-target="#collapseExample"
+                          aria-expanded="false" aria-controls="collapseExample" (click)="getCommentById(eachComment.id)">Sửa</button>
                 </div>
-                <p>{{eachComment.content}}</p>
               </div>
             </li>
           </ul>
+        </div>
+        <div id="collapseExample" class="collapse">
+          <textarea row="2" value="{{commentContent}}" [(ngModel)]="contentReview" name="commnet"></textarea>
+          <button (click)="clickSave(editCommentConfirm)" class="btn btn-primary">Chỉnh sửa</button>
         </div>
       </div>
       <div id="reviews" class="tab-pane" role="tabpanel">
@@ -168,11 +172,11 @@
                   <div class="comment-post-box">
                     <div class="row">
                       <div class="col-lg-12">
-                        <textarea name="commnet" placeholder="Viết đánh giá..."></textarea>
+                        <textarea name="commnet" placeholder="Viết đánh giá..." [(ngModel)]="contentReview"></textarea>
                       </div>
                       <div class="col-lg-12">
                         <div class="coment-btn pt-30 pb-xs-30 pb-sm-30 f-left">
-                          <input class="li-btn-2" type="submit" name="submit" value="Gửi đánh giá">
+                          <button class="li-btn-2" (click)="clickSave(insert)" class="btn btn-primary">Gửi đánh giá</button>
                         </div>
                       </div>
                     </div>
@@ -235,9 +239,9 @@
                 </div>
                 <div class="add-actions">
                   <ul class="add-actions-link">
-                    <li class="add-cart active"><span>Thêm vào giỏ</span></li>
+                    <li class="add-cart active" (click)="addProCart(sameProduct.id)"><span>Thêm vào giỏ</span></li>
                     <li><span title="Mua ngay" class="quick-view-btn"><i class="fa fa-eye"></i></span></li>
-                    <li><span title="Yêu thích" class="links-details"><i class="fa fa-heart-o"></i></span></li>
+                    <li (click)="insertToWishList(sameProduct.id)"><span title="Yêu thích" class="links-details"><i class="fa fa-heart-o"></i></span></li>
                   </ul>
                 </div>
               </div>
@@ -252,3 +256,80 @@
   </div>
 </section>
 <!-- Li's Laptop Product Area End Here -->
+<ng-template #insert>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="">Bạn có chắc chắn muốn gửi không?</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onBack()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary click-btn-upload" (click)=onBack() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" (click)="saveComment()" style="width: 88.64px;"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #editCommentConfirm>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="">Bạn có chắc chắn muốn chỉnh sửa không?</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onBack()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary click-btn-upload" (click)=onBack() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" (click)="editComment()" style="width: 88.64px;"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteCommentConfirm>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="">Bạn có chắc chắn muốn xóa không?</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onBack()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary click-btn-upload" (click)=onBack() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" (click)="deleteComment()" style="width: 88.64px;"><i
+      class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>

@@ -7,6 +7,7 @@ export const config = {
   product_API: URL_BASE + '/product/getProduct',
   search_product: URL_BASE + '/product/search',
   same_product_API: URL_BASE + '/product/sameProduct',
+  getProById_API: URL_BASE + '/product/detailById',
   product_quick_view_API: URL_BASE + '/product/quick-view',
   product_cate_API: URL_BASE + '/category/product-category',
   product_detail: URL_BASE + '/product/detail',
@@ -28,6 +29,11 @@ export const config = {
   show_wish_list_API: URL_BASE + '/wish-list/show',
   delete_wish_list_API: URL_BASE + '/wish-list/delete',
   show_comment_product_API: URL_BASE + '/comment/getByProduct',
+  saveCommentProduct_API: URL_BASE + '/comment/saveCommentProduct',
+  editComment_API: URL_BASE + '/comment/updateComment',
+  getCommentById_API: URL_BASE + '/comment/getById',
+  getCommentByBlog_API: URL_BASE + '/comment/getByBlog',
+  deleteComment_API: URL_BASE + '/comment/delete',
 
   // admin -API
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',

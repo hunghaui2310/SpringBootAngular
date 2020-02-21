@@ -130,4 +130,11 @@ export class ShowCartComponent implements OnInit {
     );
   }
 
+  changeNum(click: boolean) {
+    if (click) {
+      this.cartNum = this.cartNum + 1;
+    } else {
+      this.cartNum = this.cartNum - 1;
+    }
+  }
 }

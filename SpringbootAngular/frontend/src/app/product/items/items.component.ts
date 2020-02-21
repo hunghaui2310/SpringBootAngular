@@ -129,29 +129,21 @@ export class ItemsComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/detail/' + id]);
   }
 
-  showData(row: any) {
-    this.productId = row['id'];
-    this.productName = row['productName'];
-    this.urlImage = row['urlImage'];
-    this.productPrice = row['price'];
-    this.productDiscount = row['realPrice'];
-    this.productDescription = row['description'];
-    this.categoryName = row['categoryName'];
-    this.numLike = row['numLike'];
+  showData(row: Product) {
 
     const vdialog = this.dialog.open(QuickViewComponent, {
       maxWidth: '85vw',
       maxHeight: '100vh',
       width: '75vw',
       data: {
-        id: this.productId,
-        proName: this.productName,
-        url: this.urlImage,
-        proPrice: this.productPrice,
-        proDiscount: this.productDiscount,
-        proDes: this.productDescription,
-        cateName: this.categoryName,
-        numL: this.numLike
+        id: row.id,
+        proName: row.productName,
+        url: row.urlImage,
+        proPrice: row.price,
+        proDiscount: row.discount,
+        proDes: row.description,
+        cateName: row.categoryName,
+        numL: row.numLike
       }
     });
 

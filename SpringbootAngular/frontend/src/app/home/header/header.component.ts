@@ -11,7 +11,7 @@ import {Observable} from 'rxjs';
 import {config} from '../../../app-config/application.config';
 import {WishList} from '../../../model/wish-list';
 import {WishListService} from '../../../service/wish-list.service';
-import {CategoryAdminService} from '../../../service/admin/category-admin.service';
+import {OtherService} from '../../../service/other.service';
 
 @Component({
   selector: 'app-header',
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
               private productService: ProductService,
               private cartService: CartService,
               private wishListService: WishListService,
-              private categoryService: CategoryAdminService) {
+              private categoryService: OtherService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getComboboxCate() {
-    this.categoryService.getCategoryAPI().subscribe(
+    this.categoryService.getAllCategory().subscribe(
       data => {
         console.log('dataCategory', data);
         this.categories = data['data'];
