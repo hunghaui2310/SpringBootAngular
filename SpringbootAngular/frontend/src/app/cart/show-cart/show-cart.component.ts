@@ -38,6 +38,7 @@ export class ShowCartComponent implements OnInit {
 
   ngOnInit() {
     this.showProInCart();
+    this.fetchNumCart();
   }
 
   closeForm(): void {
@@ -130,11 +131,11 @@ export class ShowCartComponent implements OnInit {
     );
   }
 
-  changeNum(click: boolean) {
-    if (click) {
-      this.cartNum = this.cartNum + 1;
-    } else {
-      this.cartNum = this.cartNum - 1;
-    }
+  fetchNumCart() {
+    this.cartService.numCart$.subscribe(
+      data => {
+        this.cartNum = data;
+      }
+    );
   }
 }

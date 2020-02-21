@@ -10,7 +10,9 @@ public class CartDTO {
     private long numLimit;
     private Long productId;
     private double subtotal;
+    private boolean click;
     private List<ProductDTO> productDTOList;
+    private String loadData;
 
     public Long getId() {
         return id;
@@ -66,5 +68,21 @@ public class CartDTO {
 
     public void setNumLimit(long numLimit) {
         this.numLimit = numLimit;
+    }
+
+    public boolean isClick() {
+        return click;
+    }
+
+    public void setClick(boolean click) {
+        this.click = click;
+    }
+
+    public String getLoadData() {
+        return loadData;
+    }
+
+    public void setLoadData(String loadData) {
+        this.loadData = loadData;
     }
 }

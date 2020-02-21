@@ -21,6 +21,7 @@ public class Contains {
     public static final String IMAGES_PRODUCT_LARGE_SIZE = "images/product/large-size/";
     public static final String IMAGES_PRODUCT_SMALL_SIZE = "images/product/small-size/";
     public static final String IMAGES_BLOG = "images/blog/";
+    public static final String LOAD = "LOAD";
 
 
     public interface BLOG_DETAIL{

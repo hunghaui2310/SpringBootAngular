@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CartService} from '../../../service/cart.service';
 
 @Component({
   selector: 'app-stepper-input',
@@ -18,7 +19,7 @@ export class StepperInputComponent implements OnInit {
   renderedValue: string;
   value = 0;
 
-  constructor() { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
     this.value = this.initialValue
@@ -29,6 +30,8 @@ export class StepperInputComponent implements OnInit {
     if (this.step + this.value <= this.max) {
       this.value = this.value + this.step;
       this.renderedValue = this.value.toString() + this.symbol;
+      console.log(this.renderedValue);
+      this.cartService.setNumCart(this.renderedValue);
     }
   }
 
@@ -36,6 +39,7 @@ export class StepperInputComponent implements OnInit {
     if (this.value - this.step >= this.min) {
       this.value = this.value - this.step;
       this.renderedValue = this.value.toString() + this.symbol;
+      this.cartService.setNumCart(this.renderedValue);
     }
   }
 }

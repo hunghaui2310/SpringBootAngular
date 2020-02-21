@@ -14,4 +14,6 @@ public interface CartService {
     String removeProFromCart(CartDTO cartDTO) throws Exception;
 
     String updateNumCart(List<CartDTO> list) throws Exception;
+
+    Long getNumAndUpdate(CartDTO cartDTO) throws Exception;
 }

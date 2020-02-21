@@ -19,6 +19,7 @@ export const config = {
   blog_detail_API: URL_BASE + '/blog/detail-blog',
   about_API: URL_BASE + '/about/show-about',
   update_num_cart_API: URL_BASE + '/cart/updateNumCart',
+  get_and_update_cartNum_API: URL_BASE + '/cart/update',
   add_compare_API: URL_BASE + '/compare/add',
   show_compare_API: URL_BASE + '/compare/show',
   data_user_API: URL_BASE + '/account/get-data',

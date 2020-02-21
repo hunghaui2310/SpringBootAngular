@@ -45,9 +45,9 @@ public class CartServiceImpl implements CartService {
         String message = null;
         Long cartIdByUser = userCartRepo.findCartByUserId(cartDTO.getUserId());
         List<Object[]> lstObject = cartRepo.checkDuplicate(cartIdByUser, cartDTO.getProductId());
-        if(lstObject != null) {
+        if (lstObject != null) {
             long cartNum = 0;
-            for(Object[] objects : lstObject){
+            for (Object[] objects : lstObject) {
                 cartNum = DataUtil.safeToLong(objects[3]);
             }
             if (lstObject.size() > 0) {
@@ -77,11 +77,11 @@ public class CartServiceImpl implements CartService {
         List<ProductDTO> lstProductDTO = new ArrayList<>();
         Long cartId = userCartRepo.findCartByUserId(userId);
         List<Object[]> lstObject = cartRepo.getCartByUser(cartId);
-        for(Object[] objects: lstObject) {
+        for (Object[] objects : lstObject) {
             Long proIdCast = DataUtil.safeToLong(objects[0]);
             Long numPro = DataUtil.safeToLong(objects[1]);
             Object[] object = productRepo.getProInCart(proIdCast);
-            if(!DataUtil.isNullOrEmpty(object)) {
+            if (!DataUtil.isNullOrEmpty(object)) {
                 Long proId = DataUtil.safeToLong(object[0]);
                 String proName = DataUtil.safeToString(object[1]);
                 int discount = DataUtil.safeToInt(object[2]);
@@ -102,7 +102,7 @@ public class CartServiceImpl implements CartService {
                 Long cateId = DataUtil.safeToLong(object[6]);
                 productDTO.setCategoryId(cateId);
 
-                if(!DataUtil.isNullOrEmpty(urlImg)) {
+                if (!DataUtil.isNullOrEmpty(urlImg)) {
                     Resource resource = new ClassPathResource(Contains.IMAGES_PRODUCT_SMALL_SIZE + cateId + "/" + urlImg);
                     File file = resource.getFile();
                     byte[] fileContent = FileUtils.readFileToByteArray(file);
@@ -116,7 +116,7 @@ public class CartServiceImpl implements CartService {
                 listTotal.add(total);
             }
         }
-        for(Double dataTotal : listTotal){
+        for (Double dataTotal : listTotal) {
             subtotal = subtotal + dataTotal;
         }
         CartDTO cartDTO = new CartDTO();
@@ -139,12 +139,34 @@ public class CartServiceImpl implements CartService {
     @Override
     public String updateNumCart(List<CartDTO> list) throws Exception {
         String message;
-        for(CartDTO cartDTO : list) {
+        for (CartDTO cartDTO : list) {
             Long cartId = userCartRepo.findCartByUserId(cartDTO.getUserId());
             cartDTO.setId(cartId);
             cartRepo.updateNumCart(cartDTO);
         }
         message = Contains.SUCCESS;
         return message;
+    }
+
+    @Override
+    public Long getNumAndUpdate(CartDTO cartDTO) throws Exception {
+        Long cartIdByUser = userCartRepo.findCartByUserId(cartDTO.getUserId());
+        List<Object[]> list = cartRepo.getCartByUser(cartDTO.getUserId());
+        for (Object[] objects : list) {
+            Long numPro = DataUtil.safeToLong(objects[1]);
+            cartDTO.setNumCart(numPro);
+        }
+        cartDTO.setId(cartIdByUser);
+        if (!DataUtil.isNullOrEmpty(cartDTO.getLoadData())) {
+            if (cartDTO.getLoadData().equals(Contains.LOAD)) {
+                if (cartDTO.isClick()) {
+                    cartDTO.setNumCart(cartDTO.getNumCart() + 1);
+                } else {
+                    cartDTO.setNumCart(cartDTO.getNumCart() - 1);
+                }
+            }
+        }
+        cartRepo.updateNumCart(cartDTO);
+        return cartDTO.getNumCart();
     }
 }

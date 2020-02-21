@@ -16,8 +16,15 @@ export class CartService {
   orderCode: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   orderCode$: Observable<any> = this.orderCode.asObservable();
 
+  numCart: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  numCart$: Observable<any> = this.numCart.asObservable();
+
   setOrderCode(orderCode: any) {
     this.orderCode.next(orderCode);
+  }
+
+  setNumCart(numCart: any) {
+    this.numCart.next(numCart);
   }
 
   getNumCartAPI(userId: User) {
@@ -38,5 +45,9 @@ export class CartService {
 
   codeDiscountAPI(blog: Blog) {
     return this.http.post(config.cart_discount_API, blog);
+  }
+
+  getAndUpdate(cart: Cart) {
+    return this.http.post(config.get_and_update_cartNum_API, cart);
   }
 }

@@ -36,24 +36,15 @@
                 <td class="li-product-name"><a href="#">{{proInCart.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>
                 <td class="quantity">
-                  <!--                  <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol="" ariaLabelLess="Less 1"-->
-                  <!--                                     ariaLabelMore="Plus 1"></app-stepper-input>-->
-                  <div class="input-group">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-success btn-number" data-type="plus" (click)="changeNum(false)">
-                        <i class="fa fa-minus"></i>
-                      </button>
-                    </span>
-                    <input type="text"  class="form-control input-number" value="{{proInCart.numProInCart}}" min="1" max="100">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-danger btn-number" data-type="minus" (click)="changeNum(true)">
-                        <i class="fa fa-plus"></i>
-                      </button>
-                    </span>
-                  </div>
+                                    <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol="" ariaLabelLess="Less 1"
+                                                       ariaLabelMore="Plus 1"></app-stepper-input>
+<!--                  <div class="qty mt-5">-->
+<!--                    <span class="minus bg-dark" (click)="editNumCart(proInCart.id, proInCart.numProInCart, false)">-</span>-->
+<!--                    <input type="number" class="count" name="qty" value="{{cartNum}}">-->
+<!--                    <span class="plus bg-dark" (click)="editNumCart(proInCart.id, proInCart.numProInCart, true)">+</span>-->
+<!--                  </div>-->
                 </td>
-                <td class="product-subtotal"><span
-                  class="amount">{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
+                <td class="product-subtotal"><span>{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
               </tr>
               </tbody>
             </table>
@@ -118,5 +109,4 @@
     </button>
   </div>
 </ng-template>
-
 

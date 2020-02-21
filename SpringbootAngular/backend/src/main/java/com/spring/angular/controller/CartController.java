@@ -101,4 +101,15 @@ public class CartController {
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
+
+    @PostMapping("/update")
+    public ApiResponse getNumAndUpdate(@RequestBody CartDTO cartDTO) throws Exception {
+        try {
+            Long numCart = cartService.getNumAndUpdate(cartDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", numCart);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
 }
