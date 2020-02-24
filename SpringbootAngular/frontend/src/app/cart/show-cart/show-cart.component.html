@@ -37,7 +37,7 @@
                 <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>
                 <td class="quantity">
                                     <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol="" ariaLabelLess="Less 1"
-                                                       ariaLabelMore="Plus 1"></app-stepper-input>
+                                                       ariaLabelMore="Plus 1" [productId]="proInCart.id"></app-stepper-input>
 <!--                  <div class="qty mt-5">-->
 <!--                    <span class="minus bg-dark" (click)="editNumCart(proInCart.id, proInCart.numProInCart, false)">-</span>-->
 <!--                    <input type="number" class="count" name="qty" value="{{cartNum}}">-->
@@ -60,7 +60,7 @@
                   </button>
                 </div>
                 <div class="coupon2">
-                  <input class="button" name="update_cart" value="Cập nhật giỏ hàng" type="submit">
+                  <input class="button" name="update_cart" value="Cập nhật giỏ hàng" (click)="updateFaKe()">
                 </div>
               </div>
             </div>
@@ -72,7 +72,8 @@
                 <ul>
                   <li>Tổng tiền <span>{{subtotal * 1000000 | number}}</span></li>
                   <li>Khuyến mại áp dụng <span *ngIf="dataCode != null">{{dataCode}} %</span></li>
-                  <li>Thanh toán <span>{{subtotal * 1000000 - (dataCode * subtotal * 10000) | number}}</span></li>
+                  <li *ngIf="dataCode">Thanh toán <span>{{subtotal * 1000000 - (dataCode * subtotal * 10000) | number}}</span></li>
+                  <li *ngIf="!dataCode">Thanh toán <span>{{subtotal * 1000000 | number}}</span></li>
                 </ul>
                 <a routerLink="/checkout">Thanh toán</a>
               </div>

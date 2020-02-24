@@ -12,7 +12,6 @@ public class CartDTO {
     private double subtotal;
     private boolean click;
     private List<ProductDTO> productDTOList;
-    private String loadData;
 
     public Long getId() {
         return id;
@@ -78,11 +77,4 @@ public class CartDTO {
         this.click = click;
     }
 
-    public String getLoadData() {
-        return loadData;
-    }
-
-    public void setLoadData(String loadData) {
-        this.loadData = loadData;
-    }
 }

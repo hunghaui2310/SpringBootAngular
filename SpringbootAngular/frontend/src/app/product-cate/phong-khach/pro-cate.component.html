@@ -95,7 +95,7 @@
                     <div class="single-product-wrap">
                       <div class="product-image">
                         <a href="single-product.html">
-                          <img src="assets/images/product/large-size/{{eachProduct.categoryId}}/{{eachProduct.urlImage}}" alt="Li's Product Image">
+                          <img [src]="'data:image/jpg;base64,' + eachProduct.urlImage">
                         </a>
                         <span class="sticker">New</span>
                       </div>
@@ -147,7 +147,7 @@
                     <div class="col-lg-3 col-md-5 ">
                       <div class="product-image">
                         <a href="single-product.html">
-                          <img src="assets/images/product/large-size/{{eachProduct.categoryId}}/{{eachProduct.urlImage}}" alt="Li's Product Image">
+                          <img [src]="'data:image/jpg;base64,' + eachProduct.urlImage">
                         </a>
                         <span class="sticker">New</span>
                       </div>
@@ -202,8 +202,7 @@
                   <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
                     <span *ngIf="currentP*pageSize <  productDTOList.length">{{currentP * pageSize}}</span>
                     <span *ngIf="currentP*pageSize >= productDTOList.length">{{productDTOList.length}}</span> trên tổng số
-                    <span *ngIf="currentP*pageSize < productDTOList.length">{{productDTOList.length}}</span>
-                    <span *ngIf="currentP*pageSize >= productDTOList.length">{{currentP * pageSize}}</span> sản phẩm</p>
+                    <span>{{productDTOList.length}}</span> sản phẩm</p>
                 </div>
                 <div class="col-lg-6 col-md-6">
                   <ul class="pagination-box">

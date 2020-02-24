@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-  MatDialogModule, MatDialogRef,
+  MatDialogModule,
   MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
@@ -18,7 +18,7 @@ import { FooterComponent } from './home/footer/footer.component';
 import { HttpClientModule} from '@angular/common/http';
 import { ItemsComponent } from './product/items/items.component';
 import { CompareComponent } from './product/compare/compare.component';
-import { ProCateComponent } from './product/pro-cate/pro-cate.component';
+import { ProCateComponent } from './product-cate/phong-khach/pro-cate.component';
 import { QuickViewComponent } from './product/quick-view/quick-view.component';
 import { SingleItemComponent } from './product/single-item/single-item.component';
 import { WriteReviewComponent } from './product/write-review/write-review.component';
@@ -41,6 +41,9 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
 import { ShowWishListComponent } from './wish-list/show-wish-list/show-wish-list.component';
 import {AccordionModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
 import {OwlModule} from 'ngx-owl-carousel';
+import { BanAnComponent } from './product-cate/ban-an/ban-an.component';
+import { TuQuanAoComponent } from './product-cate/tu-quan-ao/tu-quan-ao.component';
+import { KeTiviComponent } from './product-cate/ke-tivi/ke-tivi.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import {OwlModule} from 'ngx-owl-carousel';
     ProfileComponent,
     RegisterComponent,
     StepperInputComponent,
-    ShowWishListComponent
+    ShowWishListComponent,
+    BanAnComponent,
+    TuQuanAoComponent,
+    KeTiviComponent
   ],
   imports: [
     BrowserModule,

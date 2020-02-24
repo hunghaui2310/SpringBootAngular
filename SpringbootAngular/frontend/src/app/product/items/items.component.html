@@ -212,8 +212,8 @@
                     <p>Từ {{currentP * pageSize - (pageSize - 1)}} -
                       <span *ngIf="currentP*pageSize <  productList.length">{{currentP * pageSize}}</span>
                       <span *ngIf="currentP*pageSize >= productList.length">{{productList.length}}</span> trên tổng số
-                      <span *ngIf="currentP*pageSize < productList.length">{{productList.length}}</span>
-                      <span *ngIf="currentP*pageSize >= productList.length">{{currentP * pageSize}}</span> sản phẩm</p>
+                      <span>{{productList.length}}</span>
+                       sản phẩm</p>
                   </div>
                   <div class="col-lg-6 col-md-6">
                     <ul class="pagination-box">

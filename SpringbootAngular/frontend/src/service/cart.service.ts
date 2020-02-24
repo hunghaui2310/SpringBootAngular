@@ -16,15 +16,8 @@ export class CartService {
   orderCode: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   orderCode$: Observable<any> = this.orderCode.asObservable();
 
-  numCart: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  numCart$: Observable<any> = this.numCart.asObservable();
-
   setOrderCode(orderCode: any) {
     this.orderCode.next(orderCode);
-  }
-
-  setNumCart(numCart: any) {
-    this.numCart.next(numCart);
   }
 
   getNumCartAPI(userId: User) {

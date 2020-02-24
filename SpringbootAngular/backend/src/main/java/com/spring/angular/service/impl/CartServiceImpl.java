@@ -151,20 +151,11 @@ public class CartServiceImpl implements CartService {
     @Override
     public Long getNumAndUpdate(CartDTO cartDTO) throws Exception {
         Long cartIdByUser = userCartRepo.findCartByUserId(cartDTO.getUserId());
-        List<Object[]> list = cartRepo.getCartByUser(cartDTO.getUserId());
-        for (Object[] objects : list) {
-            Long numPro = DataUtil.safeToLong(objects[1]);
-            cartDTO.setNumCart(numPro);
-        }
         cartDTO.setId(cartIdByUser);
-        if (!DataUtil.isNullOrEmpty(cartDTO.getLoadData())) {
-            if (cartDTO.getLoadData().equals(Contains.LOAD)) {
-                if (cartDTO.isClick()) {
-                    cartDTO.setNumCart(cartDTO.getNumCart() + 1);
-                } else {
-                    cartDTO.setNumCart(cartDTO.getNumCart() - 1);
-                }
-            }
+        if (cartDTO.isClick()) {
+            cartDTO.setNumCart(cartDTO.getNumCart() + 1);
+        } else {
+            cartDTO.setNumCart(cartDTO.getNumCart() - 1);
         }
         cartRepo.updateNumCart(cartDTO);
         return cartDTO.getNumCart();

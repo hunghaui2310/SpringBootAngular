@@ -42,8 +42,7 @@ export class ProCateComponent implements OnInit {
   }
 
   getDataPro() {
-    const cateId = this.route.snapshot.params['id'];
-    this.productService.productCateAPI(cateId).subscribe(
+    this.productService.productCateAPI(1).subscribe(
       data => {
         this.productDTOList = data['data'];
         console.log('listDataProCate', this.productDTOList);
@@ -52,8 +51,7 @@ export class ProCateComponent implements OnInit {
   }
 
   search() {
-    const cateId = this.route.snapshot.params['id'];
-    this.searchRequest = new SearchRequest(null, null, cateId, this.sortCondition);
+    this.searchRequest = new SearchRequest(null, null, 1, this.sortCondition);
     console.log('search', this.searchRequest);
     this.productService.search(this.searchRequest).subscribe(
       dataSerach => {

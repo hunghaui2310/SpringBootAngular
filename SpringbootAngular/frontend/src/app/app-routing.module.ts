@@ -27,7 +27,7 @@ import {
 } from '@angular/material';
 import {ItemsComponent} from './product/items/items.component';
 import {SingleItemComponent} from './product/single-item/single-item.component';
-import {ProCateComponent} from './product/pro-cate/pro-cate.component';
+import {ProCateComponent} from './product-cate/phong-khach/pro-cate.component';
 import {ShowCartComponent} from './cart/show-cart/show-cart.component';
 import {CheckoutComponent} from './cart/checkout/checkout.component';
 import {BlogListComponent} from './blog/blog-list/blog-list.component';
@@ -43,6 +43,9 @@ import {LogoutComponent} from './account/logout/logout.component';
 import {NotFoundComponent} from './account/not-found/not-found.component';
 import {ApiService} from '../service/api.service';
 import {ShowWishListComponent} from './wish-list/show-wish-list/show-wish-list.component';
+import {BanAnComponent} from './product-cate/ban-an/ban-an.component';
+import {TuQuanAoComponent} from './product-cate/tu-quan-ao/tu-quan-ao.component';
+import {KeTiviComponent} from './product-cate/ke-tivi/ke-tivi.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -54,7 +57,13 @@ const routes: Routes = [
     }, {
       path: 'detail/:id', component: SingleItemComponent, data: { title: 'Chi tiết sản phẩm' }
     }, {
-      path: 'product-category/:id', component: ProCateComponent, data: { title: 'Sản phẩm'}
+      path: 'product-category/1', component: ProCateComponent, data: { title: 'Bàn ghế phòng khách'}
+    }, {
+      path: 'product-category/2', component: BanAnComponent, data: { title: 'Bàn ghế phòng ăn'}
+    }, {
+      path: 'product-category/3', component: TuQuanAoComponent, data: { title: 'Tủ quần áo'}
+    }, {
+      path: 'product-category/4', component: KeTiviComponent, data: { title: 'Kệ ti vi'}
     }, {
       path: 'cart', component: ShowCartComponent, data: { title: 'Giỏ hàng'}
     }, {

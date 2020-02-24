@@ -1,15 +1,13 @@
 export class Cart {
   userId: number;
   productId: number;
-  cartNum?: number;
+  numCart?: number;
   click?: boolean;
-  loadData?: string;
 
-  constructor(userId?: number, productId?: number, cartNum?: number, click?: boolean, loadData?: string) {
+  constructor(userId?: number, productId?: number, numCart?: number, click?: boolean) {
     this.userId = userId;
     this.productId = productId;
-    this.cartNum = cartNum;
+    this.numCart = numCart;
     this.click = click;
-    this.loadData = loadData;
   }
 }

@@ -38,7 +38,6 @@ export class ShowCartComponent implements OnInit {
 
   ngOnInit() {
     this.showProInCart();
-    this.fetchNumCart();
   }
 
   closeForm(): void {
@@ -131,11 +130,7 @@ export class ShowCartComponent implements OnInit {
     );
   }
 
-  fetchNumCart() {
-    this.cartService.numCart$.subscribe(
-      data => {
-        this.cartNum = data;
-      }
-    );
+  updateFaKe() {
+    this.notificationSuccess('Cập nhật giỏ hàng thành công');
   }
 }
