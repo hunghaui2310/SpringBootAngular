@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit {
   wishListDTO;
   wishList;
   listPro: Product[];
+  clickNumCart: boolean;
   // li1;
   // li2;
   // router1;
@@ -45,10 +46,14 @@ export class HeaderComponent implements OnInit {
               private cartService: CartService,
               private wishListService: WishListService,
               private categoryService: OtherService) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.fetchOrderCode();
+    if (this.clickNumCart === true) {
+      this.cartNum = this.cartNum + 1;
+    }
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.getComboboxCate();
     this.categoryId = null;
     this.getNumCart();
@@ -133,4 +138,12 @@ export class HeaderComponent implements OnInit {
   //     this.router2 = '/register';
   //   }
   // }
+
+  fetchOrderCode() {
+    this.wishListService.numCartFetch$.subscribe(
+      dataFetch => {
+        console.log('dataFetchOrderCode', dataFetch);
+        this.clickNumCart = dataFetch;
+      });
+  }
 }

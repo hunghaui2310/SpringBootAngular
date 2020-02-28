@@ -36,6 +36,7 @@ export class SingleItemComponent implements OnInit {
   sameProList: Product[];
   numSamePro;
   listImg;
+  listImgSmall;
   conditionCart;
   notificationMessage;
   writeReview;
@@ -49,6 +50,7 @@ export class SingleItemComponent implements OnInit {
   wishListDTO;
   wishListInsert;
   cartNum = 1;
+  clickNumCart: boolean;
 
   title = 'angularowlslider';
   customOptions: any = {
@@ -108,6 +110,7 @@ export class SingleItemComponent implements OnInit {
         console.log('data detail', data['data']);
         this.dataProduct = data['data'];
         this.listImg = this.dataProduct['urlImage'];
+        this.listImgSmall = this.dataProduct['imageSmall'];
         this.productName = this.dataProduct['productName'];
         this.price = this.dataProduct['price'];
         this.numLike = this.dataProduct['numLike'];
@@ -155,20 +158,26 @@ export class SingleItemComponent implements OnInit {
     console.log('productIdToAddCart', productId);
     this.cartService.addCartAPI(this.conditionCart).subscribe(
       message => {
-        this.notificationMessage = message['data'];
-        console.log('this.notificationMessage', this.notificationMessage);
-        this.notificationSuccess('Thêm vào giỏ thành công');
+        if (message['code'] === 200) {
+          this.notificationMessage = message['data'];
+          console.log('this.notificationMessage', this.notificationMessage);
+          this.notificationSuccess('Thêm vào giỏ thành công');
+          this.clickNumCart = true;
+          this.wishListService.setNumCart(this.clickNumCart);
+        } else {
+          this.notificationError('Bạn phải đăng nhập để sử dụng chức năng này');
+        }
       },
       error => this.notificationError('Lỗi')
     );
   }
 
   notificationSuccess(notification: string) {
-    this.toastr.success(notification, 'Thông báo');
+    this.toastr.success(notification);
   }
 
   notificationError(message: string) {
-    this.toastr.error(message, 'Thông báo');
+    this.toastr.error(message);
   }
 
   showComment() {

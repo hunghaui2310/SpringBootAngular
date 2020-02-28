@@ -17,11 +17,27 @@
       <div class="col-lg-5 col-md-5">
         <!-- Product Details Left -->
         <div class="product-details-left">
-          <ngb-carousel>
-            <ng-template ngbSlide *ngFor="let img of listImg">
-              <img [src]="'data:image/jpg;base64,' + img">
-            </ng-template>
-          </ngb-carousel>
+<!--          <ngb-carousel>-->
+<!--            <ng-template ngbSlide *ngFor="let img of listImg">-->
+<!--              <img [src]="'data:image/jpg;base64,' + img">-->
+<!--            </ng-template>-->
+<!--          </ngb-carousel>-->
+          <div class="product-details-images slider-navigation-1">
+            <ngb-carousel>
+              <ng-template ngbSlide *ngFor="let img of listImg">
+                <img [src]="'data:image/jpg;base64,' + img">
+              </ng-template>
+            </ngb-carousel>
+          </div>
+          <div class="slider-thumbs-1">
+            <owl-carousel-o [options]="customOptions">
+              <ng-template carouselSlide *ngFor="let imgSmall of listImgSmall" class="product-details-thumbs">
+                <div class="sm-image">
+                  <img [src]="'data:image/jpg;base64,' + imgSmall">
+                </div>
+              </ng-template>
+            </owl-carousel-o>
+          </div>
         </div>
         <div class="single-add-to-cart">
           <form class="cart-quantity">

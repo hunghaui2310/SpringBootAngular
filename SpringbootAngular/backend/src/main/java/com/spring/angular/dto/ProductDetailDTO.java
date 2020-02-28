@@ -10,6 +10,7 @@ public class ProductDetailDTO {
     private Long numLike;
     private int discount;
     private List<String> urlImage;
+    private List<String> imageSmall;
     private String description;
     private boolean noData;
     private String categoryName;
@@ -111,5 +112,13 @@ public class ProductDetailDTO {
 
     public void setNumProInCart(Long numProInCart) {
         this.numProInCart = numProInCart;
+    }
+
+    public List<String> getImageSmall() {
+        return imageSmall;
+    }
+
+    public void setImageSmall(List<String> imageSmall) {
+        this.imageSmall = imageSmall;
     }
 }

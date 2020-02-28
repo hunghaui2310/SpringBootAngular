@@ -152,6 +152,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetailDTO getProductById(Long productId) throws Exception {
         List<Object[]> fileInfoList = fileInfoService.getListByProId(productId);
         List<String> list = new ArrayList<>();
+        List<String> listImageSmall = new ArrayList<>();
         for(Object[] fileInFo : fileInfoList){
             String url = DataUtil.safeToString(fileInFo[0]);
             Long cateId = DataUtil.safeToLong(fileInFo[1]);
@@ -161,6 +162,13 @@ public class ProductServiceImpl implements ProductService {
                 byte[] fileContent = FileUtils.readFileToByteArray(file);
                 String urlImageProduct = Base64.getEncoder().encodeToString(fileContent);
                 list.add(urlImageProduct);
+
+                // list anh nho
+                Resource resourceSmall = new ClassPathResource(Contains.IMAGES_PRODUCT_SMALL_SIZE + cateId + "/" + url);
+                File fileSmall = resourceSmall.getFile();
+                byte[] fileImgSmall = FileUtils.readFileToByteArray(fileSmall);
+                String imageSmall = Base64.getEncoder().encodeToString(fileImgSmall);
+                listImageSmall.add(imageSmall);
             }
         }
         Object[] objects = null;
@@ -185,6 +193,7 @@ public class ProductServiceImpl implements ProductService {
                 productDetailDTO.setDiscount(DataUtil.safeToInt(objects[6]));
             }
             productDetailDTO.setUrlImage(list);
+            productDetailDTO.setImageSmall(listImageSmall);
             productDetailDTO.setNoData(false);
             productDetailDTO.setCategoryName(DataUtil.safeToString(objects[7]));
             productDetailDTO.setCategoryId(DataUtil.safeToLong(objects[8]));

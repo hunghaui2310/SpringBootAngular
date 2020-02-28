@@ -1,66 +1,41 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatSnackBar, VERSION} from '@angular/material';
-import {TestDialogComponent} from './test-dialog/test-dialog.component';
-import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Đồ gỗ Huy Hùng';
 
-  version = VERSION;
-  currentUser;
-  role;
-
-  constructor(private dialog: MatDialog,
-              private snackBar: MatSnackBar,
-              private toastr: ToastrService) {
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(TestDialogComponent, {
-      data: {
-        message: 'Are you sure want to delete?',
-        buttonText: {
-          ok: 'Save',
-          cancel: 'No'
-        }
-      }
-    });
-    const snack = this.snackBar.open('Snack bar open before dialog');
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        snack.dismiss();
-        const a = document.createElement('a');
-        a.click();
-        a.remove();
-        snack.dismiss();
-        this.snackBar.open('Closing snack bar in a few seconds', 'Fechar', {
-          duration: 2000,
-        });
-      }
-    });
-  }
-
-  testToast() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private titleService: Title) {
   }
 
   ngOnInit(): void {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log('currentUserAfterLogin', this.currentUser);
-    if (this.currentUser) {
-      if (this.currentUser['role'] === 'ADMIN') {
-        this.role = 'ADMIN';
-      } else {
-        this.role = 'USER';
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => {
+        let child = this.activatedRoute.firstChild;
+        while (child) {
+          if (child.firstChild) {
+            child = child.firstChild;
+          } else if (child.snapshot.data &&    child.snapshot.data['title']) {
+            return child.snapshot.data['title'];
+          } else {
+            return null;
+          }
+        }
+        return null;
+      })
+    ).subscribe( (data: any) => {
+      if (data) {
+        this.titleService.setTitle(data);
       }
-    } else {
-      this.role = 'USER';
-    }
+    });
   }
 }
