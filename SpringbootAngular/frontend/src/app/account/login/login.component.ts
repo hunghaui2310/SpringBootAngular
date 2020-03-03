@@ -29,11 +29,7 @@ export class LoginComponent implements OnInit {
       let resp: any;
       resp = e.principal;
       console.log('fasfasfasf', resp);
-      if (resp['role'] === 'USER') {
-        window.location.replace('/home');
-      } else {
-        window.location.replace('/admin');
-      }
+      window.location.replace('/home');
       // this.user.fullName = 'ndh';
       if (resp) {
         // store user details  in local storage to keep user logged in between page refreshes

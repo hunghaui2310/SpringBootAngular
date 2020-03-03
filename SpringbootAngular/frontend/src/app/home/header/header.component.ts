@@ -12,6 +12,7 @@ import {config} from '../../../app-config/application.config';
 import {WishList} from '../../../model/wish-list';
 import {WishListService} from '../../../service/wish-list.service';
 import {OtherService} from '../../../service/other.service';
+import {AccountService} from '../../../service/account.service';
 
 @Component({
   selector: 'app-header',
@@ -35,13 +36,11 @@ export class HeaderComponent implements OnInit {
   wishList;
   listPro: Product[];
   clickNumCart: boolean;
-  // li1;
-  // li2;
-  // router1;
-  // router2;
+  userInfo: User;
 
   constructor(private http: HttpClient,
               private router: Router,
+              private accountService: AccountService,
               private productService: ProductService,
               private cartService: CartService,
               private wishListService: WishListService,
@@ -54,6 +53,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.showInfoUser();
     this.getComboboxCate();
     this.categoryId = null;
     this.getNumCart();
@@ -108,7 +108,7 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     localStorage.removeItem('currentUser');
-    this.router.navigate(['/logout']);
+    window.location.replace('/logout');
     console.log('currentUser', localStorage.removeItem('currentUser'));
   }
 
@@ -125,19 +125,16 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  // directional() {
-  //   if (JSON.parse(localStorage.getItem('currentUser')) != null) {
-  //     this.li1 = this.currentUser.username;
-  //     this.router1 = '/profile';
-  //     this.li2 = 'Đăng xuất';
-  //     this.router2 = '/logout';
-  //   } else {
-  //     this.li1 = 'Đăng nhập';
-  //     this.router1 = '/login';
-  //     this.li2 = 'Đăng kí';
-  //     this.router2 = '/register';
-  //   }
-  // }
+  showInfoUser() {
+    const userModel = new User(this.currentUser.id);
+    console.log('id Of User ', userModel);
+    this.accountService.getDataUser(userModel).subscribe(
+      data => {
+        this.userInfo = data['data'];
+        console.log('data Of User', this.userInfo);
+      }
+    );
+  }
 
   fetchOrderCode() {
     this.wishListService.numCartFetch$.subscribe(

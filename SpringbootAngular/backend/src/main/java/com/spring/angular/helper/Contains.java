@@ -30,4 +30,10 @@ public class Contains {
         public static final String CONTENT = "content";
         public static final String FOOTER = "footer";
     }
+
+    public interface MAIL {
+        public static final String MAIL_HUNG = "hunghomhinh2310@gmail.com";
+        public static final String MAIL_CONTENT = "THIS IS YOUR ACTIVE CODE = ";
+        public static final String MAIL_TITLE = "DO GO HUY HUNG";
+    }
 }

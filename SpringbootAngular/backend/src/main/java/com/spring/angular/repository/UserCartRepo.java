@@ -13,4 +13,5 @@ public interface UserCartRepo {
 
     void updateUser(OrderDTO orderDTO) throws Exception;
 
+    boolean checkDuplicateUser(String email, Long userId, String condition) throws Exception;
 }

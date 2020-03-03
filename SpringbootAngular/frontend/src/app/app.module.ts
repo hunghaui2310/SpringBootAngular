@@ -44,6 +44,7 @@ import {OwlModule} from 'ngx-owl-carousel';
 import { BanAnComponent } from './product-cate/ban-an/ban-an.component';
 import { TuQuanAoComponent } from './product-cate/tu-quan-ao/tu-quan-ao.component';
 import { KeTiviComponent } from './product-cate/ke-tivi/ke-tivi.component';
+import { ConfirmComponent } from './account/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { KeTiviComponent } from './product-cate/ke-tivi/ke-tivi.component';
     ShowWishListComponent,
     BanAnComponent,
     TuQuanAoComponent,
-    KeTiviComponent
+    KeTiviComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

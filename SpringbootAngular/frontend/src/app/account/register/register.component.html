@@ -42,7 +42,7 @@
       <div id="remember" class="checkbox">
 
       </div>
-      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Tạo tài khoản</button>
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Tạo tài khoản <i *ngIf="loading" class="fa fa-spinner fa-spin"></i></button>
       <button [routerLink]="['/login']" class="btn btn-lg btn-danger btn-block btn-cancel" type="button">Hủy</button>
 
     </form><!-- /form -->

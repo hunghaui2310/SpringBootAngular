@@ -35,12 +35,6 @@ export class BlogListComponent implements OnInit {
   }
 
   pageBlog(page: number) {
-    let total = this.currentP * 4;
-    console.log('total', total);
-    if (this.currentP * 4 > this.blogList.length) {
-      total = this.blogList.length;
-    }
     this.currentP = page;
-    console.log('page', this.currentP);
   }
 }

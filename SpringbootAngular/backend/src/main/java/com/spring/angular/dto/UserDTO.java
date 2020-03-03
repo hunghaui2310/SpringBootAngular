@@ -2,13 +2,24 @@ package com.spring.angular.dto;
 
 public class UserDTO {
 
-    private Long userId;
+    private Long id;
     private String lastName;
     private String firstName;
     private String address;
     private String phoneNumber;
     private String email;
     private String fullName;
+    private String password;
+    private Long userId;
+    private String username;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getUserId() {
         return userId;
@@ -64,5 +75,21 @@ public class UserDTO {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

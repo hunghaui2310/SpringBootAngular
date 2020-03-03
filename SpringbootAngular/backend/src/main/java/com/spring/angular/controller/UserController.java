@@ -5,6 +5,8 @@ import com.spring.angular.helper.ApiResponse;
 import com.spring.angular.helper.Contains;
 import com.spring.angular.helper.CustomErrorType;
 import com.spring.angular.model.User;
+import com.spring.angular.repository.CartRepo;
+import com.spring.angular.repository.UserCartRepo;
 import com.spring.angular.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserCartRepo userCartRepo;
 
     public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -59,6 +64,17 @@ public class UserController {
             UserDTO userDTO = userService.getDataUser(user.getId());
             return ApiResponse.build(HttpServletResponse.SC_OK, true, "", userDTO);
         }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
+
+    @PostMapping("/update")
+    public ApiResponse updateUser(@RequestBody UserDTO userDTO) {
+        try {
+            String message = userService.updateUser(userDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
+        } catch (Exception e) {
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }

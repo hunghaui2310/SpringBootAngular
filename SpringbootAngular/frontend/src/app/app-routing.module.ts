@@ -46,6 +46,7 @@ import {ShowWishListComponent} from './wish-list/show-wish-list/show-wish-list.c
 import {BanAnComponent} from './product-cate/ban-an/ban-an.component';
 import {TuQuanAoComponent} from './product-cate/tu-quan-ao/tu-quan-ao.component';
 import {KeTiviComponent} from './product-cate/ke-tivi/ke-tivi.component';
+import {ConfirmComponent} from './account/confirm/confirm.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -82,6 +83,8 @@ const routes: Routes = [
       path: 'order-info', component: OrderInfoComponent, data: { title: 'Thông tin đơn hàng'}
     }, {
       path: 'wish-list', component: ShowWishListComponent, data: { title: 'Yêu thích'}
+    }, {
+      path: 'confirm', component: ConfirmComponent, data: { title: 'Xác thực'}
     }
     ]
   },

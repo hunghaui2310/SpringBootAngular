@@ -17,4 +17,8 @@ export class AccountService {
   getDataUser(user: User) {
     return this.http.post(config.data_user_API, user);
   }
+
+  updateUser(user: User) {
+    return this.http.post(config.update_user_API, user);
+  }
 }

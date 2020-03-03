@@ -2,6 +2,7 @@ package com.spring.angular.repository.impl;
 
 import com.spring.angular.dto.CartDTO;
 import com.spring.angular.dto.OrderDTO;
+import com.spring.angular.helper.Contains;
 import com.spring.angular.model.User;
 import com.spring.angular.repository.UserCartRepo;
 import org.springframework.stereotype.Repository;
@@ -67,4 +68,31 @@ public class UserCartRepoImpl implements UserCartRepo {
         query.setParameter("userId", orderDTO.getUserId());
         query.executeUpdate();
     }
+
+    @Override
+    public boolean checkDuplicateUser(String email, Long userId, String condition) throws Exception {
+        StringBuilder sql = new StringBuilder();
+        if (condition.equals(Contains.CREATE)) {
+            sql.append("select * from user where username = :userName");
+            Query query = entityManager.createNativeQuery(sql.toString());
+            query.setParameter("userName", email);
+            if (query.getSingleResult() != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            sql.append("select * from user where username = :userName and id <> :id");
+            Query query = entityManager.createNativeQuery(sql.toString());
+            query.setParameter("userName", email);
+            query.setParameter("id", userId);
+            if (query.getSingleResult() != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+
 }

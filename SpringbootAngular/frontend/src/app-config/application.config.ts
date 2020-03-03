@@ -23,6 +23,7 @@ export const config = {
   add_compare_API: URL_BASE + '/compare/add',
   show_compare_API: URL_BASE + '/compare/show',
   data_user_API: URL_BASE + '/account/get-data',
+  update_user_API: URL_BASE + '/account/update',
   data_order_API: URL_BASE + '/order/show',
   update_order_API: URL_BASE + '/order/update',
   confirm_order_API: URL_BASE + '/order/confirm',
@@ -35,6 +36,7 @@ export const config = {
   getCommentById_API: URL_BASE + '/comment/getById',
   getCommentByBlog_API: URL_BASE + '/comment/getByBlog',
   deleteComment_API: URL_BASE + '/comment/delete',
+  confirm_mail_API: URL_BASE + '/mail/send',
 
   // admin -API
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',

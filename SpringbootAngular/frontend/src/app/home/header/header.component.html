@@ -19,13 +19,13 @@
           <div class="header-top-right">
             <ul class="ht-menu">
               <!-- Begin Setting Area -->
-              <li *ngIf="currentUser"><a routerLink="/profile">{{currentUser.username}}</a></li>
+              <li *ngIf="currentUser"><a routerLink="/profile">{{userInfo.email}}</a></li>
               <!-- Setting Area End Here -->
               <!-- Begin Currency Area -->
               <li *ngIf="currentUser"><a routerLink="/logout" (click)="logOut()">Đăng xuất</a></li>
               <!-- Currency Area End Here -->
               <!-- Begin Language Area -->
-              <li><a routerLink="/login">Đăng nhập</a></li>
+              <li *ngIf="!currentUser"><a routerLink="/login">Đăng nhập</a></li>
               <li><a routerLink="/register">Đăng kí</a></li>
               <!-- Language Area End Here -->
               <!--              <li><a routerLink="{{router1}}">{{li1}}</a></li>-->
