@@ -56,10 +56,8 @@ export class BlogDetailComponent implements OnInit {
 
   getDataDetailBlog() {
     this.blogId = this.route.snapshot.params['id'];
-    console.log('blogId', this.blogId);
     this.blogService.blogDetailAPI(this.blogId).subscribe(
       dataDetailBlog => {
-        console.log(dataDetailBlog['data']);
         this.dataDetail = dataDetailBlog['data'];
         this.blogId = this.dataDetail['id'];
         this.contentDetail = this.dataDetail['contentDetail'];
@@ -78,7 +76,6 @@ export class BlogDetailComponent implements OnInit {
     this.blogService.getBlogAPI().subscribe(
       dataBlog => {
         this.blogList = dataBlog['data'];
-        console.log('data-list-blog', this.blogList);
       }
     );
   }
@@ -89,11 +86,9 @@ export class BlogDetailComponent implements OnInit {
 
   getListComment() {
     const modelComment = new CommentModel(null, this.currentUser.id, null, this.blogId);
-    console.log('modelComment', modelComment);
     this.commentService.getCommentByBlog(modelComment).subscribe(
       data => {
         this.listComment = data['data'];
-        console.log('commentList', this.listComment);
       }
     );
   }
@@ -116,11 +111,9 @@ export class BlogDetailComponent implements OnInit {
   getByBlogId(id: number) {
     this.btnSend = true;
     const modelComment = new CommentModel(id);
-    console.log('commentModel', modelComment);
     this.commentService.getCommentByIdAPI(modelComment).subscribe(
       data => {
         this.commentContent = data['data']['content'];
-        console.log('contentComment', this.commentContent);
         this.commentId = data['data']['id'];
       }
     );
@@ -133,7 +126,6 @@ export class BlogDetailComponent implements OnInit {
   saveComment(type: number) {
     if (type === 0) { // them moi comment
       const modelComment = new CommentModel(null, this.currentUser.id, null, this.blogId, this.commentContent);
-      console.log('modelInsert', modelComment);
       this.commentService.saveCommentProAPI(modelComment).subscribe(
         data => {
           if (data['data'] === 'SUCCESS') {
@@ -148,7 +140,6 @@ export class BlogDetailComponent implements OnInit {
       );
     } else {
       const modelComment = new CommentModel(this.commentId, this.currentUser.id, null, this.blogId, this.commentContent);
-      console.log('modelUpdate', modelComment);
       this.commentService.editCommentAPI(modelComment).subscribe(
         data => {
           if (data['data'] === 'SUCCESS') {
@@ -174,7 +165,6 @@ export class BlogDetailComponent implements OnInit {
 
   deleteComment() {
     const modelComment = new CommentModel(this.commentId);
-    console.log('idCommentToDelete', modelComment);
     this.commentService.deleteComment(modelComment).subscribe(
       data => {
         if (data['data'] === 'SUCCESS') {
@@ -192,7 +182,6 @@ export class BlogDetailComponent implements OnInit {
     this.categoryService.getAllCategory().subscribe(
       data => {
         this.categories = data['data'];
-        console.log('listCategoryhfkjashdf', this.categories);
       }
     );
   }

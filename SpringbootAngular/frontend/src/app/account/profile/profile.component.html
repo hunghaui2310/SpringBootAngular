@@ -3,9 +3,6 @@
     <ul class="nav navbar-nav">
       <li class="badge badge-info"><a>Email : {{currentUser.username}}</a></li>
     </ul>
-    <!--    <ul class="nav navbar-nav navbar-right">-->
-    <!--      <li><button class="glyphicon glyphicon-log-in btn btn-danger" (click)="logOut()"> LogOut</button></li>-->
-    <!--    </ul>-->
   </div>
 </nav>
 <div class="container">
@@ -13,7 +10,7 @@
   <!-- Jumbotron Header -->
   <header class="jumbotron my-4">
     <h1 class="display-3"><strong>{{currentUser.fullName}}</strong>, Chào mừng đến với Đồ gỗ Huy Hùng </h1>
-    <p class="lead"> Đăng nhập và nhận hàng ngàn ưu đãi
+    <p class="lead"> Đăng nhập để nhận thông báo mơi nhất về thông tin khuyến mại
     </p>
   </header>
 
@@ -39,9 +36,6 @@
               *ngIf="formUser.get('email').hasError(validation.type) && (formUser.get('email').dirty || formUser.get('email').touched)">
               {{validation.message}}
             </mat-error>
-<!--            <mat-error-->
-<!--              *ngIf="isPreSpace && !formUser.get('email').hasError(validation.type) && (formUser.get('email').dirty || formUser.get('email').touched)">-->
-<!--              Bạn chưa nhập email</mat-error>-->
           </mat-error>
         </div>
         <div class="form-group col-md-6">
@@ -52,9 +46,6 @@
               *ngIf="formUser.get('password').hasError(validation.type) && (formUser.get('password').dirty || formUser.get('password').touched)">
               {{validation.message}}
             </mat-error>
-<!--            <mat-error-->
-<!--              *ngIf="isPreSpace && !formUser.get('password').hasError(validation.type) && (formUser.get('password').dirty || formUser.get('password').touched)">-->
-<!--              Bạn chưa nhập mật khẩu</mat-error>-->
           </mat-error>
         </div>
       </div>

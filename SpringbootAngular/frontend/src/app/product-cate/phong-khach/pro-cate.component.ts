@@ -45,7 +45,6 @@ export class ProCateComponent implements OnInit {
     this.productService.productCateAPI(1).subscribe(
       data => {
         this.productDTOList = data['data'];
-        console.log('listDataProCate', this.productDTOList);
       }
     );
   }
@@ -55,7 +54,6 @@ export class ProCateComponent implements OnInit {
     console.log('search', this.searchRequest);
     this.productService.search(this.searchRequest).subscribe(
       dataSerach => {
-        console.log(dataSerach['data']);
         this.productDTOList = dataSerach['data'];
       },
       error => {
@@ -69,12 +67,9 @@ export class ProCateComponent implements OnInit {
 
   addProToCart(productId: number) {
     this.conditionAddCart = new Cart(this.currentUser.id, productId);
-    console.log('this.currentUser.id', this.currentUser.id);
-    console.log('productIdToAddCart', productId);
     this.cartService.addCartAPI(this.conditionAddCart).subscribe(
       message => {
         this.notificationMessage = message['data'];
-        console.log('this.notificationMessage', this.notificationMessage);
         if (this.notificationMessage === 'CREATE' || this.notificationMessage === 'UPDATE') {
           this.notificationSuccess('Thêm thành công');
         } else {
@@ -97,11 +92,9 @@ export class ProCateComponent implements OnInit {
 
   addProToCompare(productId: number) {
     this.comPareRequest = new Cart(this.currentUser.id, productId);
-    console.log('compareRequest', this.comPareRequest);
     this.compareService.addCompareAPI(this.comPareRequest).subscribe(
       dataCompare => {
         this.notificationMessage = dataCompare['data'];
-        console.log('qqqqqqqqMessage', this.notificationMessage);
         this.notificationSuccess('Thêm so sánh thành công');
       },
       error => this.notificationError()

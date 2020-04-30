@@ -64,7 +64,7 @@
               <!-- shop-item-filter-list end -->
             </div>
             <div class="toolbar-amount">
-              <span>Có tất cả {{productDTOList.length}} sản phẩm</span>
+              <span *ngIf="productDTOList">Có tất cả {{productDTOList.length}} sản phẩm</span>
             </div>
           </div>
           <!-- product-select-box start -->
@@ -89,7 +89,7 @@
           <div class="tab-content">
             <div id="grid-view" class="tab-pane fade" role="tabpanel">
               <div class="product-area shop-product-area">
-                <div class="row">
+                <div class="row" *ngIf="productDTOList">
                   <div class="col-lg-4 col-md-4 col-sm-6 mt-40" *ngFor="let eachProduct of productDTOList | paginate: {id: 'page', itemsPerPage: pageSize, currentPage: currentP, totalItems: productDTOList.length}">
                     <!-- single-product-wrap start -->
                     <div class="single-product-wrap">
@@ -142,7 +142,7 @@
             </div>
             <div id="list-view" class="tab-pane fade product-list-view active show" role="tabpanel">
               <div class="row">
-                <div class="col">
+                <div class="col" *ngIf="productDTOList">
                   <div class="row product-layout-list" *ngFor="let eachProduct of productDTOList | paginate: {id: 'page', itemsPerPage: pageSize, currentPage: currentP, totalItems: productDTOList.length}">
                     <div class="col-lg-3 col-md-5 ">
                       <div class="product-image">
