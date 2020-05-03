@@ -32,6 +32,7 @@ export class CheckoutComponent implements OnInit {
   notes;
   id;
   orderCode;
+  total;
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,
@@ -44,24 +45,30 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.dataCheckOut();
-    this.getDataUser();
-    this.fetchOrderCode();
+    if (localStorage.getItem('currentUser')) {
+      this.getDataUser();
+      this.fetchOrderCode();
+    }
   }
 
   dataCheckOut() {
-    //   this.userId = this.route.snapshot.params['userId'];
-    this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
-    console.log('userIdssss', this.currentUser.id);
-    this.cartService.getNumCartAPI(this.currentUser).subscribe(
-      dataInCart => {
-        this.dataCart = dataInCart['data'];
-        console.log('proInCartfdasdas', dataInCart);
-        this.cartNum = this.dataCart['numCart'];
-        this.productInCart = this.dataCart['productDTOList'];
-        console.log('proInCart', this.productInCart);
-        this.subtotal = this.dataCart['subtotal'];
+    if (localStorage.getItem('currentUser')) {
+      this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
+      this.cartService.getNumCartAPI(this.currentUser).subscribe(
+        dataInCart => {
+          this.dataCart = dataInCart['data'];
+          this.cartNum = this.dataCart['numCart'];
+          this.productInCart = this.dataCart['productDTOList'];
+          this.subtotal = this.dataCart['subtotal'];
+        }
+      );
+    } else if (localStorage.getItem('product')) {
+      this.productInCart = JSON.parse(localStorage.getItem('product'));
+      for (const product of this.productInCart) {
+        console.log(product);
+        this.total = 1 * product['price'];
       }
-    );
+    }
   }
 
   showSuccess(message: string) {

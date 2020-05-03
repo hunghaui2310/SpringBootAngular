@@ -31,6 +31,8 @@ export class QuickViewComponent implements OnInit {
   cartNum = 1;
   currentP = 1;
   pageSize = 2;
+  productArr = new Array();
+  product = new Product();
 
   constructor(private dialogRef: MatDialogRef<QuickViewComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,7 +45,6 @@ export class QuickViewComponent implements OnInit {
 
   ngOnInit() {
     this.getProDetail(this.data.id);
-    console.log('id', this.data.id);
     this.getListComment();
   }
 
@@ -54,7 +55,7 @@ export class QuickViewComponent implements OnInit {
   form() {
     this.formQuickView = this.fb.group({
       id: [this.data.id],
-      productname: [this.data.proName],
+      productName: [this.data.proName],
       urlImage: [this.data.url],
       proPrice: [this.data.proPrice],
       proDiscount: [this.data.proDiscount],
@@ -66,7 +67,6 @@ export class QuickViewComponent implements OnInit {
 
   getProDetail(proId: number) {
     this.productId = new Product(proId);
-    console.log(this.productId);
     this.productService.getProById(this.productId).subscribe(
       data => {
         console.log('data detail', data['data']);
@@ -79,7 +79,6 @@ export class QuickViewComponent implements OnInit {
         this.realPrice = this.dataProduct['realPrice'];
         this.discount = this.dataProduct['discount'];
         this.categoryId = this.dataProduct['categoryId'];
-        console.log('cateId', this.categoryId);
       });
   }
 
@@ -108,5 +107,14 @@ export class QuickViewComponent implements OnInit {
         console.log('commentList', this.listComment);
       }
     );
+  }
+
+  buyNow() {
+    if (this.productName && this.price) {
+      this.product.productName = this.productName;
+      this.product.price = this.price;
+      this.productArr.push(this.product);
+      localStorage.setItem('product', JSON.stringify(this.productArr));
+    }
   }
 }

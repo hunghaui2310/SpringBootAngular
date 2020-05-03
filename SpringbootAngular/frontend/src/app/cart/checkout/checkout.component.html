@@ -81,13 +81,14 @@
               <thead>
               <tr>
                 <th class="cart-product-name">Sản phẩm</th>
-                <th class="cart-product-total">Tổng</th>
+                <th class="cart-product-total">Giá</th>
               </tr>
               </thead>
               <tbody>
               <tr class="cart_item" *ngFor="let eachCheckOut of productInCart">
-                <td class="cart-product-name"> {{eachCheckOut.productName}}<strong class="product-quantity"> × {{eachCheckOut.numProInCart}}</strong></td>
-                <td class="cart-product-total"><span class="amount">{{eachCheckOut.total * 1000000 | number}}</span></td>
+                <td class="cart-product-name"> {{eachCheckOut.productName}}<strong class="product-quantity" *ngIf="eachCheckOut.numProInCart"> × {{eachCheckOut.numProInCart}}</strong></td>
+                <td class="cart-product-total" *ngIf="eachCheckOut.total"><span class="amount">{{eachCheckOut.total * 1000000 | number}}</span></td>
+                <td class="cart-product-total" *ngIf="eachCheckOut.price"><span class="amount">{{eachCheckOut.price * 1000000 | number}}</span></td>
               </tr>
               </tbody>
               <tfoot>
@@ -97,7 +98,8 @@
               </tr>
               <tr class="order-total">
                 <th>Tổng</th>
-                <td><strong><span class="amount">{{subtotal * 1000000 - (orderCode * subtotal * 10000) | number}}</span></strong></td>
+                <td *ngIf="orderCode"><strong><span class="amount">{{subtotal * 1000000 - (orderCode * subtotal * 10000) | number}}</span></strong></td>
+                <td *ngIf="total"><strong><span class="amount">{{total * 10000 | number}}</span></strong></td>
               </tr>
               </tfoot>
             </table>
