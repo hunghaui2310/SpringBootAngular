@@ -17,11 +17,6 @@
       <div class="col-lg-5 col-md-5">
         <!-- Product Details Left -->
         <div class="product-details-left">
-<!--          <ngb-carousel>-->
-<!--            <ng-template ngbSlide *ngFor="let img of listImg">-->
-<!--              <img [src]="'data:image/jpg;base64,' + img">-->
-<!--            </ng-template>-->
-<!--          </ngb-carousel>-->
           <div class="product-details-images slider-navigation-1">
             <ngb-carousel>
               <ng-template ngbSlide *ngFor="let img of listImg">
@@ -153,7 +148,7 @@
       <div id="product-details" class="tab-pane" role="tabpanel">
         <div class="li-comment-section">
           <br>
-          <h5>{{commentList.length}} phản hồi</h5>
+          <h5 *ngIf="commentList">{{commentList.length}} phản hồi</h5>
           <ul>
             <li *ngFor="let eachComment of commentList">
               <div class="author-avatar pt-15">
@@ -162,7 +157,7 @@
               <div class="comment-body pl-15">
                 <h5 class="comment-author pt-15 pb-0">{{eachComment.userName}} ({{eachComment.createDate}})</h5>
                 <p class="pt-0">{{eachComment.content}}</p>
-                <div>
+                <div *ngIf="currentUser">
                   <button class="reply-btn" *ngIf="this.currentUser.id === eachComment.userId" (click)="clickDelete(deleteCommentConfirm, eachComment.id)">Xóa</button>
                   <button class="reply-btn" *ngIf="this.currentUser.id === eachComment.userId" data-toggle="collapse" data-target="#collapseExample"
                           aria-expanded="false" aria-controls="collapseExample" (click)="getCommentById(eachComment.id)">Sửa</button>

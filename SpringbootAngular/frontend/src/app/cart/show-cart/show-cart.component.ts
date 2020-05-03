@@ -45,15 +45,12 @@ export class ShowCartComponent implements OnInit {
   }
 
   showProInCart() {
-    //   this.userId = this.route.snapshot.params['userId'];
     this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
-    console.log('dataReceive', this.currentUser);
     this.cartService.getNumCartAPI(this.currentUser).subscribe(
       dataCarts => {
         this.dataCart = dataCarts['data'];
         this.cartNum = this.dataCart['numCart'];
         this.productInCart = this.dataCart['productDTOList'];
-        console.log('proInCart', this.productInCart);
         this.subtotal = this.dataCart['subtotal'];
       }
     );
@@ -61,19 +58,18 @@ export class ShowCartComponent implements OnInit {
 
   removeProInCart() {
     this.cartRequest = new Cart(this.currentUser.id, this.productId);
-    console.log('removeProInCart', this.cartRequest);
     this.cartService.removeProCartAPI(this.cartRequest).subscribe(
       removes => {
         this.notification = removes['data'];
         if (this.notification === 'SUCCESS') {
           this.notificationSuccess('Xóa thành công');
+          this.cartService.nextNumCart(false);
           this.showProInCart();
         } else {
           this.notificationError('Xóa thất bại');
         }
         this.mobjModalRef.hide();
         this.showProInCart();
-        console.log('notification', this.notification);
       },
       error => this.notificationError('Đã xảy ra lỗi')
     );
@@ -110,11 +106,9 @@ export class ShowCartComponent implements OnInit {
 
   getCodeDiscount(code: string) {
     this.codeRequest = new Blog(null, null, code, null, null, null);
-    console.log('this.codeRequest', this.codeRequest);
     this.cartService.codeDiscountAPI(this.codeRequest).subscribe(
       dataCode => {
         this.dataCode = dataCode['data'];
-        console.log('dataCode', this.dataCode);
         if (this.dataCode === 'EMPTY') {
           this.notificationWarning('Chưa nhập mã khuyến mại!');
           this.dataCode = null;
@@ -123,7 +117,6 @@ export class ShowCartComponent implements OnInit {
           this.dataCode = null;
         } else {
           this.discount = this.dataCode;
-          console.log('dataCode', this.discount);
           this.cartService.setOrderCode(this.discount);
         }
       }, error => this.notificationError('Đã xảy ra lỗi')

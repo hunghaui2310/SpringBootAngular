@@ -13,6 +13,7 @@ import {WishList} from '../../../model/wish-list';
 import {WishListService} from '../../../service/wish-list.service';
 import {OtherService} from '../../../service/other.service';
 import {AccountService} from '../../../service/account.service';
+import {CartData} from "../../../model/cart";
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,7 @@ export class HeaderComponent implements OnInit {
   productName;
   searchRequest: SearchRequest;
   products;
-  cartNum;
+  cartNum: number;
   userId;
   dataCart;
   productInCart: Product[];
@@ -35,7 +36,9 @@ export class HeaderComponent implements OnInit {
   wishListDTO;
   wishList;
   listPro: Product[];
-  clickNumCart: boolean;
+  setCartData = new CartData();
+  updateNum: boolean;
+
   userInfo: User;
   userEmail: string;
 
@@ -46,23 +49,25 @@ export class HeaderComponent implements OnInit {
               private cartService: CartService,
               private wishListService: WishListService,
               private categoryService: OtherService) {
-    this.fetchOrderCode();
-    if (this.clickNumCart === true) {
-      this.cartNum = this.cartNum + 1;
-    }
     if (localStorage.getItem('currentUser')) {
       this.userEmail = JSON.parse(localStorage.getItem('currentUser')).username;
     }
+    // this.cartNum = JSON.parse(localStorage.getItem('dataCart'))['numCart'];
   }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.showInfoUser();
+    if (localStorage.getItem('currentUser')) {
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.showInfoUser();
+      this.getNumCart();
+      this.showAllWishList();
+      this.fetchCartNum();
+      this.fetchCartNumFromSingleItem();
+    } else {
+      this.currentUser = null;
+    }
     this.getComboboxCate();
     this.categoryId = null;
-    this.getNumCart();
-    console.log('currentUser', this.currentUser.username);
-    this.showAllWishList();
   }
 
   getComboboxCate() {
@@ -101,12 +106,17 @@ export class HeaderComponent implements OnInit {
         this.cartNum = this.dataCart['numCart'];
         this.productInCart = this.dataCart['productDTOList'];
         this.subtotal = this.dataCart['subtotal'];
+
+        this.setCartData.numCart = this.dataCart['numCart'];
+        this.setCartData.price = this.dataCart['subtotal'];
+        localStorage.setItem('dataCart', JSON.stringify(this.setCartData));
       }
     );
   }
 
   logOut() {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('dataCart');
     window.location.replace('/logout');
   }
 
@@ -129,10 +139,25 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  fetchOrderCode() {
+  fetchCartNum() {
+    this.cartService.numCart$.subscribe(
+      dataFetch => {
+        this.updateNum = dataFetch;
+        if (this.updateNum) {
+          this.cartNum = this.cartNum + 1;
+        } else {
+          this.cartNum = this.cartNum - 1;
+        }
+      });
+  }
+
+  fetchCartNumFromSingleItem() {
     this.wishListService.numCartFetch$.subscribe(
       dataFetch => {
-        this.clickNumCart = dataFetch;
+        this.updateNum = dataFetch;
+        if (this.updateNum) {
+          this.cartNum = this.cartNum + 1;
+        }
       });
   }
 }

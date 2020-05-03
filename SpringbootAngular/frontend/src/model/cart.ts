@@ -11,3 +11,8 @@ export class Cart {
     this.click = click;
   }
 }
+
+export class CartData {
+  numCart?: number;
+  price?: number;
+}

@@ -54,7 +54,8 @@
                 <div class="hm-minicart-trigger">
                   <span class="item-icon" routerLink="/cart"></span>
                   <span class="item-text">{{subtotal * 1000000 | number}}
-                    <span class="cart-item-count" routerLink="/cart">{{cartNum}}</span>
+                    <span *ngIf="cartNum" class="cart-item-count" routerLink="/cart">{{cartNum}}</span>
+                    <span *ngIf="!cartNum" class="cart-item-count" routerLink="/login"></span>
                   </span>
                 </div>
               </li>
