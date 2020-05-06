@@ -9,17 +9,17 @@
       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !fullName.valid }">
         <label for="fullName">Tên tài khoản</label>
         <input type="text" class="form-control" name="fullName" id="fullName" [(ngModel)]="user.fullName" #fullName="ngModel" required />
-        <div *ngIf="f.submitted && !fullName.valid" class="help-block">Tên không được để trống</div>
+        <div *ngIf="f.submitted && !fullName.valid" class="error-validate">Tên không được để trống</div>
       </div>
       <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
         <label for="username">Tên đăng nhập(email)</label>
         <input type="text" class="form-control" name="username" id="username" pattern="[^ @]*@[^ @]*" [(ngModel)]="user.username" #username="ngModel" required />
         <div *ngIf="f.submitted && !username.valid" class="help-block">
 
-          <div *ngIf="username.errors.required">
+          <div *ngIf="username.errors.required" class="error-validate">
             Email không được để trống
           </div>
-          <div *ngIf="username.errors.pattern">
+          <div *ngIf="username.errors.pattern" class="error-validate">
             Email không đúng định dạng
           </div>
 
@@ -30,10 +30,10 @@
         <input type="password" class="form-control" name="password" id="password"[(ngModel)]="user.password" #password="ngModel" required minlength="4" />
         <div *ngIf="f.submitted && !password.valid" class="help-block">
 
-          <div *ngIf="password.errors.required">
+          <div *ngIf="password.errors.required" class="error-validate">
             Mật khẩu không được để trống
           </div>
-          <div *ngIf="password.errors.minlength">
+          <div *ngIf="password.errors.minlength" class="error-validate">
             Mật khẩu phải dài hơn 4 kí tự
           </div>
 

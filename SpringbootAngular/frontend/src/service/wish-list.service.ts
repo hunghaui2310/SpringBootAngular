@@ -14,7 +14,7 @@ export class WishListService {
 
   constructor(private http: HttpClient) { }
 
-  setNumCart(numCartFetch: any) {
+  setNumCart(numCartFetch: boolean) {
     this.numCartFetch.next(numCartFetch);
   }
 

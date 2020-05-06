@@ -3,7 +3,7 @@
     <div class="breadcrumb-content">
       <ul>
         <li><a href="index.html">Trang chủ</a></li>
-        <li class="active">Thanh toán</li>
+        <li class="active">Giỏ hàng</li>
       </ul>
     </div>
   </div>
@@ -19,7 +19,7 @@
               <thead>
               <tr>
                 <th class="li-product-remove">Xóa</th>
-                <th class="li-product-thumbnail">Ảnh</th>
+                <th class="li-product-thumbnail">Sản phẩm</th>
                 <th class="cart-product-name">Tên sản phẩm</th>
                 <th class="li-product-price">Giá bán</th>
                 <th class="li-product-quantity">Số lượng</th>
@@ -36,15 +36,12 @@
                 <td class="li-product-name"><a href="#">{{proInCart.productName}}</a></td>
                 <td class="li-product-price"><span class="amount">{{proInCart.realPrice * 1000000 | number}}</span></td>
                 <td class="quantity">
-                                    <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol="" ariaLabelLess="Less 1"
-                                                       ariaLabelMore="Plus 1" [productId]="proInCart.id"></app-stepper-input>
-<!--                  <div class="qty mt-5">-->
-<!--                    <span class="minus bg-dark" (click)="editNumCart(proInCart.id, proInCart.numProInCart, false)">-</span>-->
-<!--                    <input type="number" class="count" name="qty" value="{{cartNum}}">-->
-<!--                    <span class="plus bg-dark" (click)="editNumCart(proInCart.id, proInCart.numProInCart, true)">+</span>-->
-<!--                  </div>-->
+                  <app-stepper-input [step]="1" [min]="0" [max]="100" [initialValue]="proInCart.numProInCart" symbol=""
+                                     ariaLabelLess="Less 1"
+                                     ariaLabelMore="Plus 1" [productId]="proInCart.id"></app-stepper-input>
                 </td>
-                <td class="product-subtotal"><span>{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
+                <td class="product-subtotal">
+                  <span>{{proInCart.realPrice * 1000000 * proInCart.numProInCart | number}}</span></td>
               </tr>
               </tbody>
             </table>
@@ -72,7 +69,8 @@
                 <ul>
                   <li>Tổng tiền <span>{{subtotal * 1000000 | number}}</span></li>
                   <li>Khuyến mại áp dụng <span *ngIf="dataCode != null">{{dataCode}} %</span></li>
-                  <li *ngIf="dataCode">Thanh toán <span>{{subtotal * 1000000 - (dataCode * subtotal * 10000) | number}}</span></li>
+                  <li *ngIf="dataCode">Thanh toán
+                    <span>{{subtotal * 1000000 - (dataCode * subtotal * 10000) | number}}</span></li>
                   <li *ngIf="!dataCode">Thanh toán <span>{{subtotal * 1000000 | number}}</span></li>
                 </ul>
                 <a routerLink="/checkout">Thanh toán</a>

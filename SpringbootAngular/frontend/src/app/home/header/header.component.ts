@@ -13,6 +13,7 @@ import {WishList} from '../../../model/wish-list';
 import {WishListService} from '../../../service/wish-list.service';
 import {OtherService} from '../../../service/other.service';
 import {AccountService} from '../../../service/account.service';
+import {CartData} from "../../../model/cart";
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,7 @@ export class HeaderComponent implements OnInit {
   productName;
   searchRequest: SearchRequest;
   products;
-  cartNum;
+  cartNum: number;
   userId;
   dataCart;
   productInCart: Product[];
@@ -35,8 +36,11 @@ export class HeaderComponent implements OnInit {
   wishListDTO;
   wishList;
   listPro: Product[];
-  clickNumCart: boolean;
+  setCartData = new CartData();
+  updateNum: boolean;
+
   userInfo: User;
+  userEmail: string;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -45,26 +49,30 @@ export class HeaderComponent implements OnInit {
               private cartService: CartService,
               private wishListService: WishListService,
               private categoryService: OtherService) {
-    this.fetchOrderCode();
-    if (this.clickNumCart === true) {
-      this.cartNum = this.cartNum + 1;
+    if (localStorage.getItem('currentUser')) {
+      this.userEmail = JSON.parse(localStorage.getItem('currentUser')).username;
     }
+    // this.cartNum = JSON.parse(localStorage.getItem('dataCart'))['numCart'];
   }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.showInfoUser();
+    if (localStorage.getItem('currentUser')) {
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.showInfoUser();
+      this.getNumCart();
+      this.showAllWishList();
+      this.fetchCartNum();
+      this.fetchCartNumFromSingleItem();
+    } else {
+      this.currentUser = null;
+    }
     this.getComboboxCate();
     this.categoryId = null;
-    this.getNumCart();
-    console.log('currentUser', this.currentUser.username);
-    this.showAllWishList();
   }
 
   getComboboxCate() {
     this.categoryService.getAllCategory().subscribe(
       data => {
-        console.log('dataCategory', data);
         this.categories = data['data'];
       },
       error => (console.log('NO DATA!'))
@@ -77,15 +85,12 @@ export class HeaderComponent implements OnInit {
 
   search() {
     this.searchRequest = new SearchRequest(null, this.productName, this.categoryId, null);
-    console.log('search', this.searchRequest);
     this.productService.search(this.searchRequest).subscribe(
       dataSearch => {
-        console.log(dataSearch['data']);
         this.products = dataSearch['data'];
         this.productService.setService(this.products);
       },
       error => {
-        (console.log('LOI SEARCH!', error));
       },
       () => {
         console.log('ok');
@@ -95,52 +100,64 @@ export class HeaderComponent implements OnInit {
 
   getNumCart() {
     this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
-    console.log('userId', this.currentUser.id);
     this.cartService.getNumCartAPI(this.currentUser).subscribe(
       numCart => {
         this.dataCart = numCart['data'];
         this.cartNum = this.dataCart['numCart'];
         this.productInCart = this.dataCart['productDTOList'];
         this.subtotal = this.dataCart['subtotal'];
+
+        this.setCartData.numCart = this.dataCart['numCart'];
+        this.setCartData.price = this.dataCart['subtotal'];
+        localStorage.setItem('dataCart', JSON.stringify(this.setCartData));
       }
     );
   }
 
   logOut() {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('dataCart');
     window.location.replace('/logout');
-    console.log('currentUser', localStorage.removeItem('currentUser'));
   }
 
   showAllWishList() {
     this.wishListDTO = new WishList(null, null, this.currentUser.id);
-    console.log('conditionWishList', this.wishListDTO);
     this.wishListService.showAllWishListAPI(this.wishListDTO).subscribe(
       dataShow => {
         this.wishList = dataShow['data'];
-        console.log('dataWishList', this.wishList);
         this.listPro = this.wishList['productDTOList'];
-        console.log(this.wishList['productDTOList']);
       }
     );
   }
 
   showInfoUser() {
     const userModel = new User(this.currentUser.id);
-    console.log('id Of User ', userModel);
     this.accountService.getDataUser(userModel).subscribe(
       data => {
         this.userInfo = data['data'];
-        console.log('data Of User', this.userInfo);
       }
     );
   }
 
-  fetchOrderCode() {
+  fetchCartNum() {
+    this.cartService.numCart$.subscribe(
+      dataFetch => {
+        this.updateNum = dataFetch;
+        if (this.updateNum) {
+          this.cartNum = this.cartNum + 1;
+        } else {
+          this.cartNum = this.cartNum - 1;
+        }
+      });
+  }
+
+  fetchCartNumFromSingleItem() {
     this.wishListService.numCartFetch$.subscribe(
       dataFetch => {
-        console.log('dataFetchOrderCode', dataFetch);
-        this.clickNumCart = dataFetch;
+        this.updateNum = dataFetch;
+        if (this.updateNum) {
+          this.cartNum = this.cartNum + 1;
+        }
       });
   }
 }

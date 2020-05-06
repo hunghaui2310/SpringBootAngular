@@ -3660,7 +3660,7 @@ p.checkout-coupon input[type="submit"]:hover {
 }
 .country-select label span.required,
 .checkout-form-list label span.required {
-  color: #fed700;
+  color: red;
   display: inline-block;
   font-size: 24px;
   line-height: 16px;
@@ -5364,6 +5364,12 @@ span.required {
 .error-button a:hover{background:#242424;color:#fff;}
 .small-version {
   display: none;
+}
+.error-validate {
+  color: red;
+}
+.mat-form-field {
+  width: 100%;
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*------------------------------------------> The End <-----------------------------------------------*/

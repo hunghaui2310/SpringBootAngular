@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {ProductService} from '../../../service/product.service';
 import {Product} from '../../../model/product';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CommentModel} from '../../../model/comment.model';
 import {CommentService} from '../../../service/comment.service';
 import {config} from '../../../app-config/application.config';
@@ -28,9 +28,11 @@ export class QuickViewComponent implements OnInit {
   formQuickView: FormGroup;
   listComment: CommentModel[];
   currentUser;
-  cartNum = 1;
+  cartNum: number;
   currentP = 1;
   pageSize = 2;
+  productArr = new Array();
+  product = new Product();
 
   constructor(private dialogRef: MatDialogRef<QuickViewComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,12 +41,22 @@ export class QuickViewComponent implements OnInit {
               private commentService: CommentService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     dialogRef.disableClose = true;
+    this.formQuickView = new FormGroup({
+      id: new FormControl(),
+      productName: new FormControl(),
+      urlImage: new FormControl(),
+      proPrice: new FormControl(),
+      proDiscount: new FormControl(),
+      proDes: new FormControl(),
+      cateName: new FormControl(),
+      numL: new FormControl()
+    });
   }
 
   ngOnInit() {
     this.getProDetail(this.data.id);
-    console.log('id', this.data.id);
     this.getListComment();
+    this.cartNum = 1;
   }
 
   pageChange(page: number) {
@@ -53,8 +65,8 @@ export class QuickViewComponent implements OnInit {
 
   form() {
     this.formQuickView = this.fb.group({
-      id: [this.data.id],
-      productname: [this.data.proName],
+      id: [this.data.id, Validators.required],
+      productName: [this.data.proName],
       urlImage: [this.data.url],
       proPrice: [this.data.proPrice],
       proDiscount: [this.data.proDiscount],
@@ -66,7 +78,6 @@ export class QuickViewComponent implements OnInit {
 
   getProDetail(proId: number) {
     this.productId = new Product(proId);
-    console.log(this.productId);
     this.productService.getProById(this.productId).subscribe(
       data => {
         console.log('data detail', data['data']);
@@ -79,14 +90,12 @@ export class QuickViewComponent implements OnInit {
         this.realPrice = this.dataProduct['realPrice'];
         this.discount = this.dataProduct['discount'];
         this.categoryId = this.dataProduct['categoryId'];
-        console.log('cateId', this.categoryId);
       });
   }
 
   cartNumber(increase: boolean) {
     if (!increase) {
       this.cartNum = this.cartNum + 1;
-      console.log('cartNum', this.cartNum);
     } else {
       this.cartNum = this.cartNum - 1;
     }
@@ -108,5 +117,19 @@ export class QuickViewComponent implements OnInit {
         console.log('commentList', this.listComment);
       }
     );
+  }
+
+  buyNow() {
+    if (this.productName && this.price) {
+      this.product.productName = this.productName;
+      this.product.price = this.price;
+      this.product.numProInCart = this.cartNum;
+      this.productArr.push(this.product);
+      if (sessionStorage.getItem('product')) {
+        sessionStorage.removeItem('product');
+      }
+      sessionStorage.setItem('product', JSON.stringify(this.productArr));
+      this.closeForm();
+    }
   }
 }

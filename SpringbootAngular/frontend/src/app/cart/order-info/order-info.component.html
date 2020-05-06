@@ -33,7 +33,7 @@
               </tr>
               </tbody>
               <tfoot>
-              <tr class="cart-subtotal" *ngIf="codeDiscount != null">
+              <tr class="cart-subtotal" *ngIf="codeDiscount">
                 <th>Khuyến mại</th>
                 <td><span class="amount">{{codeDiscount}} %</span></td>
               </tr>
@@ -68,6 +68,7 @@
           <div class="single-contact-block">
             <h4><i class="fa fa-money-bill"></i> Hình thức thanh toán</h4>
             <p>Thanh toán sau khi nhận hàng</p>
+            <p>Hoặc chuyển tiền qua STK: (1013904753)</p>
           </div>
           <div class="payment-method">
             <div class="payment-accordion">

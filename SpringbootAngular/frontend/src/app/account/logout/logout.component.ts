@@ -16,8 +16,8 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
   }
+
   login() {
-    console.log('hbfjfhasdhfsad');
     this.authService.authenticate(this.user, (e) => {
       window.location.replace('/home');
       console.log(e);

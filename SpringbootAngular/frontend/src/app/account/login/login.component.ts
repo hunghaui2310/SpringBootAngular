@@ -22,13 +22,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('fffffr');
     this.authService.authenticate(this.user, (e) => {
       this.notificationSuccess('Đăng nhập thành công');
-      console.log('fffffre', e);
       let resp: any;
       resp = e.principal;
-      console.log('fasfasfasf', resp);
       window.location.replace('/home');
       // this.user.fullName = 'ndh';
       if (resp) {

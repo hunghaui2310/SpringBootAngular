@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../model/model.user';
 import {config} from '../app-config/application.config';
-import {Cart} from '../model/cart';
+import {Cart, CartData} from '../model/cart';
 import {Blog} from '../model/blog';
 
 @Injectable({
@@ -11,10 +11,21 @@ import {Blog} from '../model/blog';
 })
 export class CartService {
 
-  constructor(private http: HttpClient) { }
+  cartNumLocal = new CartData();
+
+  constructor(private http: HttpClient) {
+    this.cartNumLocal = JSON.parse(localStorage.getItem('dataCart'));
+  }
 
   orderCode: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   orderCode$: Observable<any> = this.orderCode.asObservable();
+
+  numCart: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  numCart$: Observable<any> = this.numCart.asObservable();
+
+  nextNumCart(isUpdate: boolean) {
+    this.numCart.next(isUpdate);
+  }
 
   setOrderCode(orderCode: any) {
     this.orderCode.next(orderCode);

@@ -16,57 +16,76 @@
         <div class="checkbox-form">
           <h3>Thông tin khách hàng</h3>
           <div class="row">
-            <div class="col-md-12">
-              <div class="country-select clearfix">
-                <label>Thành phố (City) <span class="required">*</span></label>
-                <input [(ngModel)]="city" type="text" name="makm">
+            <div class="col-md-6">
+              <div class="checkout-form-list">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Tên (First Name)</mat-label>
+                  <input matInput [formControl]="firstNameFormControl" required>
+                  <mat-error *ngIf="firstNameFormControl.invalid">Bạn chưa nhập tên</mat-error>
+                </mat-form-field>
               </div>
             </div>
             <div class="col-md-6">
               <div class="checkout-form-list">
-                <label>Tên (First Name) <span class="required">*</span></label>
-                <input value="{{firstName}}" type="text" [(ngModel)]="firstName" name="first">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="checkout-form-list">
-                <label>Họ (Last Name) <span class="required">*</span></label>
-                <input value="{{lastName}}" type="text" [(ngModel)]="lastName" name="last">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Họ (Last Name)</mat-label>
+                  <input matInput [formControl]="lastNameFormControl" required>
+                  <mat-error *ngIf="lastNameFormControl.invalid">Bạn chưa nhập họ đệm</mat-error>
+                </mat-form-field>
               </div>
             </div>
             <div class="col-md-12">
               <div class="checkout-form-list">
-                <label>Địa chỉ (Address)<span class="required">*</span></label>
-                <input type="text" [(ngModel)]="address" name="makgm">
+                <mat-form-field >
+                  <mat-label>Địa chỉ</mat-label>
+                  <textarea matInput style="border: none" [formControl]="addressFormControl" required></textarea>
+                  <mat-error *ngIf="addressFormControl.invalid">Bạn chưa nhập địa chỉ</mat-error>
+                </mat-form-field>
               </div>
             </div>
             <div class="col-md-12">
               <div class="checkout-form-list">
-                <label>Email<span class="required">*</span></label>
-                <input value="{{email}}" type="text" disabled>
+                <mat-form-field>
+                  <mat-label>Email</mat-label>
+                  <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                         placeholder="Ex. pat@example.com">
+                  <mat-error *ngIf="emailFormControl.hasError('email')">
+                    Email không hợp lệ
+                  </mat-error>
+                </mat-form-field>
               </div>
             </div>
             <div class="col-md-12">
               <div class="checkout-form-list">
-                <label>Số điện thoại (Phone Number)<span class="required">*</span></label>
-                <input type="text" [(ngModel)]="phoneNumber" name="makggm">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Số điện thoại</mat-label>
+                  <input matInput [formControl]="phoneNumberFormControl" required>
+                  <mat-error *ngIf="phoneNumberFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
+                    Sai định dạng số điện thoại
+                  </mat-error>
+                  <mat-error *ngIf="phoneNumberFormControl.hasError('required')">
+                    Bạn chưa nhập số điện thoại
+                  </mat-error>
+                </mat-form-field>
               </div>
             </div>
             <div class="col-md-12">
-              <div class="checkout-form-list create-acc">
-                <input type="checkbox" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                <label>Tôi cam kết các thông tin này là thật!</label>
-              </div>
-              <div class="collapse" id="collapseExample">
-                <p>Hãy chắc chắn rằng các thông tin này là tồn tại để chúng tôi có thể liên lạc với bạn</p>
+              <div class="checkout-form-list">
+                <mat-form-field>
+                  <mat-label>Ghi chú</mat-label>
+                  <textarea matInput maxlength="256" style="border: none" #message placeholder="Ví dụ: Tôi cần giúp đỡ..."></textarea>
+                  <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                </mat-form-field>
               </div>
             </div>
           </div>
           <div class="different-address">
             <div class="order-notes">
-              <div class="checkout-form-list">
-                <label>Chú thích</label>
-                <textarea id="checkout-mess" cols="40" rows="20" placeholder="Ghi lại các ghi chú..." [(ngModel)]="notes"></textarea>
+              <div class="checkout-form-list create-acc">
+                <mat-checkbox class="example-margin" [(ngModel)]="checked">Xác thực thông tin!</mat-checkbox>
+              </div>
+              <div class="collapse" id="collapseExample">
+                <p>Hãy chắc chắn rằng các thông tin này là chính xác để chúng tôi có thể liên lạc với bạn</p>
               </div>
             </div>
           </div>
@@ -81,13 +100,14 @@
               <thead>
               <tr>
                 <th class="cart-product-name">Sản phẩm</th>
-                <th class="cart-product-total">Tổng</th>
+                <th class="cart-product-total">Giá</th>
               </tr>
               </thead>
               <tbody>
               <tr class="cart_item" *ngFor="let eachCheckOut of productInCart">
-                <td class="cart-product-name"> {{eachCheckOut.productName}}<strong class="product-quantity"> × {{eachCheckOut.numProInCart}}</strong></td>
-                <td class="cart-product-total"><span class="amount">{{eachCheckOut.total * 1000000 | number}}</span></td>
+                <td class="cart-product-name"> {{eachCheckOut.productName}}<strong class="product-quantity" *ngIf="eachCheckOut.numProInCart"> × {{eachCheckOut.numProInCart}}</strong></td>
+                <td class="cart-product-total" *ngIf="eachCheckOut.total"><span class="amount">{{eachCheckOut.total * 1000000 | number}}</span></td>
+                <td class="cart-product-total" *ngIf="eachCheckOut.price"><span class="amount">{{eachCheckOut.price * 1000000 | number}}</span></td>
               </tr>
               </tbody>
               <tfoot>
@@ -97,7 +117,8 @@
               </tr>
               <tr class="order-total">
                 <th>Tổng</th>
-                <td><strong><span class="amount">{{subtotal * 1000000 - (orderCode * subtotal * 10000) | number}}</span></strong></td>
+                <td *ngIf="orderCode"><strong><span class="amount">{{subtotal * 1000000 - (orderCode * subtotal * 10000) | number}}</span></strong></td>
+                <td *ngIf="total"><strong><span class="amount">{{total * 10000 | number}}</span></strong></td>
               </tr>
               </tfoot>
             </table>
@@ -109,7 +130,7 @@
                   <button routerLink="/cart">Quay lại giỏ hàng</button>
                 </div>
                 <div class="col-sm-6">
-                  <button (click)="checkOut()" routerLink="/order-info">Thanh toán</button>
+                  <button (click)="checkOut()">Thanh toán</button>
                 </div>
               </div>
             </div>

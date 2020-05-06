@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Product} from '../../../model/product';
 import {config} from '../../../app-config/application.config';
 import {sort, Sort} from '../../../model/sort';
@@ -50,6 +50,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   comPareRequest;
   wishListDTO;
   wishListInsert;
+  cartNum: number;
 
   constructor(private productService: ProductService,
               private router: Router,
@@ -70,6 +71,11 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('dataCart')) {
+      this.cartNum = JSON.parse(localStorage.getItem('dataCart'))['numCart'];
+    } else {
+      this.cartNum = 0;
+    }
     this.getProducts();
     this.sortCondition = null;
 
@@ -187,21 +193,24 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   }
 
   addProToCart(productId: number) {
-    this.conditionAddCart = new Cart(this.currentUser.id, productId);
-    console.log('this.currentUser.id', this.currentUser.id);
-    console.log('productIdToAddCart', productId);
-    this.cartService.addCartAPI(this.conditionAddCart).subscribe(
-      message => {
-        this.notificationMessage = message['data'];
-        console.log('this.notificationMessage', this.notificationMessage);
-        if (this.notificationMessage === 'CREATE' || this.notificationMessage === 'UPDATE') {
-          this.notificationSuccess('Thêm vào giỏ thành công');
-        } else {
-          this.notificationError('Lỗi');
-        }
-      },
-      error => this.notificationError('Đã xảy ra lỗi')
-    );
+    if (localStorage.getItem('currentUser')) {
+      this.conditionAddCart = new Cart(this.currentUser.id, productId);
+      this.cartService.addCartAPI(this.conditionAddCart).subscribe(
+        message => {
+          // this.cartNum = this.cartNum + 1;
+          this.cartService.nextNumCart(true);
+          this.notificationMessage = message['data'];
+          if (this.notificationMessage === 'CREATE' || this.notificationMessage === 'UPDATE') {
+            this.notificationSuccess('Thêm vào giỏ thành công');
+          } else {
+            this.notificationError('Lỗi');
+          }
+        },
+        error => this.notificationError('Đã xảy ra lỗi')
+      );
+    } else {
+      this.notificationError('Bạn phải đăng nhập để sử dụng chức năng này');
+    }
   }
 
   notificationSuccess(notification: string) {
@@ -231,18 +240,22 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   }
 
   insertToWishList(productId: number) {
-    this.wishListDTO = new WishList(null, productId, this.currentUser.id);
-    console.log('wishListCondition', this.wishListDTO);
-    this.wishListService.insertWishListAPI(this.wishListDTO).subscribe(
-      dataWishList => {
-        this.wishListInsert = dataWishList['data'];
-        console.log('wishListNotification', this.wishListInsert);
-        if (this.wishListInsert === 'SUCCESS') {
-          this.notificationSuccess('Thêm vào yêu thích thành công');
-        } else {
-          this.notificationError('Sản phẩm đã tồn tại trong yêu thích');
-        }
-      }, error => this.notificationError('Đã xảy ra lỗi')
-    );
+    if (localStorage.getItem('currentUser')) {
+      this.wishListDTO = new WishList(null, productId, this.currentUser.id);
+      console.log('wishListCondition', this.wishListDTO);
+      this.wishListService.insertWishListAPI(this.wishListDTO).subscribe(
+        dataWishList => {
+          this.wishListInsert = dataWishList['data'];
+          console.log('wishListNotification', this.wishListInsert);
+          if (this.wishListInsert === 'SUCCESS') {
+            this.notificationSuccess('Thêm vào yêu thích thành công');
+          } else {
+            this.notificationError('Sản phẩm đã tồn tại trong yêu thích');
+          }
+        }, error => this.notificationError('Đã xảy ra lỗi')
+      );
+    } else {
+      this.notificationError('Bạn phải đăng nhập để sử dụng chức năng này');
+    }
   }
 }
