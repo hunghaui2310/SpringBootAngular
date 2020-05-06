@@ -25,15 +25,15 @@ public class Contains {
 
 
     public interface BLOG_DETAIL{
-        public static final String DETAIL = "detail";
-        public static final String HEADER = "header";
-        public static final String CONTENT = "content";
-        public static final String FOOTER = "footer";
+        String DETAIL = "detail";
+        String HEADER = "header";
+        String CONTENT = "content";
+        String FOOTER = "footer";
     }
 
     public interface MAIL {
-        public static final String MAIL_HUNG = "hunghomhinh2310@gmail.com";
-        public static final String MAIL_CONTENT = "THIS IS YOUR ACTIVE CODE = ";
-        public static final String MAIL_TITLE = "DO GO HUY HUNG";
+        String MAIL_HUNG = "hunghomhinh2310@gmail.com";
+        String MAIL_CONTENT = "THIS IS YOUR ACTIVE CODE = ";
+        String MAIL_TITLE = "DO GO HUY HUNG";
     }
 }

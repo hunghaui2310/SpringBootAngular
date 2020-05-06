@@ -17,15 +17,15 @@
         <div class="error-wrapper text-center ptb-50 pt-xs-20">
           <div class="error-text">
             <h2>Nhập số xác thực</h2>
-            <p>Một số xác thực được gửi đến email của bạn. <br> Nhập 4 số tại đây.</p>
+            <p>Số xác thực được gửi đến email của bạn. <br> Nhập 4 số tại đây.</p>
           </div>
           <div class="search-error">
             <div id="search-form">
-              <input type="text" [(ngModel)]="numberInput">
+              <input type="text" [(ngModel)]="numberInput" maxlength="4">
             </div>
           </div>
           <div class="error-button">
-            <a (click)="register()">Xác nhận</a>
+            <a (click)="register()" style="cursor: pointer">Xác nhận</a>
           </div>
         </div>
       </div>

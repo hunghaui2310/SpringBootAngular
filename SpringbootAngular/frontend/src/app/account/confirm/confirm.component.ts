@@ -50,11 +50,19 @@ export class ConfirmComponent implements OnInit {
           this.router.navigate(['/login']);
           }
         );
+    } else {
+      this.notificationError('Mã xác nhận không đúng');
     }
   }
 
   notificationSuccess(notification: string) {
     this.toastr.success(notification, '', {
+      timeOut: 2000, positionClass: 'toast-top-center'
+    });
+  }
+
+  notificationError(notification: string) {
+    this.toastr.error(notification, '', {
       timeOut: 2000, positionClass: 'toast-top-center'
     });
   }
