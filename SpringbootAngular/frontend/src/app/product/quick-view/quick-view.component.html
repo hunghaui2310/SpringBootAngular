@@ -75,7 +75,7 @@
             </div>
             <div class="li-comment-section" *ngIf="listComment">
               <br>
-              <h5>{{listComment.length}} phản hồi</h5>
+              <h5 *ngIf="listComment">{{listComment.length}} phản hồi</h5>
               <ul>
                 <li *ngFor="let eachComment of listComment | paginate: {id: 'page', itemsPerPage: pageSize, currentPage: currentP, totalItems: listComment.length}">
                   <div class="author-avatar pt-15">

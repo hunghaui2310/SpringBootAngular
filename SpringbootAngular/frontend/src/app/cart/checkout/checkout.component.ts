@@ -8,6 +8,8 @@ import {CartService} from '../../../service/cart.service';
 import {OrderService} from '../../../service/order.service';
 import {User} from '../../../model/model.user';
 import {Order} from '../../../model/order';
+import {FormControl, Validators} from '@angular/forms';
+import {MyErrorStateMatcher} from '../../../model/MyErrorStateMatcher';
 
 @Component({
   selector: 'app-checkout',
@@ -15,6 +17,16 @@ import {Order} from '../../../model/order';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+
+  emailFormControl = new FormControl('', [Validators.email]);
+  addressFormControl = new FormControl('', [Validators.required]);
+  firstNameFormControl = new FormControl('', [Validators.required]);
+  lastNameFormControl = new FormControl('', [Validators.required]);
+  phoneNumberFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$')
+  ]);
+  matcher = new MyErrorStateMatcher();
 
   currentUser;
   cartNum;
@@ -33,6 +45,9 @@ export class CheckoutComponent implements OnInit {
   id;
   orderCode;
   total;
+  checked: boolean;
+  userInSession = new Array();
+  userSetSession = new User();
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,
@@ -62,11 +77,11 @@ export class CheckoutComponent implements OnInit {
           this.subtotal = this.dataCart['subtotal'];
         }
       );
-    } else if (localStorage.getItem('product')) {
-      this.productInCart = JSON.parse(localStorage.getItem('product'));
+    } else if (sessionStorage.getItem('product')) {
+      this.productInCart = JSON.parse(sessionStorage.getItem('product'));
       for (const product of this.productInCart) {
         console.log(product);
-        this.total = 1 * product['price'];
+        this.total = 100 * product['price'] * product['numProInCart'];
       }
     }
   }
@@ -84,34 +99,54 @@ export class CheckoutComponent implements OnInit {
 
   getDataUser() {
     this.conditionUser = new User(this.currentUser.id);
-    console.log('conditionUser', this.conditionUser);
     this.accountService.getDataUser(this.conditionUser).subscribe(
       dataUser => {
         this.dataUsers = dataUser['data'];
-        console.log('dataUsers', this.dataUsers);
-        this.firstName = this.dataUsers['firstName'];
-        this.lastName = this.dataUsers['lastName'];
-        this.email = this.dataUsers['email'];
+        this.firstNameFormControl.setValue(this.dataUsers['firstName']);
+        this.lastNameFormControl.setValue(this.dataUsers['lastName']);
+        this.emailFormControl.setValue(this.dataUsers['email']);
       }
     );
   }
 
+  notificationError(notification: string) {
+    this.toastr.error(notification);
+  }
+
   checkOut() {
-    this.conditionUser = new Order(null, this.notes, null,
-      this.currentUser.id, this.lastName, this.firstName, this.address,
-      this.phoneNumber, this.city);
-    // console.log('this.lastName', this.lastName);
-    console.log('this.orderuuu', this.conditionUser);
-    this.orderService.updateOrderAPI(this.conditionUser).subscribe(
-      dataUpdateOrder => {
-        console.log('dataOrderdddddd', dataUpdateOrder);
-        this.id = dataUpdateOrder['data'];
-        this.productService.setId(this.id);
-        console.log('dataOrderdddddd', dataUpdateOrder);
-        this.showSuccess('Xác nhận thông tin thành công!');
-      }, error => this.showError('Lỗi')
-    );
-    console.log('ket thuc');
+    if (!this.addressFormControl.invalid && !this.phoneNumberFormControl.invalid &&
+      !this.firstNameFormControl.invalid && !this.lastNameFormControl.invalid && !this.emailFormControl.hasError('email')
+      && !this.phoneNumberFormControl.hasError('pattern')) {
+      if (localStorage.getItem('currentUser')) {
+        this.conditionUser = new Order(null, this.notes, null,
+          this.currentUser.id, this.lastName, this.firstName, this.address,
+          this.phoneNumber, this.city);
+        this.orderService.updateOrderAPI(this.conditionUser).subscribe(
+          dataUpdateOrder => {
+            this.id = dataUpdateOrder['data'];
+            this.productService.setId(this.id);
+            this.showSuccess('Xác nhận thông tin thành công!');
+          }, error => this.showError('Lỗi')
+        );
+      } else {
+        const email = this.emailFormControl.value ? this.emailFormControl.value : null;
+        this.userSetSession.firstName = this.firstNameFormControl.value;
+        this.userSetSession.lastName = this.lastNameFormControl.value;
+        this.userSetSession.phoneNumber = this.phoneNumberFormControl.value;
+        this.userSetSession.address = this.addressFormControl.value;
+        this.userSetSession.email = email;
+        this.userInSession.push(this.userSetSession);
+        if (sessionStorage.getItem('userInSession')) {
+          sessionStorage.removeItem('userInSession');
+        }
+        sessionStorage.setItem('userInSession', JSON.stringify(this.userInSession));
+      }
+      window.location.replace('/order-info');
+    } else if (this.checked === undefined || this.checked === false) {
+      this.notificationError('Bạn cần chọn vào ô xác thực thông tin trước khi thanh toán');
+    } else {
+      this.notificationError('Bạn cần điền đầy đủ và chính xác các thông tin trước khi thanh toán');
+    }
   }
 
   fetchOrderCode() {
@@ -121,5 +156,4 @@ export class CheckoutComponent implements OnInit {
         this.orderCode = dataFetch;
       });
   }
-
 }

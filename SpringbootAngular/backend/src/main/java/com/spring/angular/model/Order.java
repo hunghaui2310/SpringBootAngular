@@ -11,8 +11,12 @@ public class Order {
     private String orderCode;
     private Long userId;
     private Date createDate;
-    private String notes;
-    private String city;
+    private String note;
+    private String namerOder;
+    private String address;
+    private String phoneNumber;
+    private String email;
+    private int payment;
 
     @Id
     @GeneratedValue
@@ -53,20 +57,56 @@ public class Order {
     }
 
     @Column(name = "note")
-    public String getNotes() {
-        return notes;
+    public String getNote() {
+        return note;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    @Column(name = "city")
-    public String getCity() {
-        return city;
+    @Column(name = "name_order")
+    public String getNamerOder() {
+        return namerOder;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setNamerOder(String namerOder) {
+        this.namerOder = namerOder;
+    }
+
+    @Column(name = "address")
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Column(name = "phone_number")
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Column(name = "payment")
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
     }
 }
