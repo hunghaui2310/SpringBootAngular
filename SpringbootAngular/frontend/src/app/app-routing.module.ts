@@ -47,6 +47,7 @@ import {BanAnComponent} from './product-cate/ban-an/ban-an.component';
 import {TuQuanAoComponent} from './product-cate/tu-quan-ao/tu-quan-ao.component';
 import {KeTiviComponent} from './product-cate/ke-tivi/ke-tivi.component';
 import {ConfirmComponent} from './account/confirm/confirm.component';
+import {ForgotPasswordComponent} from "./account/forgot-password/forgot-password.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -93,6 +94,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent, data: { title: 'Đăng kí'}},
   {path: 'logout', component: LogoutComponent, data: { title: 'Đăng xuất'}},
   {path: 'not-found', component: NotFoundComponent, data: { title: 'Không tìm thấy'}},
+  {path: 'forgot-password', component: ForgotPasswordComponent, data: { title: 'Quên mật khẩu'}},
   // otherwise redirect to profile
   {path: '**', redirectTo: '/not-found'}
 ];

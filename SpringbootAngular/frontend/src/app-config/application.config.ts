@@ -36,7 +36,7 @@ export const config = {
   getCommentById_API: URL_BASE + '/comment/getById',
   getCommentByBlog_API: URL_BASE + '/comment/getByBlog',
   deleteComment_API: URL_BASE + '/comment/delete',
-  confirm_mail_API: URL_BASE + '/mail/send',
+  forgot_password_API: URL_BASE + '/mail/forgot-password',
 
   // admin -API
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',

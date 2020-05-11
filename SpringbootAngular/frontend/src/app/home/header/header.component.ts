@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.cartNum = 0;
       this.showInfoUser();
       this.getNumCart();
       this.showAllWishList();

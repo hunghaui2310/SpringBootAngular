@@ -21,4 +21,8 @@ export class AccountService {
   updateUser(user: User) {
     return this.http.post(config.update_user_API, user);
   }
+
+  forgotPassword(user: User) {
+    return this.http.post(config.forgot_password_API, user);
+  }
 }

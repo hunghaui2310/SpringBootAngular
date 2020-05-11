@@ -24,32 +24,32 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
   register() {
-    // this.accountService.createAccount(this.user).subscribe(data => {
-    //     this.notificationSuccess('Đăng kí thành công');
-    //     this.router.navigate(['/login']);
-    //   }, err => {
-    //     console.log(err);
-    //     this.errorMessage = 'Tên đăng kí đã tồn tại';
-    //     this.notificationError(this.errorMessage);
-    //   }
-    // );
-    this.apiService.setUserData(this.user);
-    console.log('user register:', this.user);
-    this.apiService.confirmMailAPI(this.user).subscribe(
-      data => {
-        if (data['code'] === 200) {
-          if (data['data'] === 'DUPLICATE') {
-            this.notificationError('Tài khoản đã tồn tại');
-          } else {
-            this.loading = true;
-            this.apiService.setNumberConfirm(data['data']);
-            this.router.navigate(['/confirm']);
-          }
-        } else {
-          this.notificationError('Email không tồn tại');
-        }
+    this.accountService.createAccount(this.user).subscribe(data => {
+        this.notificationSuccess('Đăng kí thành công');
+        this.router.navigate(['/login']);
+      }, err => {
+        console.log(err);
+        this.errorMessage = 'Tên đăng kí đã tồn tại';
+        this.notificationError(this.errorMessage);
       }
     );
+    // this.apiService.setUserData(this.user);
+    // console.log('user register:', this.user);
+    // this.apiService.confirmMailAPI(this.user).subscribe(
+    //   data => {
+    //     if (data['code'] === 200) {
+    //       if (data['data'] === 'DUPLICATE') {
+    //         this.notificationError('Tài khoản đã tồn tại');
+    //       } else {
+    //         this.loading = true;
+    //         this.apiService.setNumberConfirm(data['data']);
+    //         this.router.navigate(['/confirm']);
+    //       }
+    //     } else {
+    //       this.notificationError('Email không tồn tại');
+    //     }
+    //   }
+    // );
   }
 
   notificationSuccess(notification: string) {

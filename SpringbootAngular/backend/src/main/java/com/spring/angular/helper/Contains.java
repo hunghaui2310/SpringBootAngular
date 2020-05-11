@@ -2,6 +2,7 @@ package com.spring.angular.helper;
 
 public class Contains {
 
+    public static final String NOT_EXIST = "NOT_EXIST";
     public static final String ERROR = "ERROR";
     public static final String CONFLICT = "CONFLICT";
     public static final String USER = "USER";
@@ -35,5 +36,6 @@ public class Contains {
         String MAIL_HUNG = "hunghomhinh2310@gmail.com";
         String MAIL_CONTENT = "THIS IS YOUR ACTIVE CODE = ";
         String MAIL_TITLE = "DO GO HUY HUNG";
+        String PASSWORD = "Hungnn98";
     }
 }

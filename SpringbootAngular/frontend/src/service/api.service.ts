@@ -39,6 +39,6 @@ export class ApiService {
   }
 
   confirmMailAPI(user: User) {
-    return this.http.post(config.confirm_mail_API, user);
+    return this.http.post(config.forgot_password_API, user);
   }
 }

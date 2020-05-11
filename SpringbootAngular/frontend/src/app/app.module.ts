@@ -45,6 +45,7 @@ import { BanAnComponent } from './product-cate/ban-an/ban-an.component';
 import { TuQuanAoComponent } from './product-cate/tu-quan-ao/tu-quan-ao.component';
 import { KeTiviComponent } from './product-cate/ke-tivi/ke-tivi.component';
 import { ConfirmComponent } from './account/confirm/confirm.component';
+import { ForgotPasswordComponent } from './account/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ConfirmComponent } from './account/confirm/confirm.component';
     BanAnComponent,
     TuQuanAoComponent,
     KeTiviComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
