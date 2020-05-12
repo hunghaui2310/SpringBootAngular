@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {Category} from '../../../model/category';
 import {SearchRequest} from '../../../model/search.request';
 import {Product} from '../../../model/product';
@@ -14,6 +14,7 @@ import {WishListService} from '../../../service/wish-list.service';
 import {OtherService} from '../../../service/other.service';
 import {AccountService} from '../../../service/account.service';
 import {CartData} from "../../../model/cart";
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 @Component({
   selector: 'app-header',
@@ -38,6 +39,7 @@ export class HeaderComponent implements OnInit {
   listPro: Product[];
   setCartData = new CartData();
   updateNum: boolean;
+  mobjModalRef: BsModalRef;
 
   userInfo: User;
   userEmail: string;
@@ -48,7 +50,8 @@ export class HeaderComponent implements OnInit {
               private productService: ProductService,
               private cartService: CartService,
               private wishListService: WishListService,
-              private categoryService: OtherService) {
+              private categoryService: OtherService,
+              private modalService: BsModalService) {
     if (localStorage.getItem('currentUser')) {
       this.userEmail = JSON.parse(localStorage.getItem('currentUser')).username;
     }
@@ -71,12 +74,23 @@ export class HeaderComponent implements OnInit {
     this.categoryId = null;
   }
 
+  closeForm(): void {
+    this.mobjModalRef.hide();
+  }
+
   getComboboxCate() {
     this.categoryService.getAllCategory().subscribe(
       data => {
         this.categories = data['data'];
       },
       error => (console.log('NO DATA!'))
+    );
+  }
+
+  openLogout(pobjTemplate: TemplateRef<any>) {
+    this.mobjModalRef = this.modalService.show(pobjTemplate, {
+        ignoreBackdropClick: true
+      }
     );
   }
 

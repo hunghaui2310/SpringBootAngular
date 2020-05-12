@@ -107,11 +107,11 @@
               <tr class="cart_item" *ngFor="let eachCheckOut of productInCart">
                 <td class="cart-product-name"> {{eachCheckOut.productName}}<strong class="product-quantity" *ngIf="eachCheckOut.numProInCart"> × {{eachCheckOut.numProInCart}}</strong></td>
                 <td class="cart-product-total" *ngIf="eachCheckOut.total"><span class="amount">{{eachCheckOut.total * 1000000 | number}}</span></td>
-                <td class="cart-product-total" *ngIf="eachCheckOut.price"><span class="amount">{{eachCheckOut.price * 1000000 | number}}</span></td>
+<!--                <td class="cart-product-total" *ngIf="eachCheckOut.price"><span class="amount">{{eachCheckOut.price * 1000000 | number}}</span></td>-->
               </tr>
               </tbody>
               <tfoot>
-              <tr class="cart-subtotal" *ngIf="orderCode != null">
+              <tr class="cart-subtotal" *ngIf="orderCode">
                 <th>Khuyến mại</th>
                 <td><span class="amount">{{orderCode}} %</span></td>
               </tr>
@@ -127,7 +127,7 @@
             <div class="payment-accordion">
               <div class="order-button-payment row">
                 <div class="col-sm-6">
-                  <button routerLink="/cart">Quay lại giỏ hàng</button>
+                  <button *ngIf="currentUser" routerLink="/cart">Quay lại giỏ hàng</button>
                 </div>
                 <div class="col-sm-6">
                   <button (click)="checkOut()">Thanh toán</button>

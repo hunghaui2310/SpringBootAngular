@@ -8,6 +8,7 @@ export const config = {
   search_product: URL_BASE + '/product/search',
   same_product_API: URL_BASE + '/product/sameProduct',
   getProById_API: URL_BASE + '/product/detailById',
+  buy_now_API: URL_BASE + '/product/buy-now',
   product_quick_view_API: URL_BASE + '/product/quick-view',
   product_cate_API: URL_BASE + '/category/product-category',
   product_detail: URL_BASE + '/product/detail',
@@ -37,6 +38,7 @@ export const config = {
   getCommentByBlog_API: URL_BASE + '/comment/getByBlog',
   deleteComment_API: URL_BASE + '/comment/delete',
   forgot_password_API: URL_BASE + '/mail/forgot-password',
+  login_API: URL_BASE + '/account/login',
 
   // admin -API
   get_all_product_admin_API: URL_BASE + '/admin-product/getProduct',

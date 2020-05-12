@@ -51,6 +51,7 @@ export class SingleItemComponent implements OnInit {
   wishListInsert;
   cartNum = 1;
   clickNumCart: boolean;
+  productBuyNow = new Product();
 
   title = 'angularowlslider';
   customOptions: any = {
@@ -283,6 +284,26 @@ export class SingleItemComponent implements OnInit {
         }
       }, error => this.notificationError('Đã xảy ra lỗi')
     );
+  }
+
+  buyNow(productId: number) {
+    const id = new Product(productId);
+    this.productService.buyNow(id).subscribe(
+      data => {
+        console.log(data);
+        if (data['code'] === 200) {
+          const productArr = new Array();
+          this.productBuyNow.productName = data['data']['productName'];
+          this.productBuyNow.realPrice = data['data']['realPrice'];
+          this.productBuyNow.numProInCart = 1;
+          this.productBuyNow.total = data['data']['realPrice'];
+          productArr.push(this.productBuyNow);
+          sessionStorage.setItem('productBuyNow', JSON.stringify(productArr));
+          window.location.replace('/checkout');
+        } else {
+          this.toastr.error('Đã xảy ra lỗi. Vui lòng thủ lại sau');
+        }
+      });
   }
 
   changeNumCart(change: boolean) {

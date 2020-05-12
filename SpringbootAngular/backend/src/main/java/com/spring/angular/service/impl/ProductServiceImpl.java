@@ -366,5 +366,34 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Override
+    public ProductDetailDTO buyNow(Long productId) throws Exception {
+        ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+        Object[] objects = null;
+        int discount;
+        if (productRepo.getProductById(productId) != null) {
+            objects = productRepo.getProductById(productId);
+        }
+        if (objects != null) {
+            discount = DataUtil.safeToInt(objects[6]);
+            productDetailDTO.setPrice(DataUtil.safeToInt(objects[3]));
+            if(!DataUtil.isNullOrZero(discount)) {
+                productDetailDTO.setRealPrice(DataUtil.safeToDouble(objects[5]));
+            }else {
+                productDetailDTO.setRealPrice(productDetailDTO.getPrice());
+            }
+            if(!DataUtil.isNullOrZero(discount)){
+                productDetailDTO.setDiscount(DataUtil.safeToInt(objects[6]));
+            }
+            productDetailDTO.setId(DataUtil.safeToLong(objects[0]));
+            productDetailDTO.setProductName(DataUtil.safeToString(objects[1]));
+            productDetailDTO.setPrice(DataUtil.safeToInt(objects[3]));
+            productDetailDTO.setNoData(false);
+            productDetailDTO.setCategoryId(DataUtil.safeToLong(objects[8]));
+            return productDetailDTO;
+        } else
+            productDetailDTO.setNoData(true);
+        return productDetailDTO;
+    }
 
 }

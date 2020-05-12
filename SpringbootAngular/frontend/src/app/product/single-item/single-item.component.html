@@ -250,9 +250,11 @@
                 </div>
                 <div class="add-actions">
                   <ul class="add-actions-link">
-                    <li class="add-cart active" (click)="addProCart(sameProduct.id)"><span>Thêm vào giỏ</span></li>
+                    <li class="add-cart active" (click)="addProCart(sameProduct.id)"><span title="Thêm vào giỏ"><i class="fa fa-cart-plus"></i></span></li>
                     <li><span title="Mua ngay" class="quick-view-btn"><i class="fa fa-eye"></i></span></li>
                     <li (click)="insertToWishList(sameProduct.id)"><span title="Yêu thích" class="links-details"><i class="fa fa-heart-o"></i></span></li>
+                    <li (click)="buyNow(sameProduct.id)"><span title="Mua ngay" class="links-details"><i
+                      class="fa fa-credit-card"></i></span></li>
                   </ul>
                 </div>
               </div>

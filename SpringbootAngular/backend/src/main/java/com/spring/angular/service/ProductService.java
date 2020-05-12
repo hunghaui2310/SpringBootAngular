@@ -31,4 +31,6 @@ public interface ProductService {
     String deleteProduct(Long productId) throws Exception;
 
     String updateProduct(ProductDTO productDTO) throws Exception;
+
+    ProductDetailDTO buyNow(Long productId) throws Exception;
 }

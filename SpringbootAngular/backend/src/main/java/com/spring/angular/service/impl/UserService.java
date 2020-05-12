@@ -28,8 +28,8 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PasswordEncoder setPassword(PasswordEncoder passwordEncoder) {
-        return this.passwordEncoder = passwordEncoder;
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User saveUser(User user) throws Exception {
@@ -79,5 +79,10 @@ public class UserService {
         }
         userDTO.setEmail(user.getUsername());
         return userDTO;
+    }
+
+    public boolean checkPassword(String email, String password) {
+        User user = findByUserName(email);
+        return passwordEncoder.matches(password, user.getPassword());
     }
 }

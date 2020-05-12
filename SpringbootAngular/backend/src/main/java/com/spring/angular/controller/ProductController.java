@@ -98,4 +98,15 @@ public class ProductController {
         return apiResponse;
     }
 
+    @PostMapping("/buy-now")
+    public ApiResponse buyNow(@RequestBody ProductDTO productDTO) {
+        try {
+            ProductDetailDTO productDetailDTO = productService.buyNow(productDTO.getId());
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", productDetailDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
+
 }

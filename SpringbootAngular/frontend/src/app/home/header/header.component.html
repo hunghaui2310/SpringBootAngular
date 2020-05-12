@@ -14,7 +14,7 @@
           <div class="header-top-right">
             <ul class="ht-menu">
               <li *ngIf="currentUser"><a routerLink="/profile">{{userEmail}}</a></li>
-              <li *ngIf="currentUser"><a routerLink="/logout" (click)="logOut()">Đăng xuất</a></li>
+              <li *ngIf="currentUser"><a style="color: #007bff;" (click)="openLogout(logout)">Đăng xuất</a></li>
               <li *ngIf="!currentUser"><a routerLink="/login">Đăng nhập</a></li>
               <li><a routerLink="/register">Đăng kí</a></li>
             </ul>
@@ -87,5 +87,31 @@
     </div>
   </div>
 </header>
+
+<ng-template #logout>
+  <div class="row" style="margin-right: 0 !important; margin-left: 0 !important;">
+    <div class="col-md-10 modal-body">
+      <span> <img style="margin: 0 3px 3px 0;" src="assets/icons8-question-mark-16.png"
+                  alt="del">Bạn chắc chắn muốn đăng xuất?</span>
+    </div>
+
+    <div class="col-md-2 modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeForm()" size="6MB">
+        <span aria-hidden="true" style="border: none">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary click-btn-upload" (click)=closeForm() style="width: 88.64px;"><i
+      class="fa fa-times"></i>
+      Không
+    </button>
+    <button class="btn btn-primary click-btn-upload" type="button" style="width: 88.64px;" (click)="logOut()">
+      <i
+        class="fa fa-check"></i>
+      Có
+    </button>
+  </div>
+</ng-template>
 
 

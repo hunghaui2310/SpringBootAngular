@@ -53,9 +53,28 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/login")
-    public Principal login(Principal principal){
-        return principal;
+//    @RequestMapping("/login")
+//    public Principal login(Principal principal){
+//        return principal;
+//    }
+
+    @PostMapping("/login")
+    public ApiResponse login(@RequestBody UserDTO userDTO) {
+        try {
+            if (userService.findByUserName(userDTO.getUsername()) != null) {
+                if (userService.checkPassword(userDTO.getUsername(), userDTO.getPassword())) {
+                    User user = userService.findByUserName(userDTO.getUsername());
+                    return ApiResponse.build(HttpServletResponse.SC_OK, true, "", user);
+                } else {
+                    return ApiResponse.build(HttpServletResponse.SC_UNAUTHORIZED, false, "", null);
+                }
+            } else {
+                return ApiResponse.build(HttpServletResponse.SC_UNAUTHORIZED, false, Contains.NOT_EXIST, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
     }
 
     @PostMapping("/get-data")

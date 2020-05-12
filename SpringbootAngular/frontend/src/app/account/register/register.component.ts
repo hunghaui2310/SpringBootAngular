@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {AccountService} from '../../../service/account.service';
 import {ApiService} from '../../../service/api.service';
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,10 @@ import {ApiService} from '../../../service/api.service';
 })
 export class RegisterComponent implements OnInit {
 
+  fullName = new FormControl('', Validators.required);
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', Validators.required);
+  hide: false;
   user: User = new User();
   errorMessage: string;
   loading: boolean;
@@ -24,15 +29,24 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
   register() {
-    this.accountService.createAccount(this.user).subscribe(data => {
-        this.notificationSuccess('Đăng kí thành công');
-        this.router.navigate(['/login']);
-      }, err => {
-        console.log(err);
-        this.errorMessage = 'Tên đăng kí đã tồn tại';
-        this.notificationError(this.errorMessage);
-      }
-    );
+    const name = this.fullName.value;
+    const emailRegister = this.email.value;
+    const passwordRegister = this.password.value;
+    if (name && emailRegister && passwordRegister) {
+      this.user.username = emailRegister;
+      this.user.password = passwordRegister;
+      this.accountService.createAccount(this.user).subscribe(data => {
+          this.notificationSuccess('Đăng kí thành công');
+          this.router.navigate(['/login']);
+        }, err => {
+          console.log(err);
+          this.errorMessage = 'Tên đăng kí đã tồn tại';
+          this.notificationError(this.errorMessage);
+        }
+      );
+    } else {
+      this.notificationError('Bạn cần điền đầy đủ thông tin');
+    }
     // this.apiService.setUserData(this.user);
     // console.log('user register:', this.user);
     // this.apiService.confirmMailAPI(this.user).subscribe(

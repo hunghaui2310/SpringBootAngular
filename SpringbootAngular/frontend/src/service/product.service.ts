@@ -57,4 +57,8 @@ export class ProductService {
   getProById(product: Product) {
     return this.http.post(config.getProById_API, product);
   }
+
+  buyNow(productId: Product) {
+    return this.http.post(config.buy_now_API, productId);
+  }
 }

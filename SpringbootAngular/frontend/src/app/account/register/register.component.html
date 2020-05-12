@@ -3,46 +3,35 @@
     <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
     <p id="profile-name" class="profile-name-card"></p>
 
-    <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
-      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">{{errorMessage}}</div>
-      <span id="reauth-email" class="reauth-email"></span>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !fullName.valid }">
-        <label for="fullName">Tên tài khoản</label>
-        <input type="text" class="form-control" name="fullName" id="fullName" [(ngModel)]="user.fullName" #fullName="ngModel" required />
-        <div *ngIf="f.submitted && !fullName.valid" class="error-validate">Tên không được để trống</div>
-      </div>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-        <label for="username">Tên đăng nhập(email)</label>
-        <input type="text" class="form-control" name="username" id="username" pattern="[^ @]*@[^ @]*" [(ngModel)]="user.username" #username="ngModel" required />
-        <div *ngIf="f.submitted && !username.valid" class="help-block">
-
-          <div *ngIf="username.errors.required" class="error-validate">
-            Email không được để trống
-          </div>
-          <div *ngIf="username.errors.pattern" class="error-validate">
-            Email không đúng định dạng
-          </div>
-
-        </div>
-      </div>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-        <label for="password">Mật khẩu</label>
-        <input type="password" class="form-control" name="password" id="password"[(ngModel)]="user.password" #password="ngModel" required minlength="4" />
-        <div *ngIf="f.submitted && !password.valid" class="help-block">
-
-          <div *ngIf="password.errors.required" class="error-validate">
-            Mật khẩu không được để trống
-          </div>
-          <div *ngIf="password.errors.minlength" class="error-validate">
-            Mật khẩu phải dài hơn 4 kí tự
-          </div>
-
-        </div>
-      </div>
-      <div id="remember" class="checkbox">
-
-      </div>
-      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Tạo tài khoản <i *ngIf="loading" class="fa fa-spinner fa-spin"></i></button>
+    <form>
+      <mat-form-field>
+        <mat-label>Tên tài khoản</mat-label>
+        <input matInput type="text" [formControl]="fullName" required />
+        <mat-error *ngIf="fullName.hasError('required')">
+          Tên tài khoản không được để trống
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Tên đăng nhập(email)</mat-label>
+        <input matInput type="text" [formControl]="email" required />
+        <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+          Email sai định dạng
+        </mat-error>
+        <mat-error *ngIf="email.hasError('required')">
+          Email không được để trống
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Mật khẩu</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="password.hasError('required')">
+          Mật khẩu không được để trống
+        </mat-error>
+      </mat-form-field>
+      <button class="btn btn-lg btn-primary btn-block btn-signin mt-10" (click)="register()">Tạo tài khoản <i *ngIf="loading" class="fa fa-spinner fa-spin"></i></button>
       <button [routerLink]="['/login']" class="btn btn-lg btn-danger btn-block btn-cancel" type="button">Hủy</button>
 
     </form><!-- /form -->

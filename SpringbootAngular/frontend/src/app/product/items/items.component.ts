@@ -51,6 +51,7 @@ export class ItemsComponent implements OnInit, AfterViewInit {
   wishListDTO;
   wishListInsert;
   cartNum: number;
+  productBuyNow = new Product();
 
   constructor(private productService: ProductService,
               private router: Router,
@@ -257,5 +258,24 @@ export class ItemsComponent implements OnInit, AfterViewInit {
     } else {
       this.notificationError('Bạn phải đăng nhập để sử dụng chức năng này');
     }
+  }
+
+  buyNow(productId: number) {
+    const id = new Product(productId);
+    this.productService.buyNow(id).subscribe(
+      data => {
+        if (data['code'] === 200) {
+          const productArr = new Array();
+          this.productBuyNow.productName = data['data']['productName'];
+          this.productBuyNow.realPrice = data['data']['realPrice'];
+          this.productBuyNow.numProInCart = 1;
+          this.productBuyNow.total = data['data']['realPrice'];
+          productArr.push(this.productBuyNow);
+          sessionStorage.setItem('productBuyNow', JSON.stringify(productArr));
+          window.location.replace('/checkout');
+        } else {
+          this.toastr.error('Đã xảy ra lỗi. Vui lòng thủ lại sau');
+        }
+      });
   }
 }

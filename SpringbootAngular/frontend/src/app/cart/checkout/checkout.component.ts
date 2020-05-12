@@ -67,20 +67,30 @@ export class CheckoutComponent implements OnInit {
   }
 
   dataCheckOut() {
-    if (localStorage.getItem('currentUser')) {
-      this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
-      this.cartService.getNumCartAPI(this.currentUser).subscribe(
-        dataInCart => {
-          this.dataCart = dataInCart['data'];
-          this.cartNum = this.dataCart['numCart'];
-          this.productInCart = this.dataCart['productDTOList'];
-          this.subtotal = this.dataCart['subtotal'];
+    if (!localStorage.getItem('currentUser')) {
+      if (sessionStorage.getItem('productBuyNow')) {
+        const product = JSON.parse(sessionStorage.getItem('productBuyNow'));
+        let setTotal = 0;
+        this.cartNum = 1;
+        this.productInCart = product;
+        for (var i = 0; i < this.productInCart.length; i++) {
+          setTotal = this.productInCart[i]['realPrice'];
         }
-      );
+        this.total = setTotal * 100;
+      } else {
+        this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
+        this.cartService.getNumCartAPI(this.currentUser).subscribe(
+          dataInCart => {
+            this.dataCart = dataInCart['data'];
+            this.cartNum = this.dataCart['numCart'];
+            this.productInCart = this.dataCart['productDTOList'];
+            this.subtotal = this.dataCart['subtotal'];
+          }
+        );
+      }
     } else if (sessionStorage.getItem('product')) {
       this.productInCart = JSON.parse(sessionStorage.getItem('product'));
       for (const product of this.productInCart) {
-        console.log(product);
         this.total = 100 * product['price'] * product['numProInCart'];
       }
     }
@@ -126,6 +136,7 @@ export class CheckoutComponent implements OnInit {
             this.id = dataUpdateOrder['data'];
             this.productService.setId(this.id);
             this.showSuccess('Xác nhận thông tin thành công!');
+            sessionStorage.removeItem('productBuyNow');
           }, error => this.showError('Lỗi')
         );
       } else {
