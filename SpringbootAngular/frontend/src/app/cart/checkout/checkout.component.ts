@@ -67,16 +67,16 @@ export class CheckoutComponent implements OnInit {
   }
 
   dataCheckOut() {
-    if (!localStorage.getItem('currentUser')) {
+    if (localStorage.getItem('currentUser')) {
       if (sessionStorage.getItem('productBuyNow')) {
-        const product = JSON.parse(sessionStorage.getItem('productBuyNow'));
-        let setTotal = 0;
-        this.cartNum = 1;
-        this.productInCart = product;
-        for (var i = 0; i < this.productInCart.length; i++) {
-          setTotal = this.productInCart[i]['realPrice'];
+        this.orderCode = undefined;
+        this.productInCart = JSON.parse(sessionStorage.getItem('productBuyNow'));
+        console.log(this.productInCart);
+        for (const product of this.productInCart) {
+          this.total = 100 * product['realPrice'] * product['numProInCart'];
         }
-        this.total = setTotal * 100;
+        console.log(this.total);
+        // this.total = setTotal * 100;
       } else {
         this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
         this.cartService.getNumCartAPI(this.currentUser).subscribe(
@@ -88,8 +88,8 @@ export class CheckoutComponent implements OnInit {
           }
         );
       }
-    } else if (sessionStorage.getItem('product')) {
-      this.productInCart = JSON.parse(sessionStorage.getItem('product'));
+    } else if (sessionStorage.getItem('productBuyNow')) {
+      this.productInCart = JSON.parse(sessionStorage.getItem('productBuyNow'));
       for (const product of this.productInCart) {
         this.total = 100 * product['price'] * product['numProInCart'];
       }

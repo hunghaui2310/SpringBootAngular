@@ -73,7 +73,7 @@
                     <span>{{subtotal * 1000000 - (dataCode * subtotal * 10000) | number}}</span></li>
                   <li *ngIf="!dataCode">Thanh toán <span>{{subtotal * 1000000 | number}}</span></li>
                 </ul>
-                <a routerLink="/checkout">Thanh toán</a>
+                <a (click)="checkOut()" style="color: white">Thanh toán</a>
               </div>
             </div>
           </div>

@@ -81,6 +81,13 @@ export class ShowCartComponent implements OnInit {
     });
   }
 
+  checkOut() {
+    if (sessionStorage.getItem('productBuyNow')) {
+      sessionStorage.removeItem('productBuyNow');
+    }
+    window.location.replace('/checkout');
+  }
+
   notificationWarning(notification: string) {
     this.toastr.error(notification, 'Thông báo',{
       timeOut: 1000, positionClass: 'toast-top-center'
