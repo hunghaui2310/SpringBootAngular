@@ -65,7 +65,7 @@ public class UserService {
         return userRepo.findOneByUsername(userName);
     }
 
-    public UserDTO getDataUser(Long userId) throws Exception{
+    public UserDTO getDataUser(Long userId) throws Exception {
         UserDTO userDTO = new UserDTO();
         User user = userRepo.getOne(userId);
         userDTO.setId(user.getId());

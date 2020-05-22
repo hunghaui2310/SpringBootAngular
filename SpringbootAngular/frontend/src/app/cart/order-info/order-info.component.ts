@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {OrderService} from '../../../service/order.service';
 import {Order} from '../../../model/order';
 import {User} from '../../../model/model.user';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-order-info',
@@ -32,18 +33,23 @@ export class OrderInfoComponent implements OnInit {
   codeDiscount;
   message;
   user = new User();
+  order = new Order();
 
   constructor(private orderService: OrderService,
               private cartService: CartService,
               private productService: ProductService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private http: HttpClient) {
+    if (localStorage.getItem('currentUser')) {
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    }
+  }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.orderCode = 'HD-' + Math.random().toString(36).substr(2, 9);
     this.fetchOrderCode();
     this.showDataOrder();
     this.dataProductOrder();
-    this.orderCode = 'HD-' + Math.random().toString(36).substr(2, 9);
     if (this.codeDiscount.length === 0) {
       this.codeDiscount = null;
     }
@@ -85,9 +91,9 @@ export class OrderInfoComponent implements OnInit {
         }
       );
     } else if (sessionStorage.getItem('userInSession')) {
-      const productInSession = JSON.parse(sessionStorage.getItem('product'));
+      const productInSession = JSON.parse(sessionStorage.getItem('productBuyNow'));
       for (let i = 0; i < productInSession.length; i++) {
-        this.subtotal = productInSession[i]['price'] * productInSession[i]['numProInCart'];
+        this.subtotal = productInSession[i]['realPrice'] * productInSession[i]['numProInCart'];
       }
     }
   }
@@ -114,21 +120,26 @@ export class OrderInfoComponent implements OnInit {
   confirmOrderByUser() {
     if (this.id) {
       this.condition = new Order(this.id);
-      this.orderService.confirmOrderAPI(this.condition).subscribe(
-        dataConfirm => {
-          this.message = dataConfirm['data']['message'];
-          this.orderService.setOrderId(this.id);
-          if (this.message === 'SUCCESS') {
-            this.notificationSuccess('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất');
-            setTimeout(function STO() {
-              window.location.replace('/home');
-            }, 2000);
-          } else {
-            this.notificationError('Đã xảy ra lỗi');
-          }
-        }
-      );
     } else {
+      this.order = JSON.parse(sessionStorage.getItem('userInSession'))[0];
+      console.log(this.order);
+      this.condition = new Order(null, this.order.note == undefined ? null : this.order.note, this.orderCode, null, this.order.lastName,
+        this.order.firstName, this.order.address, this.order.phoneNumber, this.order.email);
     }
+    console.log(this.condition);
+    this.http.post('http://localhost:8080/order/save', this.condition).subscribe(
+      dataConfirm => {
+        console.log(dataConfirm);
+        if (dataConfirm['code'] === 200) {
+          this.notificationSuccess('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất');
+          this.http.get('http://localhost:4200/notification').subscribe();
+          setTimeout(function STO() {
+            window.location.replace('/home');
+          }, 1500);
+        } else {
+          this.notificationError('Đã xảy ra lỗi');
+        }
+      }
+    );
   }
 }

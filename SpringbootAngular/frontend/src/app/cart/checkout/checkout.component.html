@@ -73,7 +73,7 @@
               <div class="checkout-form-list">
                 <mat-form-field>
                   <mat-label>Ghi chú</mat-label>
-                  <textarea matInput maxlength="256" style="border: none" #message placeholder="Ví dụ: Tôi cần giúp đỡ..."></textarea>
+                  <textarea matInput maxlength="256" style="border: none" [formControl]="notesFormControl" #message placeholder="Ví dụ: Tôi cần giúp đỡ..."></textarea>
                   <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
                 </mat-form-field>
               </div>

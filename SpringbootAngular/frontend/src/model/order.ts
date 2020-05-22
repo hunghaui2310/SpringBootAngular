@@ -2,26 +2,27 @@ import {User} from './model.user';
 
 export class Order {
   id: number;
-  notes: string;
+  note: string;
   orderCode: string;
   userId: number;
   lastName: string;
   firstName: string;
   address: string;
   phoneNumber: string;
-  city: string;
+  email: string;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(id?: number, notes?: string, orderCode?: string, userId?: number, lastName?: string, firstName?: string, address?: string, phoneNumber?: string, city?: string) {
+  constructor(id?: number, note?: string, orderCode?: string,
+              userId?: number, lastName?: string, firstName?: string,
+              address?: string, phoneNumber?: string, email?: string) {
     this.id = id;
-    this.notes = notes;
+    this.note = note;
     this.orderCode = orderCode;
     this.userId = userId;
     this.lastName = lastName;
     this.firstName = firstName;
     this.address = address;
     this.phoneNumber = phoneNumber;
-    this.city = city;
+    this.email = email;
   }
 
 }

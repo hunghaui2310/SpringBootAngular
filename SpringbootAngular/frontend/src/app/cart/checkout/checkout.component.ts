@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
     Validators.required,
     Validators.pattern('^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$')
   ]);
+  notesFormControl = new FormControl('');
   matcher = new MyErrorStateMatcher();
 
   currentUser;
@@ -47,7 +48,7 @@ export class CheckoutComponent implements OnInit {
   total;
   checked: boolean;
   userInSession = new Array();
-  userSetSession = new User();
+  userSetSession = new Order();
 
   constructor(private cartService: CartService,
               private toastr: ToastrService,
@@ -146,6 +147,7 @@ export class CheckoutComponent implements OnInit {
         this.userSetSession.phoneNumber = this.phoneNumberFormControl.value;
         this.userSetSession.address = this.addressFormControl.value;
         this.userSetSession.email = email;
+        this.userSetSession.note = this.notesFormControl.value;
         this.userInSession.push(this.userSetSession);
         if (sessionStorage.getItem('userInSession')) {
           sessionStorage.removeItem('userInSession');
