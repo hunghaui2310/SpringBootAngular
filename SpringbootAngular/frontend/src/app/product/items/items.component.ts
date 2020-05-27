@@ -85,7 +85,6 @@ export class ItemsComponent implements OnInit, AfterViewInit {
 
     this.productService.service$.subscribe(
       data => {
-        console.log(data);
         this.productList = data;
       }
     );
@@ -100,7 +99,6 @@ export class ItemsComponent implements OnInit, AfterViewInit {
     console.log('search', this.searchRequest);
     this.productService.search(this.searchRequest).subscribe(
       dataSerach => {
-        console.log(dataSerach['data']);
         this.productList = dataSerach['data'];
       },
       error => {

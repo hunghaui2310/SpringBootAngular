@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,21 @@ public class ProductController {
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, "ERROR!", null);
+        }
+    }
+
+    @GetMapping("/getNameProduct")
+    public ApiResponse getAllNameProduct() {
+        try{
+            List<ProductDTO> productDTOS = productService.getAllProduct();
+            List<String> productNames = new ArrayList<>();
+            for (ProductDTO productDTO : productDTOS) {
+                productNames.add(productDTO.getProductName());
+            }
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, null, productNames);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
 

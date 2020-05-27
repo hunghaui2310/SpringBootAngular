@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef} from '@angular/core';
 import {Category} from '../../../model/category';
 import {SearchRequest} from '../../../model/search.request';
 import {Product} from '../../../model/product';
@@ -15,6 +15,8 @@ import {OtherService} from '../../../service/other.service';
 import {AccountService} from '../../../service/account.service';
 import {CartData} from "../../../model/cart";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {FormControl} from "@angular/forms";
+import {map, startWith} from "rxjs/operators";
 
 @Component({
   selector: 'app-header',
@@ -24,8 +26,8 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 export class HeaderComponent implements OnInit {
 
   categories: Category[];
-  categoryId;
-  productName;
+  categoryId = new FormControl();
+  productName = new FormControl();
   searchRequest: SearchRequest;
   products;
   cartNum: number;
@@ -40,6 +42,8 @@ export class HeaderComponent implements OnInit {
   setCartData = new CartData();
   updateNum: boolean;
   mobjModalRef: BsModalRef;
+  options: string[] = [];
+  filteredOptions: Observable<string[]>;
 
   userInfo: User;
   userEmail: string;
@@ -59,6 +63,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.options);
     if (localStorage.getItem('currentUser')) {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.cartNum = 0;
@@ -71,7 +76,11 @@ export class HeaderComponent implements OnInit {
       this.currentUser = null;
     }
     this.getComboboxCate();
-    this.categoryId = null;
+    this.filteredOptions = this.productName.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
   }
 
   closeForm(): void {
@@ -82,8 +91,17 @@ export class HeaderComponent implements OnInit {
     this.categoryService.getAllCategory().subscribe(
       data => {
         this.categories = data['data'];
-      },
-      error => (console.log('NO DATA!'))
+      }
+    );
+  }
+
+  getAllProduct() {
+    this.productService.getNameProduct().subscribe(
+      (res) => {
+           this.options = res['data'];
+      }, error1 => {
+        console.log('Loi: ', error1);
+      }
     );
   }
 
@@ -99,7 +117,7 @@ export class HeaderComponent implements OnInit {
   }
 
   search() {
-    this.searchRequest = new SearchRequest(null, this.productName, this.categoryId, null);
+    this.searchRequest = new SearchRequest(null, this.productName.value, this.categoryId.value, null);
     this.productService.search(this.searchRequest).subscribe(
       dataSearch => {
         this.products = dataSearch['data'];
@@ -174,5 +192,11 @@ export class HeaderComponent implements OnInit {
           this.cartNum = this.cartNum + 1;
         }
       });
+  }
+
+  _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    this.getAllProduct();
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 }

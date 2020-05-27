@@ -254,19 +254,22 @@ button.li-btn {
   background: #fed700;
   color: #242424;
   font-size: 20px;
-  width: 45px;
+  width: 55px;
   border-radius: 0 2px 2px 0;
-  height: 45px;
-  line-height: 45px;
+  height: 58px;
+  line-height: 55px;
   position: absolute;
-  right: -1px;
-  top: -1px;
+  right: 1px;
+  top: 5px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
 button.li-btn:hover {
   background: #333333;
   color: #ffffff;
+}
+button.li-btn:focus {
+  outline: none;
 }
 a.links,
 a.links-2,
@@ -1377,13 +1380,14 @@ textarea:focus {
 }
 .hm-searchbox {
   display: flex;
-  position: relative;
+  position: absolute;
   background: #fff;
   border-radius: 5px;
-  border: 1px solid #e1e1e1;
+  //border: 1px solid #e1e1e1;
   min-width: 638px;
   height: 45px;
   float: left;
+  margin-top: -20px;
 }
 .hm-searchbox .nice-select.select-search-category {
   width: auto;

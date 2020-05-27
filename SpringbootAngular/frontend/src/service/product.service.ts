@@ -30,6 +30,10 @@ export class ProductService {
     return this.http.get(config.product_API);
   }
 
+  getNameProduct(): Observable<string[]> {
+    return this.http.get<string[]>(config.get_name_product);
+  }
+
   search(searchModel: SearchRequest) {
     return this.http.post(config.search_product, searchModel);
   }

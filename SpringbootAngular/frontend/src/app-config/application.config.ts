@@ -5,6 +5,7 @@ export const config = {
   pageSize: 15,
   category_API: URL_BASE + '/category/getCategory',
   product_API: URL_BASE + '/product/getProduct',
+  get_name_product: URL_BASE + '/product/getNameProduct',
   search_product: URL_BASE + '/product/search',
   same_product_API: URL_BASE + '/product/sameProduct',
   getProById_API: URL_BASE + '/product/detailById',

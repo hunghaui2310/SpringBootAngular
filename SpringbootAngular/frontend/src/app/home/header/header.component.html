@@ -1,4 +1,3 @@
-
 <header>
   <div class="header-top">
     <div class="container">
@@ -34,14 +33,27 @@
           </div>
         </div>
         <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
-          <div class="hm-searchbox row">
-            <select class="select-search-category col-3" [(ngModel)]="categoryId">
-              <option [value]="null" disabled>Thể loại</option>
-              <option *ngFor="let eachCate of categories" value="{{eachCate.id}}">{{eachCate.nameCate}}</option>
-            </select>
-            <input class="col-9" type="text" [(ngModel)]="productName" placeholder="Tìm kiếm ...">
-            <button class="li-btn" type="submit" (click)="search()"><i class="fa fa-search"></i></button>
-          </div>
+          <form class="hm-searchbox row">
+            <div class="select-search-category col-3 no-pd">
+              <mat-form-field appearance="outline" class="input-custom-material">
+                <mat-label>Thể loại</mat-label>
+                <mat-select [formControl]="categoryId">
+                  <mat-option value="">---Tất cả---</mat-option>
+                  <mat-option *ngFor="let eachCate of categories" value="{{eachCate.id}}">{{eachCate.nameCate}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-9 no-pd">
+              <mat-form-field appearance="outline">
+                <input matInput class="col-9" type="text" [formControl]="productName" [matAutocomplete]="auto"
+                       placeholder="Tìm kiếm ..." class="input-custom-material" (keydown.enter)="search()">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}</mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <button class="li-btn" type="submit" (click)="search()"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
           <div class="header-middle-right">
             <ul class="hm-menu">
               <li class="hm-wishlist">
