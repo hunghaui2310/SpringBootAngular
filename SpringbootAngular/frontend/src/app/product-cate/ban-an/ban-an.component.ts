@@ -4,7 +4,7 @@ import {Product} from '../../../model/product';
 import {SearchRequest} from '../../../model/search.request';
 import {sort, Sort} from '../../../model/sort';
 import {ProductService} from '../../../service/product.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CartService} from '../../../service/cart.service';
 import {ToastrService} from 'ngx-toastr';
 import {OtherService} from '../../../service/other.service';
@@ -31,6 +31,7 @@ export class BanAnComponent implements OnInit {
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
               private cartService: CartService,
+              private router: Router,
               private toastr: ToastrService,
               private compareService: OtherService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -101,7 +102,6 @@ export class BanAnComponent implements OnInit {
     this.compareService.addCompareAPI(this.comPareRequest).subscribe(
       dataCompare => {
         this.notificationMessage = dataCompare['data'];
-        console.log('qqqqqqqqMessage', this.notificationMessage);
         this.notificationSuccess('Thêm so sánh thành công');
       },
       error => this.notificationError()
@@ -116,5 +116,9 @@ export class BanAnComponent implements OnInit {
 
     this.currentP = page;
     console.log('page', this.currentP);
+  }
+
+  productDetail(id: number) {
+    this.router.navigate(['/detail/' + id]);
   }
 }
