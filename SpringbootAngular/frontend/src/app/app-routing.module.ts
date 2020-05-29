@@ -47,7 +47,8 @@ import {BanAnComponent} from './product-cate/ban-an/ban-an.component';
 import {TuQuanAoComponent} from './product-cate/tu-quan-ao/tu-quan-ao.component';
 import {KeTiviComponent} from './product-cate/ke-tivi/ke-tivi.component';
 import {ConfirmComponent} from './account/confirm/confirm.component';
-import {ForgotPasswordComponent} from "./account/forgot-password/forgot-password.component";
+import {ForgotPasswordComponent} from './account/forgot-password/forgot-password.component';
+import {OrderUserComponent} from './account/order-user/order-user.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -86,6 +87,8 @@ const routes: Routes = [
       path: 'wish-list', component: ShowWishListComponent, data: { title: 'Yêu thích'}
     }, {
       path: 'confirm', component: ConfirmComponent, data: { title: 'Xác thực'}
+    }, {
+      path: 'order-user', component: OrderUserComponent, data: { title: 'Thông tin hóa đơn'}
     }
     ]
   },

@@ -7,6 +7,7 @@ import {OrderService} from '../../../service/order.service';
 import {Order} from '../../../model/order';
 import {User} from '../../../model/model.user';
 import {HttpClient} from "@angular/common/http";
+import {AccountService} from "../../../service/account.service";
 
 @Component({
   selector: 'app-order-info',
@@ -34,10 +35,13 @@ export class OrderInfoComponent implements OnInit {
   message;
   user = new User();
   order = new Order();
+  conditionUser;
+  dataUsers;
 
   constructor(private orderService: OrderService,
               private cartService: CartService,
               private productService: ProductService,
+              private accountService: AccountService,
               private toastr: ToastrService,
               private http: HttpClient) {
     if (localStorage.getItem('currentUser')) {
@@ -46,7 +50,7 @@ export class OrderInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orderCode = 'HD-' + Math.random().toString(36).substr(2, 9);
+    this.orderCode = sessionStorage.getItem('orderCode');
     this.fetchOrderCode();
     this.showDataOrder();
     this.dataProductOrder();
@@ -57,15 +61,17 @@ export class OrderInfoComponent implements OnInit {
 
   showDataOrder() {
     if (localStorage.getItem('currentUser')) {
-      this.condition = new Order(this.id, null, null, this.currentUser.id);
+      this.condition = new Order(null, null, this.orderCode);
+      console.log('request', this.condition);
       this.orderService.showDataOrder(this.condition).subscribe(
         data => {
+          console.log(data);
           this.dataOrder = data['data'];
           this.address = this.dataOrder['address'];
           this.phoneNumber = this.dataOrder['phoneNumber'];
           this.email = this.dataOrder['email'];
           this.fullName = this.dataOrder['fullName'];
-          this.orderCode = this.dataOrder['orderCode'];
+          this.orderCode = this.orderCode;
           this.createDate = this.dataOrder['createDate'];
           this.city = this.dataOrder['city'];
           this.notes = this.dataOrder['notes'];
@@ -82,14 +88,22 @@ export class OrderInfoComponent implements OnInit {
 
   dataProductOrder() {
     if (localStorage.getItem('currentUser')) {
-      this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
-      this.cartService.getNumCartAPI(this.currentUser).subscribe(
-        dataInCart => {
-          this.dataCart = dataInCart['data'];
-          this.productInCart = this.dataCart['productDTOList'];
-          this.subtotal = this.dataCart['subtotal'];
+      if (sessionStorage.getItem('productBuyNow')) {
+        this.productInCart = JSON.parse(sessionStorage.getItem('productBuyNow'));
+        console.log(this.productInCart);
+        for (const product of this.productInCart) {
+          this.subtotal = product['realPrice'] * product['numProInCart'];
         }
-      );
+      } else {
+        this.currentUser = new User(this.currentUser.id, null, null, null, null, null);
+        this.cartService.getNumCartAPI(this.currentUser).subscribe(
+          dataInCart => {
+            this.dataCart = dataInCart['data'];
+            this.productInCart = this.dataCart['productDTOList'];
+            this.subtotal = this.dataCart['subtotal'];
+          }
+        );
+      }
     } else if (sessionStorage.getItem('userInSession')) {
       const productInSession = JSON.parse(sessionStorage.getItem('productBuyNow'));
       for (let i = 0; i < productInSession.length; i++) {
@@ -118,28 +132,35 @@ export class OrderInfoComponent implements OnInit {
   }
 
   confirmOrderByUser() {
-    if (this.id) {
-      this.condition = new Order(this.id);
-    } else {
-      this.order = JSON.parse(sessionStorage.getItem('userInSession'))[0];
-      console.log(this.order);
-      this.condition = new Order(null, this.order.note == undefined ? null : this.order.note, this.orderCode, null, this.order.lastName,
-        this.order.firstName, this.order.address, this.order.phoneNumber, this.order.email);
-    }
-    console.log(this.condition);
-    this.http.post('http://localhost:8080/order/save', this.condition).subscribe(
-      dataConfirm => {
-        console.log(dataConfirm);
-        if (dataConfirm['code'] === 200) {
-          this.notificationSuccess('Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất');
-          this.http.get('http://localhost:4200/notification').subscribe();
-          setTimeout(function STO() {
+    this.condition = new Order(null, null, this.orderCode);
+    this.orderService.updateOrderAPI(this.condition).subscribe(
+      (res) => {
+        if (res['code'] == 200) {
+          this.notificationSuccess('Đặt hàng thành công');
+          setTimeout(function success() {
+            if (localStorage.getItem('currentUser')) {
+              window.location.replace('/order-user');
+            } else {
+              window.location.replace('/home');
+            }
+          }, 1500);
+        }
+      }
+    )
+  }
+
+  deleteOrder() {
+    const req = new Order(null, null, this.orderCode);
+    this.orderService.deleteOrderAPI(req).subscribe(
+      (res) => {
+        if (res['code'] == 200) {
+          this.notificationSuccess('Đã hủy đơn hàng');
+          setTimeout(function success() {
             window.location.replace('/home');
           }, 1500);
-        } else {
-          this.notificationError('Đã xảy ra lỗi');
         }
       }
     );
   }
+
 }

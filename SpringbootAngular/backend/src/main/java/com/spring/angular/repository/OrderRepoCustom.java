@@ -10,9 +10,13 @@ public interface OrderRepoCustom {
 
     BigInteger createOrder(OrderDTO orderDTO) throws Exception;
 
-    Object[] getOrder(Long id) throws Exception;
-
-    boolean checkExistOrder(Long id) throws Exception;
+    Object[] getOrder(String orderCode) throws Exception;
 
     void updateOrder(OrderDTO orderDTO) throws Exception;
+
+    void saveOrder(Order order) throws Exception;
+
+    List<Object[]> getByUser(Long userId) throws Exception;
+
+    void deleteOrder(String order) throws Exception;
 }

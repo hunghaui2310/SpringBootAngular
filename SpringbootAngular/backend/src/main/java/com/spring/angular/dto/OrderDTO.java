@@ -5,9 +5,11 @@ public class OrderDTO extends UserDTO{
     private Long id;
     private String orderCode;
     private String notes;
-    private String city;
     private String createDate;
     private String message;
+    private int status;
+    private String nameOrder;
+    private int payment;
 
     public Long getId() {
         return id;
@@ -33,14 +35,6 @@ public class OrderDTO extends UserDTO{
         this.notes = notes;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getCreateDate() {
         return createDate;
     }
@@ -55,5 +49,29 @@ public class OrderDTO extends UserDTO{
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getNameOrder() {
+        return nameOrder;
+    }
+
+    public void setNameOrder(String nameOrder) {
+        this.nameOrder = nameOrder;
+    }
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
     }
 }

@@ -9,9 +9,12 @@
 
   <!-- Jumbotron Header -->
   <header class="jumbotron my-4">
-    <h1 class="display-3"><strong>{{currentUser.fullName}}</strong>, Chào mừng đến với Đồ gỗ Huy Hùng </h1>
+    <h1 class="display-3"><strong>{{currentUser.fullName}}</strong> Chào mừng đến với Đồ gỗ Huy Hùng </h1>
     <p class="lead"> Đăng nhập để nhận thông báo mơi nhất về thông tin khuyến mại
     </p>
+    <div>
+      <button class="btn btn-primary" routerLink="/order-user">Xem thông tin đơn hàng</button>
+    </div>
   </header>
 
   <div class="form-user mb-30">
@@ -30,7 +33,7 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputEmail4">Email <span style="color: red">*</span></label>
-          <input type="email" class="form-control" id="inputEmail4" placeholder="Email" formControlName="email" (input)="checkSpace($event)">
+          <input type="email" class="form-control" id="inputEmail4" placeholder="Email" formControlName="email" (input)="checkSpace($event)" autocomplete="off">
           <mat-error class="error-message" *ngFor="let validation of validation_messages.email">
             <mat-error
               *ngIf="formUser.get('email').hasError(validation.type) && (formUser.get('email').dirty || formUser.get('email').touched)">

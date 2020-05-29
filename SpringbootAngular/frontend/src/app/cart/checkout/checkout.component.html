@@ -94,7 +94,7 @@
       </div>
       <div class="col-lg-6 col-12">
         <div class="your-order">
-          <h3>Hóa đơn</h3>
+          <h3>Hóa đơn( {{codeOrder}} )</h3>
           <div class="your-order-table table-responsive">
             <table class="table">
               <thead>
@@ -106,7 +106,7 @@
               <tbody>
               <tr class="cart_item" *ngFor="let eachCheckOut of productInCart">
                 <td class="cart-product-name"> {{eachCheckOut.productName}}<strong class="product-quantity" *ngIf="eachCheckOut.numProInCart"> × {{eachCheckOut.numProInCart}}</strong></td>
-                <td class="cart-product-total" *ngIf="eachCheckOut.total"><span class="amount">{{eachCheckOut.total * 1000000 | number}}</span></td>
+                <td class="cart-product-total" *ngIf="eachCheckOut.total"><strong class="product-quantity">{{eachCheckOut.total * 1000000 | number}}</strong></td>
 <!--                <td class="cart-product-total" *ngIf="eachCheckOut.price"><span class="amount">{{eachCheckOut.price * 1000000 | number}}</span></td>-->
               </tr>
               </tbody>
@@ -127,7 +127,7 @@
             <div class="payment-accordion">
               <div class="order-button-payment row">
                 <div class="col-sm-6">
-                  <button *ngIf="currentUser" routerLink="/cart">Quay lại giỏ hàng</button>
+                  <button *ngIf="currentUser && !productBuyNow" routerLink="/cart">Quay lại giỏ hàng</button>
                 </div>
                 <div class="col-sm-6">
                   <button (click)="checkOut()">Thanh toán</button>

@@ -46,6 +46,7 @@ import { TuQuanAoComponent } from './product-cate/tu-quan-ao/tu-quan-ao.componen
 import { KeTiviComponent } from './product-cate/ke-tivi/ke-tivi.component';
 import { ConfirmComponent } from './account/confirm/confirm.component';
 import { ForgotPasswordComponent } from './account/forgot-password/forgot-password.component';
+import { OrderUserComponent } from './account/order-user/order-user.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { ForgotPasswordComponent } from './account/forgot-password/forgot-passwo
     TuQuanAoComponent,
     KeTiviComponent,
     ConfirmComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    OrderUserComponent
   ],
   imports: [
     BrowserModule,

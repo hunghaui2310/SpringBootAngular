@@ -8,15 +8,16 @@ import java.util.Date;
 public class Order {
 
     private Long id;
-    private String orderCode;
     private Long userId;
+    private String orderCode;
     private Date createDate;
     private String note;
-    private String namerOder;
+    private String nameOrder;
     private String address;
     private String phoneNumber;
     private String email;
     private int payment;
+    private int status;
 
     @Id
     @GeneratedValue
@@ -29,15 +30,6 @@ public class Order {
         this.id = id;
     }
 
-    @Column(name = "order_code")
-    public String getOrderCode() {
-        return orderCode;
-    }
-
-    public void setOrderCode(String orderCode) {
-        this.orderCode = orderCode;
-    }
-
     @Column(name = "user_id")
     public Long getUserId() {
         return userId;
@@ -45,6 +37,15 @@ public class Order {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    @Column(name = "order_code")
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
     }
 
     @Column(name = "create_date")
@@ -66,12 +67,12 @@ public class Order {
     }
 
     @Column(name = "name_order")
-    public String getNamerOder() {
-        return namerOder;
+    public String getNameOrder() {
+        return nameOrder;
     }
 
-    public void setNamerOder(String namerOder) {
-        this.namerOder = namerOder;
+    public void setNameOrder(String nameOrder) {
+        this.nameOrder = nameOrder;
     }
 
     @Column(name = "address")
@@ -108,5 +109,14 @@ public class Order {
 
     public void setPayment(int payment) {
         this.payment = payment;
+    }
+
+    @Column(name = "status")
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

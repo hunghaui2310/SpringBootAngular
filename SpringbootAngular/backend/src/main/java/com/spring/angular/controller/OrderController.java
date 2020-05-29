@@ -2,6 +2,7 @@ package com.spring.angular.controller;
 
 import com.spring.angular.dto.OrderDTO;
 import com.spring.angular.helper.ApiResponse;
+import com.spring.angular.model.Order;
 import com.spring.angular.repository.OrderRepo;
 import com.spring.angular.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,7 @@ public class OrderController {
     @PostMapping("/show")
     public ApiResponse orderProduct(@RequestBody OrderDTO orderDTO){
         try {
-            Long id = orderDTO.getId();
-            Long userId = orderDTO.getUserId();
-            OrderDTO orderDTOList = orderService.getOderByUser(id, userId);
+            OrderDTO orderDTOList = orderService.getOderByCode(orderDTO.getOrderCode());
             return ApiResponse.build(HttpServletResponse.SC_OK,true,"", orderDTOList);
         }catch (Exception e){
             e.printStackTrace();
@@ -37,19 +36,52 @@ public class OrderController {
     @PostMapping("/update")
     public ApiResponse updateOrder(@RequestBody OrderDTO orderDTO) throws Exception{
         try {
-            Long id = orderService.updateOrder(orderDTO);
-            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", id);
+            String message = orderService.updateOrder(orderDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", message);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
         }
     }
 
-    @PostMapping("/confirm")
-    public ApiResponse confirmOrderByUser(@RequestBody OrderDTO orderDTO) throws Exception {
+//    @PostMapping("/confirm")
+//    public ApiResponse confirmOrderByUser(@RequestBody OrderDTO orderDTO) throws Exception {
+//        try {
+//            OrderDTO orderDTO1 = orderService.accessOrderByUser(orderDTO);
+//            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", orderDTO1);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+//        }
+//    }
+
+    @PostMapping("/save")
+    public ApiResponse saveOrder(@RequestBody OrderDTO orderDTO) {
+        try{
+            String message = orderService.saveOrder(orderDTO);
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, null, message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
+
+    @PostMapping("/getByUser")
+    public ApiResponse getByUser(@RequestBody OrderDTO orderDTO) {
         try {
-            OrderDTO orderDTO1 = orderService.accessOrderByUser(orderDTO);
-            return ApiResponse.build(HttpServletResponse.SC_OK, true, "", orderDTO1);
+            List<OrderDTO> list = orderService.getAllOrder(orderDTO.getUserId());
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, null, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);
+        }
+    }
+
+    @PostMapping("/delete")
+    public ApiResponse deleteOrder(@RequestBody OrderDTO orderDTO) {
+        try{
+            String message = orderService.deleteOrder(orderDTO.getOrderCode());
+            return ApiResponse.build(HttpServletResponse.SC_OK, true, null, message);
         } catch (Exception e) {
             e.printStackTrace();
             return ApiResponse.build(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, false, e.getMessage(), null);

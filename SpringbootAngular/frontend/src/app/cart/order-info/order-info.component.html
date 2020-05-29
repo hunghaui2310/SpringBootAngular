@@ -73,10 +73,13 @@
           <div class="payment-method">
             <div class="payment-accordion">
               <div class="order-button-payment row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <button routerLink="/checkout">Sửa lại thông tin</button>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
+                  <button (click)="deleteOrder()">Hủy đơn hàng</button>
+                </div>
+                <div class="col-sm-4">
                   <button (click)="confirmOrderByUser()">Xác nhận đơn hàng</button>
                 </div>
               </div>

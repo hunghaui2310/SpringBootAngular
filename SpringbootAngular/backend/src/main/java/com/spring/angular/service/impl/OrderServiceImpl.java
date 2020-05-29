@@ -13,8 +13,10 @@ import com.spring.angular.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.Query;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,85 +35,100 @@ public class OrderServiceImpl implements OrderService {
     private UserCartRepo userCartRepo;
 
     @Override
-    public OrderDTO getOderByUser(Long id, Long userId) throws Exception {
-        Object[] objects = orderRepo.getOrder(id);
+    public OrderDTO getOderByCode(String orderCode) throws Exception {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setOrderCode(DataUtil.safeToString(objects[2]));
-        if(objects[5] != null) {
-            orderDTO.setCity(DataUtil.safeToString(objects[5]));
-        }
-        if(objects[4] != null) {
-            orderDTO.setNotes(DataUtil.safeToString(objects[4]));
-        }
-        User user = userRepo.getOne(userId);
-        orderDTO.setAddress(user.getAddress());
-        orderDTO.setFullName(user.getFullName());
-        orderDTO.setEmail(user.getUsername());
-        orderDTO.setPhoneNumber(user.getPhoneNumber());
-        Date date = (Date) objects[3];
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        orderDTO.setCreateDate(simpleDateFormat.format(date));
+        Object[] order = orderRepo.getOrder(orderCode);
+        orderDTO.setOrderCode(orderCode);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        orderDTO.setCreateDate(dateFormat.format((Date) order[3]));
+        orderDTO.setNotes(DataUtil.safeToString(order[4]));
+        orderDTO.setEmail(DataUtil.safeToString(order[8]));
+        orderDTO.setNameOrder(DataUtil.safeToString(order[5]));
+        orderDTO.setAddress(DataUtil.safeToString(order[6]));
+        orderDTO.setPhoneNumber(DataUtil.safeToString(order[7]));
         return orderDTO;
     }
 
     @Override
-    public Long updateOrder(OrderDTO orderDTO) throws Exception {
-        OrderDTO orderDTO1 = new OrderDTO();
-        if (!DataUtil.isNullOrEmpty(orderDTO.getFirstName()) && !DataUtil.isNullOrEmpty(orderDTO.getLastName())) {
-            orderDTO1.setFullName(orderDTO.getFirstName() + orderDTO.getLastName());
-        } else if (DataUtil.isNullOrEmpty(orderDTO.getFirstName()) && !DataUtil.isNullOrEmpty(orderDTO.getLastName())) {
-            orderDTO1.setFullName(orderDTO.getLastName());
-        } else {
-            orderDTO1.setFullName(orderDTO.getFirstName());
-        }
-        if (!DataUtil.isNullOrEmpty(orderDTO.getPhoneNumber())) {
-            orderDTO1.setPhoneNumber(orderDTO.getPhoneNumber());
-        }
-        if (!DataUtil.isNullOrEmpty(orderDTO.getAddress())) {
-            orderDTO1.setAddress(orderDTO.getAddress());
-        }
-        orderDTO1.setUserId(orderDTO.getUserId());
-        userCartRepo.updateUser(orderDTO1);
+    public String updateOrder(OrderDTO orderDTO) throws Exception {
+        String message = null;
+        orderDTO.setStatus(1);
+        orderRepo.updateOrder(orderDTO);
+        message = Contains.SUCCESS;
+        return message;
+    }
 
-        if (!DataUtil.isNullOrEmpty(orderDTO.getCity())) {
-            orderDTO1.setCity(orderDTO.getCity());
-        }
-        if (!DataUtil.isNullOrEmpty(orderDTO.getNotes())) {
-            orderDTO1.setNotes(orderDTO.getNotes());
-        }
-        Stream<Integer> list = DataUtil.autoGenCode(5);
-        List<Integer> result = list.collect(Collectors.toList());
-        for (Integer integer : result) {
-            if (integer > 0) {
-                orderDTO1.setOrderCode(Contains.HD + "-" + integer);
-            } else {
-                orderDTO1.setOrderCode(Contains.HD + integer);
+//    @Override
+//    public OrderDTO accessOrderByUser(OrderDTO orderDTO) throws Exception {
+//        Object[] order = orderRepo.getOrder(orderDTO.getId());
+//        Long userId = DataUtil.safeToLong(order[1]);
+//        User user = userRepo.getOne(userId);
+//        OrderDTO orderDTO1 = new OrderDTO();
+//        orderDTO1.setId(orderDTO.getId());
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        orderDTO1.setCreateDate(simpleDateFormat.format((Date) order[3]));
+//        orderDTO1.setPhoneNumber(user.getPhoneNumber());
+//        orderDTO1.setEmail(user.getUsername());
+//        orderDTO1.setFullName(user.getFullName());
+//        orderDTO1.setAddress(user.getAddress());
+//        orderDTO1.setOrderCode(DataUtil.safeToString(order[2]));
+//        orderDTO1.setUserId(userId);
+//        orderDTO1.setMessage(Contains.SUCCESS);
+//        return orderDTO1;
+//    }
+
+    @Override
+    public String saveOrder(OrderDTO order) throws Exception {
+        String message;
+        if (order != null) {
+            Order orderModel = new Order();
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            orderModel.setNote(order.getNotes());
+            orderModel.setNameOrder(order.getLastName() + " " + order.getFirstName());
+            orderModel.setEmail(order.getEmail());
+            if (order.getUserId() != null) {
+                orderModel.setUserId(order.getUserId());
             }
+            orderModel.setPhoneNumber(order.getPhoneNumber());
+            orderModel.setAddress(order.getAddress());
+            orderModel.setPayment(0);
+            orderModel.setOrderCode(order.getOrderCode());
+            String dateString = date.format(new Date());
+            Date setDate = date.parse(dateString);
+            orderModel.setCreateDate(setDate);
+            orderModel.setStatus(0);
+            orderRepo.saveOrder(orderModel);
+            message = Contains.SUCCESS;
+        } else {
+            message = Contains.ERROR;
         }
-        orderDTO1.setUserId(orderDTO.getUserId());
-        // tra cho front-end id ban ghi vua them moi trong order
-        BigInteger bigInteger = orderRepo.createOrder(orderDTO1);
-        Long id = bigInteger.longValue();
-        return id;
+        return message;
     }
 
     @Override
-    public OrderDTO accessOrderByUser(OrderDTO orderDTO) throws Exception {
-        Object[] order = orderRepo.getOrder(orderDTO.getId());
-        Long userId = DataUtil.safeToLong(order[1]);
-        User user = userRepo.getOne(userId);
-        OrderDTO orderDTO1 = new OrderDTO();
-        orderDTO1.setId(orderDTO.getId());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        orderDTO1.setCreateDate(simpleDateFormat.format((Date) order[3]));
-        orderDTO1.setPhoneNumber(user.getPhoneNumber());
-        orderDTO1.setEmail(user.getUsername());
-        orderDTO1.setFullName(user.getFullName());
-        orderDTO1.setAddress(user.getAddress());
-        orderDTO1.setCity(DataUtil.safeToString(order[5]));
-        orderDTO1.setOrderCode(DataUtil.safeToString(order[2]));
-        orderDTO1.setUserId(userId);
-        orderDTO1.setMessage(Contains.SUCCESS);
-        return orderDTO1;
+    public List<OrderDTO> getAllOrder(Long userId) throws Exception {
+        List<OrderDTO> orders = new ArrayList<>();
+        List<Object[]> orderList = orderRepo.getByUser(userId);
+        for (Object[] order : orderList) {
+            OrderDTO orderNew = new OrderDTO();
+            orderNew.setOrderCode(DataUtil.safeToString(order[2]));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            orderNew.setCreateDate(dateFormat.format(order[3]));
+            orderNew.setNotes(DataUtil.safeToString(order[4]));
+            orderNew.setNameOrder(DataUtil.safeToString(order[5]));
+            orderNew.setAddress(DataUtil.safeToString(order[6]));
+            orderNew.setPhoneNumber(DataUtil.safeToString(order[7]));
+            orderNew.setEmail(DataUtil.safeToString(order[8]));
+            orderNew.setPayment(DataUtil.safeToInt(order[9]));
+            orders.add(orderNew);
+        }
+        return orders;
+    }
+
+    @Override
+    public String deleteOrder(String orderCode) throws Exception {
+        orderRepo.deleteOrder(orderCode);
+        String message = Contains.SUCCESS;
+        return message;
     }
 }

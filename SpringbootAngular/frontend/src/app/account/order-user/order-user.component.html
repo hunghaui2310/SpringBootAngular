@@ -1,0 +1,80 @@
+<div class="checkout-area pt-60 pb-30">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="header-table">
+            <tr style="background-color: aliceblue">
+              <th>STT</th>
+              <th>Mã hóa đơn</th>
+              <th>Ngày đặt</th>
+              <th>Chú thích</th>
+              <th>Tên đặt hàng</th>
+              <th>Địa chỉ</th>
+              <th>Số điện thoại</th>
+              <th>Email</th>
+              <th>Thanh toán</th>
+            </tr>
+            </thead>
+
+            <tbody *ngIf="!listOrder">
+            <tr>
+              <td colspan="9" align="center" style="background: white">
+                Không có dữ liệu
+              </td>
+            </tr>
+            </tbody>
+
+            <tbody *ngIf="listOrder && listOrder.length > 0">
+            <tr
+              *ngFor="let eachPro of listOrder | paginate: {id:'productPagination', itemsPerPage: pageSize, currentPage: currentP, totalItems: listOrder.length}, index as i">
+              <td class="text-center">{{currentP * pageSize - (pageSize - 1) + i}}</td>
+              <td>
+                <div data-toggle="tooltip" title="{{eachPro.orderCode}}">{{eachPro.orderCode}}</div>
+              </td>
+              <td>
+                <div data-toggle="tooltip" title="{{eachPro.createDate}}">{{eachPro.createDate}}</div>
+              </td>
+              <td>
+                <div data-toggle="tooltip" title="{{eachPro.note}}">{{eachPro.note}}</div>
+              </td>
+              <td>
+                <div data-toggle="tooltip"
+                     title="{{eachPro.nameOrder}}">{{eachPro.nameOrder}}</div>
+              </td>
+              <td>
+                <div data-toggle="tooltip" title="{{eachPro.address}}"> {{eachPro.address}}</div>
+              </td>
+              <td>
+                <div data-toggle="tooltip" title="{{eachPro.phoneNumber}}"> {{eachPro.phoneNumber}}</div>
+              </td>
+              <td>
+                <div data-toggle="tooltip" title="{{eachPro.email}}"> {{eachPro.email}}</div>
+              </td>
+              <td>
+                <div data-toggle="tooltip" *ngIf="eachPro.payment === 0">Chưa thanh toán</div>
+                <div data-toggle="tooltip" *ngIf="eachPro.payment === 1">Đã thanh toán</div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="w-100 d-flex justify-content-between" *ngIf="listOrder && listOrder.length > 0">
+          <p style="margin-left: 5px;">Từ {{currentP * pageSize - (pageSize - 1)}}
+            đến
+            <span *ngIf="currentP*pageSize <  listOrder.length">{{currentP * pageSize}}</span>
+            <span *ngIf="currentP*pageSize >= listOrder.length">{{listOrder.length}}</span>
+            trên tổng số {{listOrder.length}}
+            đơn hàng</p>
+          <ul style="float:right;" class="pagination">
+            <pagination-controls id='productPagination' (pageChange)="pageChange($event)"
+                                 previousLabel="Trước"
+                                 nextLabel="Tiếp">
+            </pagination-controls>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

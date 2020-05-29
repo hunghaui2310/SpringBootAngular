@@ -22,11 +22,23 @@ export class OrderService {
     return this.http.post(config.data_order_API, order);
   }
 
-  updateOrderAPI(order: Order): Observable<any> {
-    return this.http.post<any>(config.update_order_API, order);
+  updateOrderAPI(order: Order) {
+    return this.http.post(config.update_order_API, order);
   }
 
   confirmOrderAPI(order: Order) {
     return this.http.post(config.confirm_order_API, order);
+  }
+
+  saveOrder(order: Order) {
+    return this.http.post(config.save_order_API, order);
+  }
+
+  getAllOrder(order: Order) {
+    return this.http.post(config.get_all_order, order);
+  }
+
+  deleteOrderAPI(order: Order) {
+    return this.http.post(config.delete_order_API, order);
   }
 }
